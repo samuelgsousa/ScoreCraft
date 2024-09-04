@@ -1,0 +1,150 @@
+:root{
+    --MainButtonColor: var(--SecondaryColor);
+    --MainButtonShadow: #3a0483;
+    --ActiveMButtonColor: rgb(172, 85, 212);
+    --Filter: rgba(1, 39, 145, 0.548);
+}
+
+#cover{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 90vh;
+    background-attachment: fixed;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    flex-direction: column;
+}
+
+/* background-image: url(../images/index-games/Cover/cv-Elden-ring.svg); */
+
+#createAccount{
+    margin-top: 1%;
+    border-radius: 15px;
+    width: clamp(10rem, 10rem + 25vw ,50rem);
+    height: clamp(3rem, 2rem + 2vw ,5rem);
+    background-color: var(--MainButtonColor);
+    border-color: var(--MainButtonShadow);
+    box-shadow: 2px 2px var(--MainButtonShadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#createAccount:active{
+    background-color: var(--ActiveMButtonColor);
+    border-color: var(--ActiveMButtonColor);
+}
+
+.modal-title{
+    box-shadow: 0px -80px 180px 250px #212529;
+}
+
+#week-list{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 30vw;
+    padding: 0 3%;
+    gap:5 4%;
+}
+
+.week-game{
+    border-radius: 10px;
+    height: 100%;
+    width: 20%;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+}
+
+.week-game img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.icon{
+    max-width: clamp(16px,4px + 4vw,64px);
+    max-height: clamp(16px,4px + 4vw,64px);
+    visibility: hidden;
+    text-align: center ;
+}
+
+.rate{
+    display: flex;
+    flex-direction: column;
+    align-self:center;
+     visibility: hidden; 
+    text-align: center;
+}
+
+.stars{
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.stars img{
+    max-height: clamp(16px,2px + 2vw,32px);
+    max-width: clamp(16px,2px + 2vw,32px);
+    filter: brightness(0) saturate(100%) invert(85%) sepia(28%) saturate(3207%) hue-rotate(78deg) brightness(98%) contrast(114%);
+}
+
+.filter{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.filter:hover{
+    transition: 0.1s;
+    background-color: var(--Filter);
+}
+
+ .filter:hover + img{
+    transition: 0.1s;
+    filter: blur(1.3px);
+}
+
+.filter:hover .icon, .filter:hover .rate{
+    transition: 0.1s;
+    visibility: visible;
+}
+
+@media(max-width: 430px){
+    #week-list{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: 70vh;
+        width: 100%;
+        justify-items: center;
+        grid-gap: 40px;
+    }
+
+    .week-game{
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.custom-popover {
+    --bs-popover-max-width: 300px;
+    --bs-popover-border-color: var(--MainButtonColor);
+    --bs-popover-header-bg: var(--MainButtonColor);
+    --bs-popover-header-color: white;
+    --bs-popover-body-padding-x: 1rem;
+    --bs-popover-body-padding-y: .5rem; 
+    --bs-popover-bg: var(--MainBackground);
+    --bs-popover-body-color: white;
+  }
