@@ -10,6 +10,6 @@ export interface Profile{
     seguindo: Array<number>
     wallpaper: string
     bio: string
-    review_list: Array<number>
+    // review_list: Array<number>
     fav_games: Array<number>
 }

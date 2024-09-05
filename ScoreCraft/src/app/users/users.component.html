@@ -1,0 +1,44 @@
+<div id="canvasContainer">
+    <canvas id="nightSky"></canvas>
+    <h1 id="clickMessage">C L I C K</h1>
+  </div>
+
+<h1>Visite o perfil de nossos usuários</h1>
+<div id="users">
+    
+    <a [routerLink]="['/users/profile', user.id]" *ngFor="let user of allUsersList">
+        <div class="card text-center text-bg-dark" style="width: 18rem;">
+                <img [src]=[user.foto_perfil] class="card-img-top" alt="...">
+        
+            <div class="card-body">
+              <h5 class="card-title">{{user.nome}}</h5>
+        
+            </div>
+        </div>
+    </a>
+
+    <!-- <a href="profile.html?value=0">
+        <div class="card text-center text-bg-dark" style="width: 18rem;">
+            <img src="../images/profile/General/profile-picture-naruto.jpg" class="card-img-top" alt="...">
+        
+            <div class="card-body">
+              <h5 class="card-title">Narutinho 123</h5>
+              <p class="card-text"></p>
+        
+            </div>
+        </div>
+    </a>
+
+    <a href="profile.html?value=1">
+        <div class="card text-center text-bg-dark" style="width: 18rem;">
+            <img src="../images/profile/General/profile-picture-miranha.jpg" class="card-img-top" alt="...">
+        
+            <div class="card-body">
+              <h5 class="card-title">Valdemar Oliveira da Silva</h5>
+              <p class="card-text"></p>
+        
+            </div>
+        </div>
+    </a> -->
+
+</div>

@@ -1,0 +1,14 @@
+<h1 class="text-light">Bio</h1>
+<p class="text-light fs-4" id="bio">{{profile?.bio}}</p>
+
+<h1 class="text-light">Favoritos</h1>
+
+{{getFavGames(profile?.fav_games)}}
+
+<div id="favorite-list">
+    
+    <div *ngFor="let fav_game of profile?.fav_games" class="img-game-review rounded float-start">
+        <h1>teste </h1>
+        
+    </div>
+</div>

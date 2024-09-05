@@ -1,0 +1,39 @@
+
+<div id="cover">
+            
+    <div id="avatar">
+        <img [src]="[user?.foto_perfil]" alt="" class="Profile-picture">
+        
+        <span class="text-light fw-semibold text-expand-lg" id="nickname">{{user?.nome}}<img src="#" alt="" id="follow"></span>
+
+        <button type="button" class="stamp">Streamer</button>
+    </div>
+    
+</div>
+
+<!--Guias de Navegação-->
+<ul class="nav nav-underline nav-fill justify-content-center " id="ScoreCraftTab" role="tablist">
+
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active " id="game-tab" data-bs-toggle="tab" data-bs-target="#game-tab-pane" type="button" role="tab" aria-controls="game-tab-pane" aria-selected="true">jogos</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-tab-pane" type="button" role="tab" aria-controls="reviews-tab-pane" aria-selected="false">reviews</button>
+    </li>
+    <li class="nav-item" role="presentation" style="display: none;">
+      <button class="nav-link disabled" id="lives-tab" data-bs-toggle="tab" data-bs-target="#lives-tab-pane" type="button" role="tab" aria-controls="lives-tab-pane" aria-selected="false">lives</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="lives-tab" data-bs-toggle="tab" data-bs-target="#statistics-tab-pane" type="button" role="tab" aria-controls="lives-tab-pane" aria-selected="false">estatísticas</button>
+      </li>
+      
+  </ul>
+<!--/Guias de Navegação-->
+
+        <!--Jogos-->
+        <div class="tab-pane fade show active" id="game-tab-pane" role="tabpanel" aria-labelledby="game-tab" tabindex="0"> 
+
+            <user-jogos [profile]="user"></user-jogos>
+
+        </div>
+    <!--/Jogos -->
