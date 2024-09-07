@@ -123,12 +123,126 @@ export class GamesService{
           summary: "Viva em uma distopia futurista onde você pode modificar seu corpo com implantes cibernéticos e tomar decisões que moldam o mundo ao seu redor.",
           producer: "CD Projekt Red",
           genres: ["RPG", "Ação", "Mundo Aberto"]
-        }
+        },
+        {
+          id: 14,
+          name: "The Witcher 3: Wild Hunt",
+          picture: "./games/the-witcher-3.svg",
+          release_date: new Date('2015-05-19'),
+          summary: "Embarque em uma aventura épica em um mundo aberto como Geralt de Rívia, um caçador de monstros.",
+          producer: "CD Projekt Red",
+          genres: ["RPG", "Ação", "Mundo Aberto"]
+        },
+        {
+          id: 15,
+          name: "The Legend of Zelda: Breath of the Wild",
+          picture: "./games/zelda-breath-of-the-wild.svg",
+          release_date: new Date('2017-03-03'),
+          summary: "Explore um vasto mundo aberto enquanto desvenda segredos e enfrenta inimigos poderosos.",
+          producer: "Nintendo",
+          genres: ["Ação", "Aventura", "Mundo Aberto"]
+        },
+        {
+          id: 16,
+          name: "Red Dead Redemption 2",
+          picture: "./games/red-dead-redemption-2.svg",
+          release_date: new Date('2018-10-26'),
+          summary: "Uma jornada épica no Velho Oeste enquanto o fora-da-lei Arthur Morgan tenta sobreviver.",
+          producer: "Rockstar Games",
+          genres: ["Ação", "Aventura", "Mundo Aberto"]
+        },
+        {
+          id: 17,
+          name: "Elden Ring",
+          picture: "./games/elden-ring.svg",
+          release_date: new Date('2022-02-25'),
+          summary: "Explore o vasto mundo de Lands Between e enfrente inimigos poderosos em um RPG desafiador.",
+          producer: "FromSoftware Inc",
+          genres: ["RPG", "Ação", "Soulslike"]
+        },
+        {
+          id: 18,
+          name: "Hades",
+          picture: "./games/hades.svg",
+          release_date: new Date('2020-09-17'),
+          summary: "Escape do submundo grego em um jogo de ação roguelike com combates intensos.",
+          producer: "Supergiant Games",
+          genres: ["Roguelike", "Ação"]
+        },
+        {
+          id: 19,
+          name: "Sekiro: Shadows Die Twice",
+          picture: "./games/sekiro-shadows-die-twice.svg",
+          release_date: new Date('2019-03-22'),
+          summary: "Assuma o papel de um guerreiro shinobi em uma jornada de vingança no Japão feudal.",
+          producer: "FromSoftware Inc",
+          genres: ["Ação", "Soulslike"]
+        },
+        {
+          id: 20,
+          name: "Ghost of Tsushima",
+          picture: "./games/ghost-of-tsushima.svg",
+          release_date: new Date('2020-07-17'),
+          summary: "Defenda o Japão da invasão mongol em uma aventura épica com samurais.",
+          producer: "Sucker Punch Productions",
+          genres: ["Ação", "Aventura", "Mundo Aberto"]
+        },
+        {
+          id: 21,
+          name: "Super Mario Odyssey",
+          picture: "./games/super-mario-odyssey.svg",
+          release_date: new Date('2017-10-27'),
+          summary: "Viaje pelo mundo com Mario para salvar a Princesa Peach de Bowser em uma nova aventura.",
+          producer: "Nintendo",
+          genres: ["Plataforma", "Aventura"]
+        },
+        {
+          id: 22,
+          name: "Resident Evil Village",
+          picture: "./games/resident-evil-village.svg",
+          release_date: new Date('2021-05-07'),
+          summary: "Explore uma vila misteriosa em busca de respostas enquanto enfrenta criaturas horríveis.",
+          producer: "Capcom",
+          genres: ["Terror", "Ação"]
+        },
+        {
+          id: 23,
+          name: "Doom Eternal",
+          picture: "./games/doom-eternal.svg",
+          release_date: new Date('2020-03-20'),
+          summary: "O Slayer retorna para enfrentar hordas de demônios em uma jornada épica.",
+          producer: "id Software",
+          genres: ["FPS", "Ação"]
+        },
+        {
+          id: 24,
+          name: "Final Fantasy VII Remake",
+          picture: "./games/final-fantasy-vii-remake.svg",
+          release_date: new Date('2020-04-10'),
+          summary: "Reviva a história épica de Cloud Strife e seus amigos na luta contra a corporação Shinra.",
+          producer: "Square Enix",
+          genres: ["RPG", "Ação"]
+        },
+        {
+          id: 25,
+          name: "The Last of Us Part II",
+          picture: "./games/the-last-of-us-part-ii.svg",
+          release_date: new Date('2020-06-19'),
+          summary: "Acompanhe Ellie em uma jornada brutal e emocional por vingança em um mundo pós-apocalíptico.",
+          producer: "Naughty Dog",
+          genres: ["Ação", "Aventura"]
+        },
+        
       ];
 
      getFavGames(favG: Array<number>): Games[]{
       return this.gamesList.filter(game => favG.includes(game.id));
       console.log(this.gamesList.filter(game => favG.includes(game.id)))
+    }
+
+    getGameDetailsById(game_id: number): {name: string, picture: string} | undefined {
+      const game = this.gamesList.find(g => g.id === game_id)
+      return game ? {name: game.name, picture: game.picture} : undefined
     }
       
 }

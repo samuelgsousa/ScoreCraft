@@ -8,46 +8,172 @@ export class ProfileService {
 
   protected userList: Profile[] =[
     {
-      id:1,
+      id: 1,
       nome: "Narutinho 123",
       foto_perfil: "./profile/General/profile-picture-naruto.jpg",
-      seguidores: [2, 3],
-      horas_jogadas: 4556,
       fav_gen: ["Terror", "Ação", "Aventura"],
-      // "avaliacoes":
-      //     [1, 2, 3, 4]
-      // ,
       streamer: true,
-      seguindo: [1, 2, 3],
+      seguindo: [2],
       wallpaper: "./profile/General/wp-mortal-kombat.svg",
       bio: "Oi, eu sou o Fabio. Gosto de animes e faço umas livezinhas de vez em quando :3",
-      // review_list:[1, 2, 3, 4],
-      fav_games:[6, 7, 8, 9]
-      
-  },
-  {
-    id: 2,
-    nome: "Valdemar Oliveira da Silva",
-            foto_perfil: "./profile/General/profile-picture-miranha.jpg",
-            seguidores: [1, 4],
-            horas_jogadas: 1092,
-            fav_gen: ["FPS", "RPG", "Sandbox"],
-            // "avaliacoes":{
-            //     "star1": 1,
-            //     "star2": 5,
-            //     "star3": 3,
-            //     "star4": 9,
-            //     "star5": 15
-            // },
-            streamer: false,
-            seguindo: [4, 5],
-            wallpaper: "./profile/General/wp-spiderverse.svg",
-            bio: "25 anos - SP. Designer nas horas vagas",
-            // review_list:[1, 2, 3],
-            fav_games:[1, 10, 11, 12]
-        },
-        
-      ]
+      fav_games: [6, 7, 8, 9]
+    },
+    {
+      id: 2,
+      nome: "Valdemar Oliveira da Silva",
+      foto_perfil: "./profile/General/profile-picture-miranha.jpg",
+      fav_gen: ["FPS", "RPG", "Sandbox"],
+      streamer: false,
+      seguindo: [1],
+      wallpaper: "./profile/General/wp-spiderverse.svg",
+      bio: "25 anos - SP. Designer nas horas vagas",
+      fav_games: [1, 10, 11, 12]
+    },
+    {
+      id: 3,
+      nome: "Ana_Gamer77",
+      foto_perfil: null,
+      fav_gen: ["Ação", "Plataforma", "Estratégia"],
+      streamer: true,
+      seguindo: [1, 5],
+      wallpaper: null,
+      bio: "Amante de jogos indie e adoro streams de speedruns.",
+      fav_games: [5, 14, 18]
+    },
+    {
+      id: 4,
+      nome: "PedroKillerXD",
+      foto_perfil: null,
+      fav_gen: ["FPS", "Battle Royale", "MOBA"],
+      streamer: false,
+      seguindo: [2, 3],
+      wallpaper: null,
+      bio: "Jogador hardcore de FPS, sempre em busca do top rank.",
+      fav_games: [2, 7, 16]
+    },
+    {
+      id: 5,
+      nome: "Luna_Fox",
+      foto_perfil: null,
+      fav_gen: ["RPG", "Aventura", "Simulação", "Survival"],
+      streamer: true,
+      seguindo: [3, 4, 7],
+      wallpaper: null,
+      bio: "Curto explorar mundos abertos e construir bases em jogos de sobrevivência.",
+      fav_games: [8, 12, 15]
+    },
+    {
+      id: 6,
+      nome: "GhostHunter99",
+      foto_perfil: null,
+      fav_gen: ["Terror", "Ação", "Survival"],
+      streamer: false,
+      seguindo: [1, 9, 12],
+      wallpaper: null,
+      bio: "Apaixonado por sustos e games de terror.",
+      fav_games: [3, 13, 19, 25]
+    },
+    {
+      id: 7,
+      nome: "MasterChefGame",
+      foto_perfil: null,
+      fav_gen: ["Simulação", "RPG", "Plataforma"],
+      streamer: true,
+      seguindo: [2, 6],
+      wallpaper: null,
+      bio: "Adoro sim games e criar meus próprios mundos virtuais.",
+      fav_games: [11, 23, 24]
+    },
+    {
+      id: 8,
+      nome: "DarkSoulZ",
+      foto_perfil: null,
+      fav_gen: ["RPG", "Ação", "Aventura"],
+      streamer: false,
+      seguindo: [1, 4, 5],
+      wallpaper: null,
+      bio: "Sou fanático por RPGs difíceis e intensos.",
+      fav_games: [4, 9, 17]
+    },
+    {
+      id: 9,
+      nome: "SpeedrunnerX",
+      foto_perfil: null,
+      fav_gen: ["Plataforma", "Corrida", "Arcade"],
+      streamer: true,
+      seguindo: [3, 8],
+      wallpaper: null,
+      bio: "Sempre em busca do recorde mundial nas minhas runs!",
+      fav_games: [6, 20, 21]
+    },
+    {
+      id: 10,
+      nome: "NerdLord",
+      foto_perfil: null,
+      fav_gen: ["Estratégia", "Puzzle", "Aventura"],
+      streamer: false,
+      seguindo: [1, 7],
+      wallpaper: null,
+      bio: "Adoro jogos que fazem pensar e desafiam a mente.",
+      fav_games: [1, 22, 25]
+    },
+    {
+      id: 11,
+      nome: "ArcadeMaster",
+      foto_perfil: null,
+      fav_gen: ["Arcade", "Plataforma", "Luta"],
+      streamer: true,
+      seguindo: [2, 10, 15],
+      wallpaper: null,
+      bio: "Velha guarda dos arcades, amo jogos retrô.",
+      fav_games: [2, 5, 13]
+    },
+    {
+      id: 12,
+      nome: "PixelHunter",
+      foto_perfil: null,
+      fav_gen: ["Aventura", "Simulação", "Puzzle"],
+      streamer: false,
+      seguindo: [6, 11],
+      wallpaper: null,
+      bio: "Adoro pixel art e games com boas histórias.",
+      fav_games: [9, 14, 17]
+    },
+    {
+      id: 13,
+      nome: "DragonSlayerBR",
+      foto_perfil: null,
+      fav_gen: ["RPG", "Ação", "Fantasia"],
+      streamer: true,
+      seguindo: [1, 8, 12],
+      wallpaper: null,
+      bio: "Sempre na busca por derrotar dragões em qualquer jogo!",
+      fav_games: [3, 8, 10]
+    },
+    {
+      id: 14,
+      nome: "LaraCroftFan",
+      foto_perfil: null,
+      fav_gen: ["Ação", "Aventura", "Exploração"],
+      streamer: false,
+      seguindo: [1, 13],
+      wallpaper: null,
+      bio: "Fã de jogos de exploração e arqueologia.",
+      fav_games: [15, 16, 23]
+    },
+    {
+      id: 15,
+      nome: "PuzzleManiac",
+      foto_perfil: null,
+      fav_gen: ["Puzzle", "Estratégia", "RPG"],
+      streamer: false,
+      seguindo: [5, 10],
+      wallpaper: null,
+      bio: "Apaixonado por resolver quebra-cabeças em jogos de estratégia.",
+      fav_games: [4, 18, 25]
+    }
+  ]
+  
 
   
 
@@ -60,5 +186,4 @@ export class ProfileService {
     return new Promise(resolve => resolve(this.userList[id]))
   }
     
-      // constructor() { }
   }

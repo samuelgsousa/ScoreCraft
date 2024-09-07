@@ -9,7 +9,7 @@
             <div class="magic-grid" id="magic-grid"></div> <!--//Grid mágico\-->
     
             <!--Botão de menu-->
-              <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="botaoMenu">
                 <span class="toggler-icon top-bar"></span>
                 <span class="toggler-icon middle-bar"></span>
                 <span class="toggler-icon bottom-bar"></span>
@@ -22,19 +22,19 @@
           <div class="collapse navbar-collapse bg-dark" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active link-light " aria-current="page" href="index.html">Início</a>
+                <a class="nav-link active link-light " aria-current="page" [routerLink]="['']" (click)="toggleMenu()">Início</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link link-light disabled" href="">Jogos</a>
+                <a class="nav-link link-light disabled" href="#" (click)="toggleMenu()">Jogos</a>
               </li>
               <li class="nav-item link-light">
-                <a class="nav-link link-light disabled" href="#">Reviews</a>
+                <a class="nav-link link-light disabled" href="#" (click)="toggleMenu()">Reviews</a>
               </li>
               <li class="nav-item link-light">
-                <a class="nav-link link-light" href="users.html">Usuários</a>
+                <a class="nav-link link-light" [routerLink]="['users']" (click)="toggleMenu()">Usuários</a>
               </li>
               <li class="nav-item link-light">
-                <a class="nav-link disabled" href="">Meu perfil</a>
+                <a class="nav-link disabled" href="#" (click)="toggleMenu()">Meu perfil</a>
               </li>
             </ul>
           </div>

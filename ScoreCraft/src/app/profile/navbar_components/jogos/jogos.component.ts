@@ -16,21 +16,22 @@ export class JogosComponent {
   @Input() profile: Profile | undefined;
 
   favoriteGames: Games[] = [];
+ 
+  constructor(private gamesService: GamesService) {}
 
   ngOnInit(): void {
-    
+    this.loadFavGames();
     // this.getAllFavGames()
   }
 
-  //  getAllFavGames = () => {
-  //    console.log(this.profile?.fav_games)
-  //   return this.profile?.fav_games
-  // }
+  loadFavGames(): void {
+    if (this.profile?.fav_games) {
+      this.favoriteGames = this.gamesService.getFavGames(this.profile.fav_games); 
+     
+    }
 
-  // teste(favG: Array<number> = []){
-  //   console.log(favG)
-  // }
 
+}
 }
 
 

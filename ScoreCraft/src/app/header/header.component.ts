@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+
+  collapsed = true;
+  toggleMenu() {
+    document.querySelector('#navbarSupportedContent')?.classList.toggle('show')
+    document.querySelector('#botaoMenu')?.classList.toggle('collapsed')
+  }
 
   ngOnInit(): void{
     const colors = ['#e74c3c', '#8e44ad', '#3498db', '#e67e22', '#2ecc71']

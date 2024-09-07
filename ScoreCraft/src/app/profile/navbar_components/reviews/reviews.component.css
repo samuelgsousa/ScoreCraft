@@ -1,0 +1,55 @@
+/*Reviews*/
+
+#reviews-tab-pane{
+    height: auto;
+}
+
+main{
+    overflow: auto;
+    height: auto;
+    scrollbar-width: none;
+}
+
+main::-webkit-scrollbar {
+    display: none; /* ocultar a barra de rolagem em navegadores WebKit */
+  }
+
+
+.game-review{
+    min-height: 21rem;
+    padding: 1%;
+    margin-bottom: 10px;
+    word-break: normal;
+}
+
+.img-game-review{
+    border-radius: 5px;
+    height: clamp(70px,30px + 30vw,300px); 
+    width: clamp(100px,25px + 20vw,200px); 
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    object-fit: cover;
+    margin-right: clamp(10px,10px + 1vw,30px);
+}
+
+.game-review h1{
+    font-size: clamp(1.2rem,1rem + 2vw,2rem);
+    margin-bottom: 0px;
+}
+
+
+.rating{
+    font-size: 1.5rem;
+    margin-right: 1%;
+}
+
+@media(max-width: 350px){ .date-rate{ display: inline-block;}}
+
+.game-review p{
+    font-size: 1rem;
+    margin-top: 1%;
+
+}
+/*/Reviews*/

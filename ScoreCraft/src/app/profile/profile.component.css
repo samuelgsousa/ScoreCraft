@@ -85,3 +85,11 @@ ng-template{
     background-color: blue;
     position: absolute;
 }
+
+.tab-pane {
+    display: none;
+}
+
+.show{
+    display: inherit;
+}

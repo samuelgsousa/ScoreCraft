@@ -30,10 +30,20 @@
   </ul>
 <!--/Guias de Navegação-->
 
-        <!--Jogos-->
+
         <div class="tab-pane fade show active" id="game-tab-pane" role="tabpanel" aria-labelledby="game-tab" tabindex="0"> 
 
             <user-jogos [profile]="user"></user-jogos>
 
         </div>
-    <!--/Jogos -->
+
+
+
+      <div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
+        <user-reviews [userId]="user?.id"></user-reviews>
+      </div>
+  
+      <div class="tab-pane fade" id="statistics-tab-pane" role="tabpanel" aria-labelledby="statistics-tab" tabindex="0">
+        <user-estatisticas [profile]="user"></user-estatisticas>
+      </div>
+      

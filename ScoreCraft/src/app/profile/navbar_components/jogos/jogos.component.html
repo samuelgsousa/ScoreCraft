@@ -3,12 +3,12 @@
 
 <h1 class="text-light">Favoritos</h1>
 
-{{getFavGames(profile?.fav_games)}}
+
 
 <div id="favorite-list">
     
-    <div *ngFor="let fav_game of profile?.fav_games" class="img-game-review rounded float-start">
-        <h1>teste </h1>
+    <div *ngFor="let fav_game of this.favoriteGames" class="game-review border-bottom border-secondary">
+        <img [src]="[fav_game.picture]" alt="" class="img-game-review rounded float-start">
         
     </div>
 </div>
