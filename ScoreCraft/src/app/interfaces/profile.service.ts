@@ -32,7 +32,7 @@ export class ProfileService {
     {
       id: 3,
       nome: "Ana_Gamer77",
-      foto_perfil: null,
+      foto_perfil: './petcons/blueberry_by_hyanna_natsu_daaq3p4.png',
       fav_gen: ["Ação", "Plataforma", "Estratégia"],
       streamer: true,
       seguindo: [1, 5],
@@ -43,7 +43,7 @@ export class ProfileService {
     {
       id: 4,
       nome: "PedroKillerXD",
-      foto_perfil: null,
+      foto_perfil: './petcons/bonbonbear_by_hyanna_natsu_dacb1le.png',
       fav_gen: ["FPS", "Battle Royale", "MOBA"],
       streamer: false,
       seguindo: [2, 3],
@@ -54,7 +54,7 @@ export class ProfileService {
     {
       id: 5,
       nome: "Luna_Fox",
-      foto_perfil: null,
+      foto_perfil: './petcons/chipster_by_hyanna_natsu_dacb1lb.png',
       fav_gen: ["RPG", "Aventura", "Simulação", "Survival"],
       streamer: true,
       seguindo: [3, 4, 7],
@@ -65,7 +65,7 @@ export class ProfileService {
     {
       id: 6,
       nome: "GhostHunter99",
-      foto_perfil: null,
+      foto_perfil: './petcons/cottoncandypaca_by_hyanna_natsu_daaq3os.png',
       fav_gen: ["Terror", "Ação", "Survival"],
       streamer: false,
       seguindo: [1, 9, 12],
@@ -76,7 +76,7 @@ export class ProfileService {
     {
       id: 7,
       nome: "MasterChefGame",
-      foto_perfil: null,
+      foto_perfil: './petcons/hotdog_by_hyanna_natsu_daaq3oe.png',
       fav_gen: ["Simulação", "RPG", "Plataforma"],
       streamer: true,
       seguindo: [2, 6],
@@ -87,7 +87,7 @@ export class ProfileService {
     {
       id: 8,
       nome: "DarkSoulZ",
-      foto_perfil: null,
+      foto_perfil: './petcons/pigpizza_by_hyanna_natsu_daaq3nz.png',
       fav_gen: ["RPG", "Ação", "Aventura"],
       streamer: false,
       seguindo: [1, 4, 5],
@@ -98,7 +98,7 @@ export class ProfileService {
     {
       id: 9,
       nome: "SpeedrunnerX",
-      foto_perfil: null,
+      foto_perfil: './petcons/popcorn_by_hyanna_natsu_dacb1l4.png',
       fav_gen: ["Plataforma", "Corrida", "Arcade"],
       streamer: true,
       seguindo: [3, 8],
@@ -109,7 +109,7 @@ export class ProfileService {
     {
       id: 10,
       nome: "NerdLord",
-      foto_perfil: null,
+      foto_perfil: './petcons/sushipanda_by_hyanna_natsu_daaq3nr.png',
       fav_gen: ["Estratégia", "Puzzle", "Aventura"],
       streamer: false,
       seguindo: [1, 7],
@@ -120,7 +120,7 @@ export class ProfileService {
     {
       id: 11,
       nome: "ArcadeMaster",
-      foto_perfil: null,
+      foto_perfil: './petcons/watermelonparrot_by_hyanna_natsu_daaq3ne.png',
       fav_gen: ["Arcade", "Plataforma", "Luta"],
       streamer: true,
       seguindo: [2, 10, 15],
@@ -131,7 +131,7 @@ export class ProfileService {
     {
       id: 12,
       nome: "PixelHunter",
-      foto_perfil: null,
+      foto_perfil: './petcons/chipster_by_hyanna_natsu_dacb1lb.png',
       fav_gen: ["Aventura", "Simulação", "Puzzle"],
       streamer: false,
       seguindo: [6, 11],
@@ -142,7 +142,7 @@ export class ProfileService {
     {
       id: 13,
       nome: "DragonSlayerBR",
-      foto_perfil: null,
+      foto_perfil: './petcons/pigpizza_by_hyanna_natsu_daaq3nz.png',
       fav_gen: ["RPG", "Ação", "Fantasia"],
       streamer: true,
       seguindo: [1, 8, 12],
@@ -153,7 +153,7 @@ export class ProfileService {
     {
       id: 14,
       nome: "LaraCroftFan",
-      foto_perfil: null,
+      foto_perfil: './petcons/blueberry_by_hyanna_natsu_daaq3p4.png',
       fav_gen: ["Ação", "Aventura", "Exploração"],
       streamer: false,
       seguindo: [1, 13],
@@ -164,7 +164,7 @@ export class ProfileService {
     {
       id: 15,
       nome: "PuzzleManiac",
-      foto_perfil: null,
+      foto_perfil: './petcons/watermelonparrot_by_hyanna_natsu_daaq3ne.png',
       fav_gen: ["Puzzle", "Estratégia", "RPG"],
       streamer: false,
       seguindo: [5, 10],
@@ -184,6 +184,12 @@ export class ProfileService {
 
   async getUserById(id: number): Promise<Profile | undefined>{
     return new Promise(resolve => resolve(this.userList[id]))
+  }
+
+  async getFollowersById(id: number): Promise<Profile[]>{
+    return new Promise(resolve => resolve(this.userList.filter(follower => follower.seguindo?.includes(id))))
+    
+    
   }
     
   }

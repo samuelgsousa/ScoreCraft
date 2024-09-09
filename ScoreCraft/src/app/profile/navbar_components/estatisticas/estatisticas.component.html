@@ -1,12 +1,12 @@
 <div id="avatar-data">
-    <img src="#" alt="" class="Profile-picture">
+    <img [src]="profile?.foto_perfil" alt="" class="Profile-picture">
     <span class="text-light fw-semibold text-expand-lg" id="nickname"></span>
     <button type="button" class="stamp">Streamer</button>
 </div>
 
 <div class="dados">
-    <span id="seguidores">Seguidores: </span>
-    <span id="horasJogadas">Horas jogadas: </span>
+    <span id="seguidores">Seguidores: {{this.followers.length}}*</span>
+    <span id="horasJogadas">Horas jogadas: *função ainda não disponível*</span>
     <span id="generosFavoritos">Gêneros Favoritos: {{profile?.fav_gen}}</span>
 
     <div class="avaliacoes">
@@ -16,4 +16,13 @@
             <canvas id="myChart"></canvas>
         </div>
     </div>
+</div>
+
+<div class="seguindo"></div>
+    <h1 class="text-light">Seguindo</h1>
+
+<!--Quem o perfil segue-->
+
+<div class="following-profiles">
+    <img *ngFor="let follow of this.followers" [src]="[follow.foto_perfil]" alt="" class="following-p-photo">
 </div>

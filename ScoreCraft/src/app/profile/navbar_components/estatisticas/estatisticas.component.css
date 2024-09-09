@@ -88,7 +88,7 @@ margin-top: 0px;}
     gap: 25px;
 }
 
-.following-p-photo img{
+.following-p-photo {
     border-radius: 50%;
     width: clamp(86px,12px + 12vw,128px); /*128px*/
     height: clamp(86px,12px + 12vw,128px);
@@ -97,3 +97,4 @@ margin-top: 0px;}
 }
 
   /*/Estatísticas*/
+  

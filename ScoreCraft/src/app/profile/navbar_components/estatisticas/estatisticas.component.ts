@@ -17,17 +17,23 @@ export class EstatisticasComponent {
   @Input() profile: Profile | undefined;
 
   userReviews: Reviews[] = [];
+  followers: Profile[] = [];
   review: any;
 
-  constructor(private reviewsService: ReviewsService) {}
+  constructor(private reviewsService: ReviewsService, private profileService: ProfileService) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // Chamando o método para buscar as reviews
     if (this.profile?.id !== undefined) {
       this.userReviews = this.reviewsService.getUserReviews(this.profile?.id);
       this.gerarGrafico();
+      this.followers = await this.profileService.getFollowersById(this.profile?.id)
+      
     }
+
+    
   }
+
 
   gerarGrafico(): void {
     const ctx = document.querySelector('#myChart') as HTMLCanvasElement | null;

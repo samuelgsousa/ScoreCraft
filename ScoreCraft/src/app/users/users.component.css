@@ -16,30 +16,39 @@ main h1{
     width: 60%;
 }
 
-#users{
+.users{
     display: flex;
-    width: 100%;
     min-height: 60vh;
+    max-width: 100%;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 80px;
+    gap: 200px;
     padding-top: 50px;
+    
 }
 
 .card{
     cursor: pointer;
+    min-height: 10rem;
+    min-width: 10rem;
+    overflow: hidden;
+    align-items: center;
+    background-color: transparent;
+    border-color: transparent;
+    color: white;
 }
+
+
 
 .card img{
-    height: 18rem;
     object-fit: cover;
+    height: 15rem;
+    width: 15rem;
+    border-radius: 50%;
+
 }
 
-@media(max-width: 700px){
-    #users{
-        flex-flow: column;
-    }
-}
 
 .card:hover{
     transition: ease-in-out 0.4s;

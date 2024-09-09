@@ -55,7 +55,7 @@ export class GamesService{
         {
           id: 6,
           name: "Castlevania Symphony of the Night",
-          picture: "./games/castlevania-sotn.svg",
+          picture: "./games/castlevania.svg",
           release_date: new Date('1997-03-20'),
           summary: "Um clássico dos jogos de ação e plataforma, onde Alucard explora o castelo de Drácula em busca de respostas e redenção.",
           producer: "Konami",
@@ -82,7 +82,7 @@ export class GamesService{
         {
           id: 9,
           name: "Naruto Ultimate Ninja 2",
-          picture: "./games/naruto-ultimate-ninja-2.svg",
+          picture: "./games/naruto-un.svg",
           release_date: new Date('2004-09-30'),
           summary: "Um jogo de luta baseado no anime Naruto, onde os jogadores podem escolher seus ninjas favoritos para batalhas épicas.",
           producer: "CyberConnect2",
@@ -118,7 +118,7 @@ export class GamesService{
         {
           id: 13,
           name: "Cyberpunk 2077",
-          picture: "./games/cyberpunk-2077.svg",
+          picture: "./games/cyberpunk.svg",
           release_date: new Date('2020-12-10'),
           summary: "Viva em uma distopia futurista onde você pode modificar seu corpo com implantes cibernéticos e tomar decisões que moldam o mundo ao seu redor.",
           producer: "CD Projekt Red",
@@ -136,7 +136,7 @@ export class GamesService{
         {
           id: 15,
           name: "The Legend of Zelda: Breath of the Wild",
-          picture: "./games/zelda-breath-of-the-wild.svg",
+          picture: "./games/zelda_breath_of_the_wild.svg",
           release_date: new Date('2017-03-03'),
           summary: "Explore um vasto mundo aberto enquanto desvenda segredos e enfrenta inimigos poderosos.",
           producer: "Nintendo",
