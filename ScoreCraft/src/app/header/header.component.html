@@ -34,10 +34,13 @@
                 <a class="nav-link link-light" [routerLink]="['users']" (click)="toggleMenu()">Usuários</a>
               </li>
               <li class="nav-item link-light">
-                <a class="nav-link link-light" [routerLink]="['signup']" (click)="toggleMenu()">Criar perfil</a>
+                <a class="nav-link link-light" [routerLink]="['signup']" (click)="toggleMenu()" *ngIf="!currentUser">Criar perfil</a>
               </li>
               <li class="nav-item link-light">
-                <a class="nav-link link-light" [routerLink]="['login']" (click)="toggleMenu()">Login</a>
+                <a class="nav-link link-light" [routerLink]="['login']" (click)="toggleMenu()" *ngIf="!currentUser">Login</a>
+              </li>
+              <li class="nav-item link-light">
+                <a class="nav-link link-light" [routerLink]="['']" (click)="logout()" *ngIf="currentUser">Logout</a>
               </li>
             </ul>
           </div>

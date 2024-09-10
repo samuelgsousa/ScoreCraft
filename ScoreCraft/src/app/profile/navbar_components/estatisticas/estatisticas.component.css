@@ -31,6 +31,7 @@
 #avatar-data .Profile-picture{
     width: 40vh;
     height: 40vh;
+    border-radius: 50%;
 }
 
 #avatar-data .stamp{
@@ -96,5 +97,10 @@ margin-top: 0px;}
 
 }
 
+.following-p-photo:hover{
+    transition: ease-in-out 0.4s;
+    transform: translateY(-50px);
+    cursor: pointer;
+}
   /*/Estatísticas*/
   

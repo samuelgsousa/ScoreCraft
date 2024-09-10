@@ -6,16 +6,18 @@ import { ProfileService } from '../interfaces/profile.service';
 import { EstatisticasComponent } from '../profile/navbar_components/estatisticas/estatisticas.component';
 import { JogosComponent } from '../profile/navbar_components/jogos/jogos.component';
 import { ReviewsComponent } from '../profile/navbar_components/reviews/reviews.component';
+import { AuthService } from '../login/auth.service'; // Serviço de autenticação
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-base-profile',
   standalone: true,
-  imports: [NgbNavModule, JogosComponent, ReviewsComponent, EstatisticasComponent],
+  imports: [NgbNavModule, JogosComponent, ReviewsComponent, EstatisticasComponent, CommonModule],
   templateUrl: './base-profile.component.html',
   styleUrl: './base-profile.component.css'
 })
 export class BaseProfileComponent {
-
+  @Input() user: Profile | undefined;
   @Input() gamesText: string = 'Jogos';
   @Input() reviewsText: string = 'Reviews';
   @Input() statsText: string = 'Estatísticas';
@@ -24,7 +26,6 @@ export class BaseProfileComponent {
   profileUserService: ProfileService = inject(ProfileService);
 
   active = 1;
-  user: Profile | undefined;
   profilePicture: string | undefined;
 
   petPhotos: string[] = [
@@ -39,10 +40,14 @@ export class BaseProfileComponent {
     './petcons/watermelonparrot_by_hyanna_natsu_daaq3ne.png',
   ]
   
+    // Pegar o id do usuário logado
+ 
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.getUser();
+    // this.loggedInUserId = this.authService.getCurrentUser()?.id || null;
   }
+
 
   async getUser() {
     this.user = await this.profileUserService.getUserById(this.route.snapshot.params['id']);
@@ -66,6 +71,10 @@ export class BaseProfileComponent {
       const randomIndex = Math.floor(Math.random() * this.petPhotos.length);
       return this.petPhotos[randomIndex]
     }
+  }
+
+  editNickname(){
+    console.log('funfou')
   }
 }
 

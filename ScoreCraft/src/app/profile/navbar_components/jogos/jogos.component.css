@@ -3,3 +3,12 @@
     height: 20rem;
     object-fit: cover; 
 }
+
+#favorite-list{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    max-height: 30vw;
+    padding: 0 3%;
+    gap:5 4%;
+}

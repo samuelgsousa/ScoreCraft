@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Profile } from '../interfaces/profile';
 import { ProfileService } from '../interfaces/profile.service';
 
@@ -9,7 +9,7 @@ import { ProfileService } from '../interfaces/profile.service';
 })
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<Profile | null>(null)
-  currentUser$ = this.currentUserSubject.asObservable()
+  public currentUser$: Observable<Profile | null> = this.currentUserSubject.asObservable();
   profileService: ProfileService = inject(ProfileService);
 
   //Método para realizar o login

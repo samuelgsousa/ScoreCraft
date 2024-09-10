@@ -24,5 +24,5 @@
 <!--Quem o perfil segue-->
 
 <div class="following-profiles">
-    <img *ngFor="let follow of this.followers" [src]="[follow.foto_perfil]" alt="" class="following-p-photo">
+    <img *ngFor="let follow of this.followers" [src]="[follow.foto_perfil]" alt="" class="following-p-photo" [routerLink]="['/users/profile', (follow.id - 1)]">
 </div>

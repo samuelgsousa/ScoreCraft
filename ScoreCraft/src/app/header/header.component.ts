@@ -1,24 +1,37 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../login/auth.service';
+import { CommonModule } from '@angular/common';
+import { Profile } from '../interfaces/profile';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
 
   collapsed = true;
+  currentUser: Profile | null = null;
+
   toggleMenu() {
     document.querySelector('#navbarSupportedContent')?.classList.toggle('show')
     document.querySelector('#botaoMenu')?.classList.toggle('collapsed')
   }
 
+  constructor(private authService: AuthService){
+    this.authService.currentUser$.subscribe((user: Profile | null) => this.currentUser = user);
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
   ngOnInit(): void{
     const colors = ['#e74c3c', '#8e44ad', '#3498db', '#e67e22', '#2ecc71']
 
-const setGrid = () => {
+  const setGrid = () => {
     const container = document.querySelector('div#magic-grid')
     
     const SQUARES = 800

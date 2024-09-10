@@ -38,10 +38,15 @@ export class SignupComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
+      bio: ['', [Validators.maxLength(300)]],
     }, { validators: this.passwordMatchValidator });
    
     this.getPetProfilePicture();
   }
+
+    toggleIconSelection(){
+      (document.querySelector("#iconSelection") as HTMLImageElement).classList.toggle('show')
+    }
 
     // Validação personalizada para confirmar se as senhas coincidem
     passwordMatchValidator(form: FormGroup): { [s: string]: boolean } | null {
@@ -66,7 +71,7 @@ export class SignupComponent {
           streamer: false,
           seguindo: null,
           wallpaper: null,
-          bio: null,
+          bio: formValue.bio,
           fav_games: null,
           email: formValue.email,
           senha: formValue.password,

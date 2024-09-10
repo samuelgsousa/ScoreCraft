@@ -5,11 +5,11 @@ import { ProfileService } from '../../../interfaces/profile.service';
 import { Reviews } from '../../../interfaces/reviews';
 import { ReviewsService } from '../../../interfaces/reviews.service';
 import Chart from 'chart.js/auto';
-
+import { RouterLink, RouterModule } from '@angular/router';
 @Component({
   selector: 'user-estatisticas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterModule],
   templateUrl: './estatisticas.component.html',
   styleUrl: './estatisticas.component.css'
 })

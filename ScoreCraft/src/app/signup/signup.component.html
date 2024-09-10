@@ -1,7 +1,12 @@
 <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
     <div>
-      <label for="username">Apelido</label>
-      <input id="username" formControlName="username" type="text">
+      <img [src]='' alt="" id="Profile_Photo" (click)="toggleIconSelection()" > <br>
+
+      <div id="iconSelection" class="hidden">
+        <img *ngFor="let icon of petPhotos" [src]="icon" alt="" class="iconPetcon " (click)="changePetProfilePicture(icon)" (click)="toggleIconSelection()">
+    </div>
+  
+      <input id="username" formControlName="username" type="text" placeholder="Apelido">
       <div *ngIf="accountForm.get('username')?.invalid && accountForm.get('username')?.touched">
         <small *ngIf="accountForm.get('username')?.errors?.required">Username é obrigatório.</small>
         <small *ngIf="accountForm.get('username')?.errors?.minlength">O username deve ter pelo menos 3 caracteres.</small>
@@ -9,8 +14,7 @@
     </div>
   
     <div>
-      <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email">
+      <input id="email" formControlName="email" type="email" placeholder="Email">
       <div *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.touched">
         <small *ngIf="accountForm.get('email')?.errors?.required">Email é obrigatório.</small>
         <small *ngIf="accountForm.get('email')?.errors?.email">Por favor, insira um email válido.</small>
@@ -18,8 +22,7 @@
     </div>
   
     <div>
-      <label for="password">Senha</label>
-      <input id="password" formControlName="password" type="password">
+      <input id="password" formControlName="password" type="password" placeholder="Senha">
       <div *ngIf="accountForm.get('password')?.invalid && accountForm.get('password')?.touched">
         <small *ngIf="accountForm.get('password')?.errors?.required">Senha é obrigatória.</small>
         <small *ngIf="accountForm.get('password')?.errors?.minlength">A senha deve ter pelo menos 6 caracteres.</small>
@@ -27,21 +30,19 @@
     </div>
   
     <div>
-      <label for="confirmPassword">Confirmar Senha</label>
-      <input id="confirmPassword" formControlName="confirmPassword" type="password">
+
+      <input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="Confirmar Senha">
       <div *ngIf="accountForm.get('confirmPassword')?.invalid && accountForm.get('confirmPassword')?.touched">
         <small *ngIf="accountForm.get('confirmPassword')?.errors?.required">Confirmação de senha é obrigatória.</small>
         <small *ngIf="accountForm.errors?.passwordMismatch">As senhas não coincidem.</small>
       </div>
     </div>
-    <label for="Profile_Photo">Foto de Perfil</label>
 
-    <img [src]='' alt="" id="Profile_Photo">
-
-    <div id="iconSelection">
-        <img *ngFor="let icon of petPhotos" [src]="icon" alt="" class="iconPetcon" (click)="changePetProfilePicture(icon)">
+    <textarea id="bio" formControlName="bio" rows="5" cols="50" placeholder="Escreva sua bio..."></textarea>
+  
+    <div *ngIf="accountForm.get('bio')?.invalid && accountForm.get('bio')?.touched">
+      <small *ngIf="accountForm.get('bio')?.errors?.['maxlength']">A bio não pode exceder 300 caracteres.</small>
     </div>
-
     <br>
     <button type="submit" [disabled]="accountForm.invalid">Criar Conta</button>
   </form>
