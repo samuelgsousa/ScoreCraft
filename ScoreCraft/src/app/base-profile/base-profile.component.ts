@@ -8,26 +8,28 @@ import { JogosComponent } from '../profile/navbar_components/jogos/jogos.compone
 import { ReviewsComponent } from '../profile/navbar_components/reviews/reviews.component';
 import { AuthService } from '../login/auth.service'; // Serviço de autenticação
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-base-profile',
   standalone: true,
-  imports: [NgbNavModule, JogosComponent, ReviewsComponent, EstatisticasComponent, CommonModule],
+  imports: [NgbNavModule, JogosComponent, ReviewsComponent, EstatisticasComponent, CommonModule, FormsModule],
   templateUrl: './base-profile.component.html',
   styleUrl: './base-profile.component.css'
 })
 export class BaseProfileComponent {
-  @Input() user: Profile | undefined;
+  @Input() user!: Profile | undefined;
   @Input() gamesText: string = 'Jogos';
   @Input() reviewsText: string = 'Reviews';
   @Input() statsText: string = 'Estatísticas';
-  
+  @Input() isCurrentUser: boolean = false;
+
   route: ActivatedRoute = inject(ActivatedRoute);
   profileUserService: ProfileService = inject(ProfileService);
 
   active = 1;
   profilePicture: string | undefined;
-
+  isEditing = false;
   petPhotos: string[] = [
     './petcons/blueberry_by_hyanna_natsu_daaq3p4.png',
     './petcons/bonbonbear_by_hyanna_natsu_dacb1le.png',
@@ -39,8 +41,12 @@ export class BaseProfileComponent {
     './petcons/sushipanda_by_hyanna_natsu_daaq3nr.png',
     './petcons/watermelonparrot_by_hyanna_natsu_daaq3ne.png',
   ]
+
+  profileData: any = {
+    nome: '',
+    bio: '',
   
-    // Pegar o id do usuário logado
+  }
  
 
   constructor(private authService: AuthService) {
@@ -61,6 +67,15 @@ export class BaseProfileComponent {
 
   ngOnInit(): void {
     this.profilePicture = this.user?.foto_perfil || this.getPetProfilePicture();
+
+    if (this.user) {
+      this.profileData = {
+        nome: this.user.nome || '',
+        bio: this.user.bio || '',
+        // Adicione outros campos conforme necessário
+      };
+    }
+
   }
   
 
@@ -73,8 +88,20 @@ export class BaseProfileComponent {
     }
   }
 
-  editNickname(){
-    console.log('funfou')
+  enableEdit() {
+    this.isEditing = true; // Habilita o modo de edição
+  }
+
+  cancelEdit(){
+    this.isEditing = false;
+  }
+
+  update(field: string){ //uma única função para alterar qualquer dado de acordo com os parâmetros
+ 
+    if(this.user){
+       this.profileUserService.updateProfileField(this.user?.id, field, this.profileData[field])
+      // console.log(`O campo alterado deve ser o ${field} que receberá o valor: ${this.profileData[field]}`)
+   }
   }
 }
 

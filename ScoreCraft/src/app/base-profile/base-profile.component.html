@@ -5,6 +5,12 @@
         <img [src]="profilePicture" alt="" class="Profile-picture">
         
         <span class="text-light fw-semibold text-expand-lg" id="nickname">{{user?.nome}}<img src="#" alt="" id="follow"></span> 
+        <input 
+        *ngIf="isEditing" type="text" class="form-control" placeholder='Digite seu novo apelido' [(ngModel)]="profileData.nome"> 
+        <button (click)="enableEdit()" *ngIf="isCurrentUser && !isEditing">Editar nome</button>
+        <button *ngIf="isCurrentUser && isEditing" (click)="update('nome')">salvar</button>
+        <button *ngIf="isCurrentUser && isEditing" (click)="cancelEdit()">cancelar</button>
+
 
         <button type="button" class="stamp">Streamer</button>
     </div>

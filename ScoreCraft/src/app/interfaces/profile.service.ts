@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Profile } from './profile';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -223,9 +224,23 @@ export class ProfileService {
     this.userList.push(profile)
     console.log(this.userList)
   }
+
   getNextId(): number{
     const lastProfile = this.userList[this.userList.length - 1];
     return lastProfile ? lastProfile.id + 1 : 1;
   }
+
+  updateProfileField(userId: number, field: string, value: any): void {
+    const profile = this.getUserById(userId)
+    if(profile){
+      (profile as any)[field] = value
+      console.log(`Campo ${field} atualizado para: ${value}`)
+      console.log(profile) //a função está funcionando, só não exibe na página pois não criei uma síntaxe para atualizar a página
+    } else {
+      console.error('Perfil não encontrado')
+    }
+  } //uma função para alterar qualquer campo
+
+
     
   }

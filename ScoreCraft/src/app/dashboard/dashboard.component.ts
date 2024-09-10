@@ -14,18 +14,19 @@ import { BaseProfileComponent } from "../base-profile/base-profile.component";
 export class DashboardComponent {
 
   currentUser: Profile | null = null
-
+  isCurrentUser: boolean = true;
 
   constructor(private authService: AuthService){
   }
 
 
   ngOnInit(): void {
-    this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe((user) => {
       this.currentUser = user;
+      this.isCurrentUser = true;  // Você define isso como true para o usuário logado
     });
-
   }
+
 }
 
 
