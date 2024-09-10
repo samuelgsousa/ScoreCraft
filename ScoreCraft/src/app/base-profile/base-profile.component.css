@@ -1,0 +1,95 @@
+:root{
+    --stampColor: rgb(154, 69, 250);
+}
+
+/*capa e perfil*/
+#cover{
+    /* background-image: url(""); */
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+}
+
+@media(max-width: 600px){
+    #cover{
+        align-items: last baseline;
+        justify-content: center;
+        padding-top: 10%;
+    }
+}
+
+#avatar{
+    height: 25%;
+    width: auto;
+    margin-left: 5%;
+    margin-bottom: 12%;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+    column-gap: 15px;
+}
+
+.Profile-picture{
+    border-radius: 50%;
+    width: clamp(86px,12px + 12vw,128px); /*128px*/
+    height: clamp(86px,12px + 12vw,128px);
+    object-fit: cover;
+    grid-column: 1;
+}
+
+#nickname{
+    font-size: clamp(18px,2px + 2vw,26px);
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#follow{
+    max-width: clamp(24px,2px + 2vw,32px);
+    max-height: clamp(24px,2px + 2vw,32px);
+    filter: brightness(0) saturate(100%) invert(85%) sepia(28%) saturate(3207%) hue-rotate(78deg) brightness(98%) contrast(114%);
+    margin-bottom: 10%;
+    cursor: pointer;
+}
+
+#follow:active{
+    filter: brightness(0) saturate(0%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0) brightness(150%) contrast(200%);
+}
+
+.stamp{
+    width: 70px;
+    height: 25px;
+    background-color: var(--stampColor);
+    border-style: none;
+    border-radius: 5px;
+    font-size: 80%;
+    font-weight: 600;
+    color: var(--BasicTextColor);
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 50px;
+    cursor: unset;
+    display: none;
+}
+
+/*/Capa e perfil*/
+
+.nav-tabs{
+    height: 100vh;
+    background-color: red;
+
+}
+
+ng-template{
+    height: 100vh ;
+    background-color: blue;
+    position: absolute;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.show{
+    display: inherit;
+}

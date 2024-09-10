@@ -1,0 +1,19 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()"> 
+    <div>
+      <label for="email">E-mail</label>
+      <input id="email" formControlName="email" type="email" />
+      <div *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched">
+        <small *ngIf="loginForm.controls.email.errors?.required">E-mail é obrigatório</small>
+        <small *ngIf="loginForm.controls.email.errors?.email">E-mail inválido</small>
+      </div>
+    </div>
+    <div>
+      <label for="senha">Senha</label>
+      <input id="senha" formControlName="senha" type="password" />
+      <div *ngIf="loginForm.controls.senha.invalid && loginForm.controls.senha.touched">
+        <small *ngIf="loginForm.controls.senha.errors?.required">Senha é obrigatória</small>
+      </div>
+    </div>
+    <button type="submit">Entrar</button>
+  </form>
+  

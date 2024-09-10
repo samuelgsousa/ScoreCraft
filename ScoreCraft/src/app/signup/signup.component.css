@@ -1,0 +1,19 @@
+label{
+    color: white;
+    margin-right: 15px;
+}
+
+#iconSelection{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.iconPetcon{
+    width: 8rem;
+    height: 8rem;
+    cursor: pointer;
+}
