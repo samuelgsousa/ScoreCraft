@@ -76,13 +76,11 @@
 
 .nav-tabs{
     height: 100vh;
-    background-color: red;
 
 }
 
 ng-template{
     height: 100vh ;
-    background-color: blue;
     position: absolute;
 }
 

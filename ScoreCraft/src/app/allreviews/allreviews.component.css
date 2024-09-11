@@ -1,0 +1,36 @@
+h1{
+    color: white;
+}
+
+#AllGamesList{
+    display: flex;
+    flex-direction: column;
+}
+
+.game{
+    min-height: 21rem;
+    padding: 1%;
+    margin-bottom: 10px;
+    word-break: normal;
+    display: flex;
+    padding-right: 10px;
+    width: 100% !important;
+}
+
+.img-game{
+    border-radius: 5px;
+    height: clamp(70px,30px + 30vw,300px); 
+    min-width: clamp(100px,25px + 20vw,200px); 
+    max-width: clamp(100px,25px + 20vw,200px);
+    cursor: pointer;
+    overflow: hidden;
+    display: block;
+    justify-content: center;
+    object-fit: cover;
+    margin-right: clamp(10px,10px + 1vw,30px);
+}
+
+#avaliar{
+
+}
+

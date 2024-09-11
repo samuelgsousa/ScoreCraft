@@ -5,8 +5,8 @@
         <img [src]="profilePicture" alt="" class="Profile-picture">
         
         <span class="text-light fw-semibold text-expand-lg" id="nickname">{{user?.nome}}<img src="#" alt="" id="follow"></span> 
-        <input 
-        *ngIf="isEditing" type="text" class="form-control" placeholder='Digite seu novo apelido' [(ngModel)]="profileData.nome"> 
+        <input *ngIf="isEditing" type="text" class="form-control" placeholder='Digite seu novo apelido' [(ngModel)]="profileData.nome"> 
+        
         <button (click)="enableEdit()" *ngIf="isCurrentUser && !isEditing">Editar nome</button>
         <button *ngIf="isCurrentUser && isEditing" (click)="update('nome')">salvar</button>
         <button *ngIf="isCurrentUser && isEditing" (click)="cancelEdit()">cancelar</button>
@@ -46,7 +46,7 @@
 
 
       <div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
-        <user-reviews [userId]="user?.id"></user-reviews>
+        <user-reviews [userId]="user?.id" [isCurrentUser]="this.isCurrentUser"></user-reviews>
       </div>
   
       <div class="tab-pane fade" id="statistics-tab-pane" role="tabpanel" aria-labelledby="statistics-tab" tabindex="0">

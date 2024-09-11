@@ -75,6 +75,9 @@ export class BaseProfileComponent {
         // Adicione outros campos conforme necessário
       };
     }
+    if(this.isCurrentUser){
+      console.log('é o usuário atual')
+    }
 
   }
   

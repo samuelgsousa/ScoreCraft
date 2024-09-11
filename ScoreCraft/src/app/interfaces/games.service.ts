@@ -235,7 +235,7 @@ export class GamesService{
         
       ];
 
-     getFavGames(favG: Array<number>): Games[]{
+    getFavGames(favG: Array<number>): Games[]{
       return this.gamesList.filter(game => favG.includes(game.id));
       console.log(this.gamesList.filter(game => favG.includes(game.id)))
     }
@@ -243,6 +243,10 @@ export class GamesService{
     getGameDetailsById(game_id: number): {name: string, picture: string} | undefined {
       const game = this.gamesList.find(g => g.id === game_id)
       return game ? {name: game.name, picture: game.picture} : undefined
+    }
+
+    getAllGames(){
+      return this.gamesList
     }
       
 }

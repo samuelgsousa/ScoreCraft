@@ -280,8 +280,34 @@ export class ReviewsService{
             played_data: new Date('2024-01-10')
           }
     ];
+    asyncgetAllReviews(){
+        return this.reviewList
+    }
     
     getUserReviews(user_id: number): Reviews[]{
         return this.reviewList.filter(review => review.user_id === user_id)
     }
+
+    async getReviewById(id: number): Promise<Reviews | undefined>{
+        return new Promise(resolve => resolve(this.reviewList[id]))
+    }
+
+    async updateUserReview(userId: number, reviewId: number,  rating: number, text: string){
+        try{
+            const review = await this.getReviewById(reviewId -1)
+            if (review){
+                review.review_text = text
+                review.rating = rating;
+    
+                console.log(`Review ID ${reviewId -1} atualizada com sucesso. Rating: ${rating}`);
+                console.log(this.reviewList)
+            } else {
+                console.error(`Review com ID ${reviewId -1} não encontrada.`);
+              }
+        } catch (error) {
+            console.error('Erro ao atualizar a review:', error);
+          }
+    }
+
+
 }

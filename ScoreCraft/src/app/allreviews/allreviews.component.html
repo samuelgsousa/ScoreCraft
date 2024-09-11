@@ -1,0 +1,15 @@
+<h1>Confira as avaliações de nossos usuários</h1>
+
+<div id="AllReviewsList"></div>
+    <div *ngFor="let review of reviewList" class="game">
+    <img [src]="game.picture" alt="" class="img-game" *ngIf="getGameDetails(review.game_id) as game">
+        <div class="game-data">
+            <h1 class="text-light" *ngIf="getGameDetails(review.game_id) as game">{{ game.name }}</h1>
+            <span class="text-success rating">
+                <!-- <ngb-rating [(rate)]="null" [max]="5" readonly="true"/>       -->
+            </span>
+            <p class="text-light">{{review.review_text}}</p>
+            <button id="avaliar">Avaliar</button>
+        </div>
+        
+    </div>

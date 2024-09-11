@@ -53,3 +53,10 @@ main::-webkit-scrollbar {
 
 }
 /*/Reviews*/
+
+textarea {
+    overflow-y: hidden; /* Oculta a barra de rolagem vertical */
+    resize: none;       /* Evita o redimensionamento manual */
+    width: 70%;
+    min-height: auto;
+  }
