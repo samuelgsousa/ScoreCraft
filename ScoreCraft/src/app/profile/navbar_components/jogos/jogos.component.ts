@@ -13,25 +13,25 @@ import { Games } from '../../../interfaces/games';
 })
 export class JogosComponent {
 
-//   @Input() profile: Profile | undefined;
+  @Input() profile: Profile | undefined;
 
-//   favoriteGames: Games[] = [];
+  favoriteGames: Games[] = [];
  
-//   constructor(private gamesService: GamesService) {}
+  constructor(private gamesService: GamesService) {}
 
-//   ngOnInit(): void {
-//     this.loadFavGames();
-//     // this.getAllFavGames()
-//   }
+  ngOnInit(): void {
+    this.loadFavGames();
+    // this.getAllFavGames()
+  }
 
-//   loadFavGames(): void {
-//     if (this.profile?.fav_games) {
-//       this.gamesService.getFavGames(this.profile.fav_games); 
+  loadFavGames(): void {
+    if (this.profile?.fav_games) {
+      this.favoriteGames = this.gamesService.getFavGames(this.profile.fav_games); 
      
-//     }
+    }
 
 
-// }
+}
 }
 
 

@@ -15,7 +15,7 @@ export class AllreviewsComponent {
 
   reviewList: Reviews[] = [];
 
-  constructor(private reviewsService: ReviewsService, gamesService: GamesService) {}
+  constructor(private reviewsService: ReviewsService) {}
   private gamesService = inject(GamesService);
 
 
