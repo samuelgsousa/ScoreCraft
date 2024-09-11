@@ -9,7 +9,7 @@ import { Profile } from '../interfaces/profile';
 import { BaseProfileComponent } from "../base-profile/base-profile.component";
 
 @Component({
-  selector: 'app-profile',
+  selector: 'app-profile', 
   standalone: true,
   imports: [NgbNavModule, JogosComponent, ReviewsComponent, EstatisticasComponent, BaseProfileComponent],
   templateUrl: './profile.component.html',

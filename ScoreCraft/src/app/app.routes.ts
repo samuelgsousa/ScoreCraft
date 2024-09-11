@@ -6,7 +6,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './login/auth.guard';
-import { JogosComponent } from './jogos/jogos.component';
+import { JogosComponent } from './allJogos/jogos.component';
 import { AllreviewsComponent } from './allreviews/allreviews.component';
 
 export const routes: Routes = [

@@ -3,6 +3,7 @@ import { ProfileService } from '../interfaces/profile.service';
 import { Profile } from '../interfaces/profile';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-users',
@@ -37,7 +38,7 @@ export class UsersComponent {
   }
 
   async getAllUsers() {
-    this.allUsersList = await this.allUsersService.getAllUsers();
+   this.allUsersService.getAllUsers();
   }
 
   getPetProfilePicture(): string{

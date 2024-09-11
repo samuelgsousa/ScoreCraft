@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Reviews } from './reviews';
+import {HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
   })
 
 export class ReviewsService{
+
+    private apiUrl = 'http://localhost:3000/api/profiles';
+    constructor(private http: HttpClient) {}
+    
     protected reviewList: Reviews[] = [
         {
             id: 1,
@@ -284,9 +290,9 @@ export class ReviewsService{
         return this.reviewList
     }
     
-    getUserReviews(user_id: number): Reviews[]{
-        return this.reviewList.filter(review => review.user_id === user_id)
-    }
+    getUserReviews(userId: number): Observable<Reviews[]> {
+        return this.http.get<Reviews[]>(`${this.apiUrl}/reviews?userId=${userId}`);
+      }
 
     async getReviewById(id: number): Promise<Reviews | undefined>{
         return new Promise(resolve => resolve(this.reviewList[id]))

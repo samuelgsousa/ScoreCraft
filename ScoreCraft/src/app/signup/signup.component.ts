@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl } 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileService } from '../interfaces/profile.service';
 import { Profile } from '../interfaces/profile';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -61,10 +62,8 @@ export class SignupComponent {
         console.log('Formulário enviado com sucesso', this.accountForm.value);
 
         const formValue = this.accountForm.value;
-        const nextId = this.profileUserService.getNextId();
 
         const newProfile: Profile ={
-          id: nextId,
           nome: formValue.username,
           foto_perfil: String((document.querySelector("#Profile_Photo") as HTMLImageElement).src),
           fav_gen: null,
@@ -75,6 +74,7 @@ export class SignupComponent {
           fav_games: null,
           email: formValue.email,
           senha: formValue.password,
+          id: 0
         }
         this.profileUserService.addProfile(newProfile)
 

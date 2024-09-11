@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, NgModule } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Profile } from '../interfaces/profile';
@@ -6,16 +6,17 @@ import { ProfileService } from '../interfaces/profile.service';
 import { EstatisticasComponent } from '../profile/navbar_components/estatisticas/estatisticas.component';
 import { JogosComponent } from '../profile/navbar_components/jogos/jogos.component';
 import { ReviewsComponent } from '../profile/navbar_components/reviews/reviews.component';
-import { AuthService } from '../login/auth.service'; // Serviço de autenticação
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../login/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-base-profile',
   standalone: true,
   imports: [NgbNavModule, JogosComponent, ReviewsComponent, EstatisticasComponent, CommonModule, FormsModule],
   templateUrl: './base-profile.component.html',
-  styleUrl: './base-profile.component.css'
+  styleUrls: ['./base-profile.component.css'] 
 })
 export class BaseProfileComponent {
   @Input() user!: Profile | undefined;
@@ -24,8 +25,9 @@ export class BaseProfileComponent {
   @Input() statsText: string = 'Estatísticas';
   @Input() isCurrentUser: boolean = false;
 
-  route: ActivatedRoute = inject(ActivatedRoute);
-  profileUserService: ProfileService = inject(ProfileService);
+  route = inject(ActivatedRoute);
+  profileUserService = inject(ProfileService);
+  authService = inject(AuthService);
 
   active = 1;
   profilePicture: string | undefined;
@@ -40,24 +42,22 @@ export class BaseProfileComponent {
     './petcons/popcorn_by_hyanna_natsu_dacb1l4.png',
     './petcons/sushipanda_by_hyanna_natsu_daaq3nr.png',
     './petcons/watermelonparrot_by_hyanna_natsu_daaq3ne.png',
-  ]
+  ];
 
   profileData: any = {
     nome: '',
     bio: '',
-  
-  }
- 
+  };
 
-  constructor(private authService: AuthService) {
+  constructor() {
     this.getUser();
-    // this.loggedInUserId = this.authService.getCurrentUser()?.id || null;
   }
-
 
   async getUser() {
-    this.user = await this.profileUserService.getUserById(this.route.snapshot.params['id']);
-    this.insertWallpaper(String(this.user?.wallpaper));
+    this.user = await this.profileUserService.getUserById(this.route.snapshot.params['id']).toPromise();
+    if (this.user) {
+      this.insertWallpaper(String(this.user?.wallpaper));
+    }
   }
 
   insertWallpaper(wallpaperUrl: string) {
@@ -72,43 +72,52 @@ export class BaseProfileComponent {
       this.profileData = {
         nome: this.user.nome || '',
         bio: this.user.bio || '',
-        // Adicione outros campos conforme necessário
       };
     }
-    if(this.isCurrentUser){
-      console.log('é o usuário atual')
+    
+    if (this.isCurrentUser) {
+      console.log('é o usuário atual');
     }
-
   }
-  
 
-  getPetProfilePicture(): string{
-    if(this.user?.foto_perfil != null){
+  getPetProfilePicture(): string {
+    if (this.user?.foto_perfil != null) {
       return this.user.foto_perfil;
-    } else{
+    } else {
       const randomIndex = Math.floor(Math.random() * this.petPhotos.length);
-      return this.petPhotos[randomIndex]
+      return this.petPhotos[randomIndex];
     }
   }
 
   enableEdit() {
-    this.isEditing = true; // Habilita o modo de edição
+    this.isEditing = true;
   }
 
-  cancelEdit(){
+  cancelEdit() {
     this.isEditing = false;
   }
 
-  update(field: string){ //uma única função para alterar qualquer dado de acordo com os parâmetros
- 
-    if(this.user){
-       this.profileUserService.updateProfileField(this.user?.id, field, this.profileData[field])
-      // console.log(`O campo alterado deve ser o ${field} que receberá o valor: ${this.profileData[field]}`)
-   }
+  update(field: string): void { 
+    this.authService.getCurrentUser().subscribe(user => {
+      if (user) {
+        const updatedProfile = {
+          ...user,
+          [field]: this.profileData[field]
+        };
+
+        // Atualiza o perfil do usuário logado
+        this.profileUserService.updateProfile(user.id, updatedProfile)
+          .subscribe(
+            updatedProfile => {
+              console.log('Perfil atualizado com sucesso:', updatedProfile);
+            },
+            error => {
+              console.error('Erro ao atualizar o perfil:', error);
+            }
+          );
+      } else {
+        console.error('Usuário não encontrado.');
+      }
+    });
   }
 }
-
-NgModule({
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-
