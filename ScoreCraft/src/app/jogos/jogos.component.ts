@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GamesService } from '../interfaces/games.service';
 import { CommonModule } from '@angular/common';
 import { Games } from '../interfaces/games';
+import { HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-jogos',
@@ -17,7 +18,15 @@ export class JogosComponent {
   constructor(private gamesService: GamesService) {}
 
   ngOnInit(): void {
-    this.gameList = this.gamesService.getAllGames()
+    this.gamesService.getAllGames().subscribe(
+      (data: Games[]) => {
+        this.gameList = data;
+        console.log(this.gameList);
+      },
+      (error) => {
+        console.error('Erro ao buscar jogos', error);
+      }
+    );
   }
 
 }

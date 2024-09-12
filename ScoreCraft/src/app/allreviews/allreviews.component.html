@@ -2,9 +2,9 @@
 
 <div id="AllReviewsList"></div>
     <div *ngFor="let review of reviewList" class="game">
-    <img [src]="game.picture" alt="" class="img-game" *ngIf="getGameDetails(review.game_id) as game">
+    <img [src]="" alt="" class="img-game" *ngIf="getGameDetails(review.game_id) as game">
         <div class="game-data">
-            <h1 class="text-light" *ngIf="getGameDetails(review.game_id) as game">{{ game.name }}</h1>
+            <h1 class="text-light" *ngIf="getGameDetails(review.game_id) as game"></h1>
             <span class="text-success rating">
                 <!-- <ngb-rating [(rate)]="null" [max]="5" readonly="true"/>       -->
             </span>

@@ -26,7 +26,7 @@ export class JogosComponent {
 
   loadFavGames(): void {
     if (this.profile?.fav_games) {
-      this.favoriteGames = this.gamesService.getFavGames(this.profile.fav_games); 
+      this.gamesService.getFavGames(this.profile.fav_games); 
      
     }
 

@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
 import { SignupComponent } from './signup/signup.component';
+import { HttpClient, provideHttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
