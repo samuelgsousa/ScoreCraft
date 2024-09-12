@@ -9,4 +9,4 @@ const reviewsSchema = new mongoose.Schema({
     review_text: { type: String, default: null, required: true },
 });
 
-module.exports = mongoose.model('Review', reviewSchema);
+module.exports = mongoose.model('Review', reviewsSchema);

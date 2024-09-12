@@ -1,37 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-
-// Definindo o esquema para avaliações
-const reviewSchema = new mongoose.Schema({
-  user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Profile',
-    required: true
-  },
-  game_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Game',
-    required: true
-  },
-  rating: {
-    type: Number,
-    required: true,
-    min: 1,
-    max: 5
-  },
-  review_text: {
-    type: String,
-    required: false
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
-  }
-});
-
-// Criando o modelo para avaliações
-const Review = mongoose.model('Review', reviewSchema);
+const Review = require('../models/Reviews');
 
 // Rota para obter todas as avaliações
 router.get('/', async (req, res) => {

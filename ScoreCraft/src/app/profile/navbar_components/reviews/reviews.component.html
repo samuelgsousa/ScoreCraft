@@ -12,6 +12,6 @@
             <textarea *ngIf="editStates[i]" type="text" class="form-control" placeholder='Review' [(ngModel)]="tempReviewText[i]" (input)="autoResize($event)"> </textarea>
 
             <button (click)="enableEdit(i)" *ngIf="isCurrentUser && !editStates[i]">Editar Review</button>
-            <button *ngIf="isCurrentUser && editStates[i]" (click)="updateReview(i, review.review_text, review.rating)">salvar</button>
+            <button *ngIf="isCurrentUser && editStates[i]" (click)="updateReview(i, review.id)">salvar</button>
             <button *ngIf="isCurrentUser && editStates[i]" (click)="cancelEdit(i)">cancelar</button>
 </div>

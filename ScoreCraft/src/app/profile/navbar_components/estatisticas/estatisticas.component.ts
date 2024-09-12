@@ -25,7 +25,7 @@ export class EstatisticasComponent {
   async ngOnInit(): Promise<void> {
     // Chamando o método para buscar as reviews
     if (this.profile?.id !== undefined) {
-      this.userReviews = this.reviewsService.getUserReviews(this.profile?.id);
+      this.reviewsService.getUserReviews(this.profile?.id);
       this.gerarGrafico();
       this.followers = await this.profileService.getFollowersById(this.profile?.id)
       

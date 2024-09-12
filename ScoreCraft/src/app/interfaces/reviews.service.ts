@@ -1,5 +1,50 @@
 import { Injectable } from '@angular/core';
 import { Reviews } from './reviews';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Profile } from './profile';
+
+@Injectable({
+    providedIn: 'root'
+  })
+
+export class ReviewsService{
+
+    private baseUrl = 'http://localhost:3000/api/reviews'
+   
+    constructor(private http: HttpClient) { }
+
+
+    asyncgetAllReviews(): Observable<Reviews[]>{
+        return this.http.get<Reviews[]>(this.baseUrl)
+        
+    }
+    
+    getUserReviews(user_id: number): Observable<Reviews[]> {
+        // Cria um HttpParams para incluir o user_id na URL
+        const params = new HttpParams().set('user_id', user_id.toString());
+        return this.http.get<Reviews[]>(this.baseUrl, { params });
+      }
+
+    getReviewById(id: number): Observable<Reviews>{
+        return this.http.get<Reviews>(`${this.baseUrl}/${id}`)
+    }
+
+    updateReview(reviewId: number, updatedReview: Partial<Reviews>): Observable<Reviews> {
+        return this.http.patch<Reviews>(`${this.baseUrl}/${reviewId}`, updatedReview).pipe(
+          catchError(error => {
+            console.error('Erro ao atualizar review:', error);
+            return throwError(() => new Error('Erro ao atualizar review'));
+          })
+        );
+      }
+
+
+}
+
+/*
+import { Injectable } from '@angular/core';
+import { Reviews } from './reviews';
 
 @Injectable({
     providedIn: 'root'
@@ -311,3 +356,5 @@ export class ReviewsService{
 
 
 }
+
+*/

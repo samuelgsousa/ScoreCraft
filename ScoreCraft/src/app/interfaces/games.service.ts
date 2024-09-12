@@ -20,8 +20,8 @@ export class GamesService {
     });
   }
 
-  getGameDetailsById(game_id: number): Observable<{name: string, picture: string} | undefined> {
-    return this.http.get<{name: string, picture: string} | undefined>(`${this.baseUrl}/${game_id}`);
+  getGameDetailsById(id: number): Observable<Games> {
+    return this.http.get<Games>(`${this.baseUrl}/${id}`);
   }
 
   getAllGames(): Observable<Games[]> {

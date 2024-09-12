@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Game = require('../models/Games'); 
 // Rota para obter todos os jogos
+
 router.get('/', async (req, res) => {
     try {
         const games = await Game.find();
@@ -11,10 +12,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Rota para obter um jogo específico pelo ID
-router.get('/:id', getGame, (req, res) => {
-    res.json(res.game);
-});
 
 // Rota para criar um novo jogo
 router.post('/', async (req, res) => {
@@ -36,7 +33,7 @@ router.post('/', async (req, res) => {
 });
 
 // Rota para atualizar um jogo existente
-router.patch('/:id', getGame, async (req, res) => {
+router.patch('/:id', async (req, res) => {
     if (req.body.name != null) {
         res.game.name = req.body.name;
     }
@@ -64,7 +61,7 @@ router.patch('/:id', getGame, async (req, res) => {
 });
 
 // Rota para deletar um jogo
-router.delete('/:id', getGame, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         await res.game.remove();
         res.json({ message: 'Jogo removido com sucesso' });
@@ -73,19 +70,19 @@ router.delete('/:id', getGame, async (req, res) => {
     }
 });
 
-// Middleware para obter jogo pelo ID
-async function getGame(req, res, next) {
-    let game;
+// Rota para obter um jogo específico pelo ID
+router.get('/:id', async (req, res) => {
     try {
-        game = await Game.findById(req.params.id);
-        if (game == null) {
-            return res.status(404).json({ message: 'Jogo não encontrado' });
+        const gameId = parseInt(req.params.id); // Converter para número se necessário
+        const game = await Game.findOne({ id: gameId });
+        if (!game) {
+            return res.status(404).send({ message: 'Game not found' });
         }
-    } catch (err) {
-        return res.status(500).json({ message: err.message });
+        res.send(game);
+    } catch (error) {
+        res.status(500).send({ message: 'Server error', error });
     }
-    res.game = game;
-    next();
-}
+});
+
 
 module.exports = router;

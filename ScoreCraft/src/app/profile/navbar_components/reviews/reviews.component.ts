@@ -34,7 +34,7 @@ export class ReviewsComponent {
   ngOnInit(): void {
     // Chamando o método para buscar as reviews
     if (this.userId !== undefined) {
-     this.userReviews = this.reviewsService.getUserReviews(this.userId)
+     this.reviewsService.getUserReviews(this.userId)
      this.editStates = this.userReviews.map(() => false);
      this.tempReviewText = this.userReviews.map(review => review.review_text); // Inicializa a variável temporária
 
@@ -59,16 +59,27 @@ export class ReviewsComponent {
 
   }
 
-  updateReview(index: number, new_text: string, new_rating: number) {
-    // Lógica para salvar a review
-    // console.log("o que será alterado é o ID: " + this.userReviews[index].id)
-    // console.log(this.userReviews)
-    this.userReviews[index].review_text = this.tempReviewText[index]; // Atualiza o review com o texto temporário
+  async updateReview(index: number, reviewId: number): Promise<void> {
+    const updatedReview: Partial<Reviews> = {
+        review_text: this.tempReviewText[index],
+        rating: this.userReviews[index].rating
+    };
 
-    this.reviewsService.updateUserReview(this.userReviews[index].user_id, this.userReviews[index].id, new_rating, this.tempReviewText[index])
+    try {
+        const response = await this.reviewsService.updateReview(reviewId, updatedReview).toPromise();
+        if (response) { // Verifique se response não é undefined
+            // Atualize a review localmente após a atualização
+            this.userReviews[index] = response;
+            this.editStates[index] = false;
+            console.log(`Review ID ${reviewId} atualizada com sucesso.`);
+        } else {
+            console.error(`Resposta para a review ID ${reviewId} é indefinida.`);
+        }
+    } catch (error) {
+        console.error('Erro ao atualizar review:', error);
+    }
+}
 
-    this.editStates[index] = false; // Fecha o modo de edição após salvar
-  }
 
   autoResize(event: any): void {
     const textarea = event.target;
