@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProfileService {
 
-  private baseUrl = 'http://localhost:3000/api/profiles';
+  private baseUrl = 'https://scorecraft.onrender.com/api/profiles';
 
   protected userList: Profile[] =[
     {
