@@ -12,3 +12,24 @@
     padding: 0 3%;
     gap:5 4%;
 }
+
+@media(max-width: 1230px){
+    #favorite-list{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: 70vh;
+        width: 100%;
+        justify-items: center;
+        grid-gap: 40px;
+    }
+}
+
+@media(max-width: 600px){
+
+    .img-game-review{
+        
+        max-width: 10rem;
+        max-height: 15rem;
+    }
+
+}

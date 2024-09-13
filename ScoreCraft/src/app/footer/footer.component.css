@@ -7,6 +7,7 @@ footer{
     justify-content: space-around;
     align-items: center;
     width: 100%;
+    position: relative;
   }
   
   footer div{
@@ -87,3 +88,5 @@ footer{
     
     
   }
+
+ 
