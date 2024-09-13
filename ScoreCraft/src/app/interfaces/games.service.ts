@@ -8,7 +8,7 @@ import { Games } from './games';
 })
 export class GamesService {
  
-  private baseUrl = 'https://scorecraft.onrender.com'; // URL do seu backend
+  private baseUrl = 'https://scorecraft.onrender.com/api/games'; // URL do seu backend
 
   constructor(private http: HttpClient) { }
 
