@@ -1,17 +1,17 @@
-import { Component, inject, Input } from '@angular/core';
-import { Profile } from '../../../interfaces/profile';
 import { CommonModule } from '@angular/common';
-import { GamesService } from '../../../interfaces/games.service';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Games } from '../../../interfaces/games';
+import { GamesService } from '../../../interfaces/games.service';
+import { Profile } from '../../../interfaces/profile';
 
 @Component({
   selector: 'user-jogos',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './jogos.component.html',
-  styleUrl: './jogos.component.css'
+  styleUrls: ['./jogos.component.css']
 })
-export class JogosComponent {
+export class JogosComponent implements OnChanges {
 
   @Input() profile: Profile | undefined;
 
@@ -19,16 +19,18 @@ export class JogosComponent {
  
   constructor(private gamesService: GamesService) {}
 
-  ngOnInit(): void {
-    this.loadFavGames();
-    
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['profile'] && this.profile) {
+      this.loadFavGames();
+    }
   }
 
   loadFavGames(): void {
     if (this.profile?.fav_games) {
       this.gamesService.getFavGames(this.profile.fav_games).subscribe({
         next: (games) => {
-          this.favoriteGames = games;
+          this.favoriteGames = games ?? [];
+          console.log('Favorite Games:', this.favoriteGames);
         },
         error: (error) => {
           console.error('Erro ao carregar jogos favoritos', error);
@@ -36,7 +38,4 @@ export class JogosComponent {
       });
     }
   }
-  
 }
-
-

@@ -34,6 +34,7 @@ export class ReviewsComponent {
 
   ngOnInit(): void {
     // Chamando o método para buscar as reviews
+
     if (this.userId !== undefined) {
       this.reviewsService.getUserReviews(this.userId).subscribe({
         next: (reviews) => {
@@ -43,9 +44,9 @@ export class ReviewsComponent {
           this.editStates = this.userReviews.map(() => false);
           // Inicializa a variável temporária com o texto das reviews
           this.tempReviewText = this.userReviews.map(review => review.review_text);
-  
-          // Opcional: Exibe as reviews no console para depuração
-          // console.log(this.userReviews);
+           console.log(this.userReviews);
+
+           this.loadGameDetails()
         },
         error: (error) => {
           console.error('Erro ao carregar reviews do usuário', error);
@@ -53,7 +54,7 @@ export class ReviewsComponent {
       });
     }
 
-    this.loadGameDetails()
+    
   }
   
 

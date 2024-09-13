@@ -7,7 +7,7 @@ import { ReviewsService } from '../interfaces/reviews.service';
 import { Reviews } from '../interfaces/reviews';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { AuthService } from '../login/auth.service';
 @Component({
   selector: 'app-composereview',
   standalone: true,
@@ -20,16 +20,19 @@ export class ComposereviewComponent {
   gameDetails: Games | undefined;
   reviewText: string = '';  // Variável para armazenar o texto da review
   rating: number = 0;       // Variável para armazenar a avaliação
+  userId: number | null | undefined;
   
   constructor(
     private gamesService: GamesService, 
     private route: ActivatedRoute, 
-    private reviewsService: ReviewsService) {}
+    private reviewsService: ReviewsService,
+    private authService: AuthService
+  ) {}
   
   ngOnInit(): void {
-    console.log(new Date().toISOString())
     const gameId = this.route.snapshot.params['id']; // Captura o ID do jogo da rota
     this.getGameDetails(gameId); // Chama a função para obter os detalhes
+    this.authService.getUserId().subscribe(id => this.userId = id); // Obter o ID do usuário
   }
 
   async getGameDetails(id: number): Promise<void> {
@@ -53,13 +56,14 @@ export class ComposereviewComponent {
   }
 
   createReview() {
-    if (this.gameDetails) {
+    if (this.gameDetails  && this.userId !== undefined) {
+      console.log(this.userId)
       const newReview: Reviews = {
         id: 0, 
         game_id: this.gameDetails.id, // ID do jogo
         review_text: this.reviewText, // Texto da review
         rating: this.rating,
-        user_id: 1,
+        user_id: Number(this.userId),
       };
 
       this.reviewsService.createReview(newReview).subscribe(response => {

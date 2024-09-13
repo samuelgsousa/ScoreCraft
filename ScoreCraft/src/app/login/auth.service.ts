@@ -1,19 +1,19 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Profile } from '../interfaces/profile';
 import { ProfileService } from '../interfaces/profile.service';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<Profile | null>(null)
+  private currentUserSubject = new BehaviorSubject<Profile | null>(null);
   public currentUser$: Observable<Profile | null> = this.currentUserSubject.asObservable();
   profileService: ProfileService = inject(ProfileService);
 
-  //Método para realizar o login
+  constructor() {}
 
+  // Método para realizar o login
   login(email: string, senha: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.profileService.getAllUsers().subscribe(users => {
@@ -33,21 +33,15 @@ export class AuthService {
       });
     });
   }
-  
 
-
-  private findUserByEmailAndPassword(email: string, senha: string): void {
-    this.profileService.getAllUsers().subscribe(users => {
-      const user = users.find(user => user.email === email && user.senha === senha) || null;
-      // Aqui você pode tratar o que fazer com o 'user' encontrado
-      console.log(user);
-    });
+  // Método para obter o ID do usuário atual
+  getUserId(): Observable<number | undefined> {
+    return this.currentUser$.pipe(
+      map(user => user?.id) // Supondo que o 'Profile' tem um campo 'id'
+    );
   }
-  
 
   logout(): void {
     this.currentUserSubject.next(null);
   }
-
-  constructor() { }
 }
