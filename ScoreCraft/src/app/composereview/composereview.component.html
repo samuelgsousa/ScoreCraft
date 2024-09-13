@@ -1,0 +1,13 @@
+<div class="game-review border-bottom border-secondary">
+  <img [src]="gameDetails?.picture" alt="" class="img-game-review">
+  <h1 class="text-light">{{gameDetails?.name}}</h1>
+
+  <span class="text-success rating">
+    <ngb-rating [(rate)]="rating" [max]="5" [readonly]="false"></ngb-rating> <!-- Vincule a variável de rating -->
+  </span>
+
+  <textarea [(ngModel)]="reviewText" class="form-control" placeholder='Review' (input)="autoResize($event)"></textarea> <!-- Vincule a variável de texto da review -->
+
+  <button (click)="createReview()">Salvar</button>
+  <button (click)="cancelCreation()">Cancelar</button>
+</div>

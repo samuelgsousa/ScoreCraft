@@ -8,6 +8,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './login/auth.guard';
 import { JogosComponent } from './jogos/jogos.component';
 import { AllreviewsComponent } from './allreviews/allreviews.component';
+import path from 'path';
+import { ComposereviewComponent } from './composereview/composereview.component';
 
 export const routes: Routes = [
     {
@@ -51,6 +53,11 @@ export const routes: Routes = [
         path: 'reviews',
         component: AllreviewsComponent,
         title: 'Avaliações'
+    },
+    {
+        path: 'newreview/:id',
+        component: ComposereviewComponent,
+        title: 'Nova Review'
     },
     {
         path: '**', 

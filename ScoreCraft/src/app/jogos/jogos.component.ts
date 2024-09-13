@@ -3,11 +3,12 @@ import { GamesService } from '../interfaces/games.service';
 import { CommonModule } from '@angular/common';
 import { Games } from '../interfaces/games';
 import { HttpClient} from '@angular/common/http';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-jogos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './jogos.component.html',
   styleUrl: './jogos.component.css'
 })

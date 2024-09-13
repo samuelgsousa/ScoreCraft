@@ -29,6 +29,11 @@ export class ReviewsService{
         return this.http.get<Reviews>(`${this.baseUrl}/${id}`)
     }
 
+    createReview(newReview: Reviews): Observable<Reviews> {
+      console.log(newReview)
+      return this.http.post<Reviews>(`${this.baseUrl}`, newReview);
+    }
+
     updateReview(id: number, updatedReview: Partial<Reviews>): Observable<Reviews> {
         return this.http.patch<Reviews>(`${this.baseUrl}/${id}`, updatedReview);
       }
@@ -37,5 +42,6 @@ export class ReviewsService{
         return this.http.delete<void>(`${this.baseUrl}/${id}`)
     }
 
+  
 
 }

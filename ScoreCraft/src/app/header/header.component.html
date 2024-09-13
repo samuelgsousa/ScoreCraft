@@ -40,6 +40,9 @@
                 <a class="nav-link link-light" [routerLink]="['login']" (click)="toggleMenu()" *ngIf="!currentUser">Login</a>
               </li>
               <li class="nav-item link-light">
+                <a class="nav-link link-light" [routerLink]="['dashboard']" (click)="toggleMenu()" *ngIf="currentUser">Meu perfil</a>
+              </li>
+              <li class="nav-item link-light">
                 <a class="nav-link link-light" [routerLink]="['']" (click)="logout()" *ngIf="currentUser">Logout</a>
               </li>
             </ul>

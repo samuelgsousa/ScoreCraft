@@ -25,7 +25,7 @@ export class ReviewsComponent {
   review: any;
   editStates: boolean[] = []; 
   tempReviewText: string[] = []; // Variável para armazenar o texto temporário
-
+  
   gameDetails: { [key: number]: Games } = {}; 
 
   // Injetando o serviço
