@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ProfileService } from '../interfaces/profile.service';
 import { Profile } from '../interfaces/profile';
 import { Router, RouterLink } from '@angular/router';
-
+import { AuthService } from '../login/auth.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -29,7 +29,7 @@ export class SignupComponent {
 
   profilePhoto: string = './petcons/default_profile.png'; // Foto padrão
 
-  constructor(private fb: FormBuilder, private profileUserService: ProfileService, private router: Router) {}
+  constructor(private fb: FormBuilder, private profileUserService: ProfileService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.accountForm = this.fb.group({
@@ -68,9 +68,12 @@ export class SignupComponent {
       console.log(profile);
       
       this.profileUserService.addProfile(profile).subscribe(
-        newProfile => {
+        async newProfile => {
           console.log('Perfil adicionado com sucesso:', newProfile);
-          this.router.navigate(['/dashboard']);
+          const isAuthenticated = await this.authService.login(profile.email, profile.senha);
+          if (isAuthenticated) {
+            this.router.navigate(['/dashboard']); // Redirecionar para a página desejada após o login
+          }
           // Atualize a lista de perfis ou faça qualquer outra ação necessária
         },
         error => {
