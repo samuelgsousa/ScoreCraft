@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const profileSchema = new mongoose.Schema({
-    profile_id: { type: Number },  // Campo para auto-incremento
     id: { type: Number },  // Campo id para o código existente
     nome: { type: String, required: true },
     foto_perfil: { type: String, default: null },
@@ -16,17 +15,10 @@ const profileSchema = new mongoose.Schema({
     senha: { type: String, default: null, required: true },
 });
 
-profileSchema.plugin(AutoIncrement, { inc_field: 'profile_id' });  // Auto-incremento em profile_id
-
-// Middleware para copiar profile_id para id
-profileSchema.pre('save', function (next) {
-    if (!this.id) {
-        this.id = this.profile_id;
-    }
-    next();
-});
-
-
+profileSchema.statics.getNextId = async function() {
+    const lastProfile = await this.findOne().sort('-id');
+    return lastProfile ? lastProfile.id + 1 : 1;
+};
 
 module.exports = mongoose.model('Profile', profileSchema);
 
