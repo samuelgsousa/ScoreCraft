@@ -11,9 +11,5 @@ const reviewsSchema = new mongoose.Schema({
     review_text: { type: String, default: null, required: true },
 });
 
-reviewsSchema.statics.getNextId = async function() {
-    const lastReview = await this.findOne().sort('-id');
-    return lastReview ? lastReview.id + 1 : 1;
-};
 
 module.exports = mongoose.model('Review', reviewsSchema);

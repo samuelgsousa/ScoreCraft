@@ -14,14 +14,19 @@ router.get('/', async (req, res) => {
 
 
 // Rota para criar um novo perfil
-router.post('/profiles', async (req, res) => {
+router.post('/', async (req, res) => {
+  const profile = new Profile({
+    nome: req.body.nome,
+    email: req.body.email,
+    senha: req.body.senha,
+    foto_perfil: req.body.foto_perfil,
+    bio: req.body.bio
+  });
   try {
-    const nextId = await Profile.getNextId();
-    const newProfile = new Profile({ ...req.body, id: nextId });
-    await newProfile.save();
-    res.status(201).send(newProfile);
-  } catch (error) {
-    res.status(500).send({ message: 'Erro ao criar perfil', error });
+    const newProfile = await profile.save();
+    res.status(201).json(newProfile);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 });
 

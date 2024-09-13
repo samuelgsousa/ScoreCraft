@@ -15,11 +15,6 @@ const profileSchema = new mongoose.Schema({
     senha: { type: String, default: null, required: true },
 });
 
-profileSchema.statics.getNextId = async function() {
-    const lastProfile = await this.findOne().sort('-id');
-    return lastProfile ? lastProfile.id + 1 : 1;
-};
-
 
 module.exports = mongoose.model('Profile', profileSchema);
 
