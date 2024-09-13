@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Conectar ao MongoDB
-mongoose.connect('mongodb+srv://samuelgsousa:<srKpSrufmbqDMwYJ>@cluster0.7tlos.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://samuelgsousa:srKpSrufmbqDMwYJ@cluster0.7tlos.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB conectado'))
   .catch(err => console.error('Erro ao conectar ao MongoDB', err));
 
