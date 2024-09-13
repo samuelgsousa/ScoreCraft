@@ -1,14 +1,455 @@
-.img-game-review{
-    width: 15rem;
-    height: 20rem;
-    object-fit: cover; 
+@charset "UTF-8";
+
+:root{
+    --stampColor: rgb(154, 69, 250);
+}
+
+/*capa e perfil*/
+#cover{
+    /* background-image: url(""); */
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+}
+
+@media(max-width: 600px){
+    #cover{
+        align-items: last baseline;
+        justify-content: center;
+        padding-top: 10%;
+    }
+}
+
+#avatar{
+    height: 25%;
+    width: auto;
+    margin-left: 5%;
+    margin-bottom: 12%;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+    column-gap: 15px;
+}
+
+.Profile-picture{
+    border-radius: 50%;
+    width: clamp(86px,12px + 12vw,128px); /*128px*/
+    height: clamp(86px,12px + 12vw,128px);
+    object-fit: cover;
+    grid-column: 1;
+}
+
+#nickname{
+    font-size: clamp(18px,2px + 2vw,26px);
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#follow{
+    max-width: clamp(24px,2px + 2vw,32px);
+    max-height: clamp(24px,2px + 2vw,32px);
+    filter: brightness(0) saturate(100%) invert(85%) sepia(28%) saturate(3207%) hue-rotate(78deg) brightness(98%) contrast(114%);
+    margin-bottom: 10%;
+    cursor: pointer;
+}
+
+#follow:active{
+    filter: brightness(0) saturate(0%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0) brightness(150%) contrast(200%);
+}
+
+.stamp{
+    width: 70px;
+    height: 25px;
+    background-color: var(--stampColor);
+    border-style: none;
+    border-radius: 5px;
+    font-size: 80%;
+    font-weight: 600;
+    color: var(--BasicTextColor);
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 50px;
+    cursor: unset;
+    display: none;
+}
+
+/*/Capa e perfil*/
+
+/*Geral*/
+
+p{
+    text-align: justify;
+}
+
+/*/Geral*/
+
+/*Tabs*/
+
+#ScoreCraftTab{
+     box-shadow: 0px -6px 30px 40px; 
+}
+
+.tab-pane{
+    padding: 15px;
+    min-height: none;
+    max-height: 100vh;
+
+}
+
+
+
+.nav-tabs{
+    flex-wrap: nowrap;
+}
+
+.nav-link{
+    color: var(--BasicTextColor);
+}
+
+.active{
+    color: var(--MainColor) !important;
+}
+
+.nav-item button{
+  font-size: clamp(0.7rem, 0.2rem + 2vw ,1.1rem);
+}
+
+.nav-item button:hover{
+    color: var(--stampColor);
+}
+
+/*/Tabs*/
+
+/*Jogos Favoritos*/
+
+#game-tab-pane h1{
+    border-style: solid;
+    border-color: var(--BasicTextColor)hite;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    margin-bottom: 20px;
 }
 
 #favorite-list{
     display: flex;
     align-items: center;
     justify-content: space-around;
-    max-height: 30vw;
+    height: 30vw;
     padding: 0 3%;
     gap:5 4%;
 }
+
+.favorite-game{
+    border-radius: 10px;
+    height: 100%;
+    width: 20%;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+}
+
+.favorite-game img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@media(max-width: 600px){
+    #favorite-list{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: 70vh;
+        width: 100%;
+        justify-items: center;
+        grid-gap: 40px;
+    }
+
+    .favorite-game{
+        height: 100%;
+        width: 100%;
+    }
+}
+
+
+/*/Jogos Favoritos/*/
+
+/*Reviews*/
+
+#reviews-tab-pane{
+    height: auto;
+}
+
+
+
+main{
+    overflow: auto;
+    height: auto;
+    scrollbar-width: none;
+}
+
+main::-webkit-scrollbar {
+    display: none; /* ocultar a barra de rolagem em navegadores WebKit */
+  }
+
+
+.game-review{
+    min-height: 21rem;
+    padding: 1%;
+    margin-bottom: 10px;
+    word-break: normal;
+}
+
+.img-game-review{
+    border-radius: 5px;
+    height: clamp(70px,30px + 30vw,300px); 
+    width: clamp(100px,25px + 20vw,200px); 
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    object-fit: cover;
+    margin-right: clamp(10px,10px + 1vw,30px);
+}
+
+.game-review h1{
+    font-size: clamp(1.2rem,1rem + 2vw,2rem);
+    margin-bottom: 0px;
+}
+
+
+.rating{
+    font-size: 1.5rem;
+    margin-right: 1%;
+}
+
+@media(max-width: 350px){ .date-rate{ display: inline-block;}}
+
+.game-review p{
+    font-size: 1rem;
+    margin-top: 1%;
+
+}
+/*/Reviews*/
+
+/*Lives*/
+/*Display none na LI funciona*/
+
+
+#lives-tab-pane h1{
+    color: var(--BasicTextColor);
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+swiper-container{
+    height: 35vh;
+  }
+
+  swiper-slide{
+    max-width: 40vh;
+    height: 100%;
+    position: relative;
+  }
+
+  swiper-slide iframe{
+    width: 100%;
+    height: 80%;
+    border-radius: 5px;
+  } 
+
+  .live-data{
+    color: var(--BasicTextColor);
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  /*/Lives*/
+
+/*Estatísticas*/
+
+#statistics-tab-pane{
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+    display: none;
+}
+
+ .active{
+    display: block !important;
+}
+
+.graphics{
+    display: flex;
+    gap: 15%;
+    height: 60vh;
+   
+}
+
+#avatar-data{
+    height: 60vh;
+    width: 100%;
+    margin-bottom: 12%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#avatar-data .Profile-picture{
+    width: 40vh;
+    height: 40vh;
+}
+
+#avatar-data .stamp{
+margin-top: 0px;}
+
+#avatar-data #nickname{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dados{
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+
+.dados span{
+    font-size: 2rem;
+    color: var(--BasicTextColor);
+}
+
+.chart-container{
+    width: 200px;
+    height: 100px;
+    align-self: stretch;
+  }
+
+.avaliacoes{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.seguindo{
+    margin-left: 15px;
+    margin-bottom: 20px;
+    margin-top: 15px;
+    width: 99%;
+    border-style: solid;
+    border-color: var(--BasicTextColor);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.following-profiles{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 25px;
+}
+
+.following-p-photo img{
+    border-radius: 50%;
+    width: clamp(86px,12px + 12vw,128px); /*128px*/
+    height: clamp(86px,12px + 12vw,128px);
+    object-fit: cover;
+
+}
+
+  /*/Estatísticas*/
+
+  @media(max-width:850px){
+    #statistics-tab-pane{
+        flex-direction: column;
+        align-items: center;
+        max-height: none;
+    }
+    .seguindo{
+        text-align: center;
+        margin-top: 30rem;
+    }
+
+    .dados span{
+        color: var(--BasicTextColor);
+        margin-bottom: 10%;
+        border-style: solid;
+        border-color: var(--BasicTextColor);
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        padding-bottom: 15px;
+        border-width: 0.5px;
+        border-color: var(--DataSpanLine);
+        box-sizing: border-box;
+    }
+
+    #aval{
+        border-style: none;
+        margin-bottom: 0px;
+    }
+
+
+    #avatar-data{
+        margin-bottom: 0px;
+    }
+
+    .graphics{
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    .dados{
+      width: auto;
+      
+    }
+   #seguidores, #horasJogadas, #generosFavoritos{
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+
+    .avaliacoes{
+       justify-content: center;
+       margin-top: 5%;
+    }
+
+    .chart-container{
+        align-self: center !important;
+    }
+}
+
+@media(max-width: 380px){
+    .avaliacoes{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20%;
+    }
+    
+    .dados span{
+        font-size: 1.5rem;
+        text-align: center;
+        margin-left: 0px !important;
+    }
+
+    .chart-container{
+        align-self: inherit;
+    }
+
+    #seguidores, #horasJogadas, #generosFavoritos{
+        margin-right: 0%;
+    }
+
+}
+
+
