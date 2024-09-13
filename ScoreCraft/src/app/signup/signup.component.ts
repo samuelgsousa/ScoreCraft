@@ -3,11 +3,12 @@ import { Component, NgModule } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProfileService } from '../interfaces/profile.service';
 import { Profile } from '../interfaces/profile';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
@@ -28,7 +29,7 @@ export class SignupComponent {
 
   profilePhoto: string = './petcons/default_profile.png'; // Foto padrão
 
-  constructor(private fb: FormBuilder, private profileUserService: ProfileService) {}
+  constructor(private fb: FormBuilder, private profileUserService: ProfileService, private router: Router) {}
 
   ngOnInit(): void {
     this.accountForm = this.fb.group({
@@ -69,6 +70,7 @@ export class SignupComponent {
       this.profileUserService.addProfile(profile).subscribe(
         newProfile => {
           console.log('Perfil adicionado com sucesso:', newProfile);
+          this.router.navigate(['/dashboard']);
           // Atualize a lista de perfis ou faça qualquer outra ação necessária
         },
         error => {
