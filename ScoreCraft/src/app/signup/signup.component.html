@@ -1,6 +1,7 @@
 <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
   <div>
-    <img [src]="profilePhoto" alt="" id="Profile_Photo" (click)="toggleIconSelection()" > <br>
+    <img [src]="profilePhoto" alt="" id="Profile_Photo" (click)="toggleIconSelection()" > 
+    <p class="iconAware">*Clique na foto para selecionar um icon*</p>
 
     <div id="iconSelection" class="hidden">
       <img *ngFor="let icon of petPhotos" [src]="icon" alt="" class="iconPetcon" (click)="changePetProfilePicture(icon); toggleIconSelection()">

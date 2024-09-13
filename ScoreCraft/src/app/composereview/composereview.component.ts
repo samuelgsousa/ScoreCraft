@@ -8,6 +8,8 @@ import { Reviews } from '../interfaces/reviews';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../login/auth.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-composereview',
   standalone: true,
@@ -26,7 +28,8 @@ export class ComposereviewComponent {
     private gamesService: GamesService, 
     private route: ActivatedRoute, 
     private reviewsService: ReviewsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
   
   ngOnInit(): void {
@@ -68,6 +71,8 @@ export class ComposereviewComponent {
 
       this.reviewsService.createReview(newReview).subscribe(response => {
         console.log('Review criada com sucesso:', response);
+        window.alert('Review criada com sucesso! Você será redirecionado')
+        this.router.navigate(['/dashboard']);
         // Redirecione ou faça outras ações após a criação bem-sucedida
       }, error => {
         console.error('Erro ao criar review:', error);

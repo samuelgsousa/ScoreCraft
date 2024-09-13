@@ -64,6 +64,12 @@ form button{
     border-color: #7A4AFA;
 }
 
+.iconAware{
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #7A4AFA;
+}
+
 form button[type="submit"]:disabled{
     background-color: transparent;
     color: #543a9b;
