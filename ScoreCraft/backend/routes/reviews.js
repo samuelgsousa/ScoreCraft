@@ -13,17 +13,31 @@ router.get('/', async (req, res) => {
   }
 });
 
+const getNextSequenceValue = async (sequenceName) => {
+  const sequenceDocument = await db.collection('counters').findOneAndUpdate(
+    { id: sequenceName },
+    { $inc: { sequence_value: 1 } },
+    { returnOriginal: false }
+  );
+  return sequenceDocument.value.sequence_value;
+};
+
 // Rota para criar uma nova avaliação
 router.post('/', async (req, res) => {
   const { user_id, game_id, rating, review_text } = req.body;
-  const review = new Review({
-    user_id,
-    game_id,
-    rating,
-    review_text
-  });
+
+
 
   try {
+    const reviewId = await getNextSequenceValue('reviews_id');  // Obtém o próximo ID
+    const review = new Review({
+      id: reviewId,
+      user_id,
+      game_id,
+      rating,
+      review_text
+    });
+
     const newReview = await review.save();
     res.status(201).json(newReview);
   } catch (error) {
