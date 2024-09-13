@@ -6,7 +6,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
 const port = 3000;
 
-const uri = 'mongodb+srv://samuelgsousa:srKpSrufmbqDMwYJ@cluster0.7tlos.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const uri = 'mongodb+srv://samuelgsousa:srKpSrufmbqDMwYJ@cluster0.7tlos.mongodb.net/ScoeCraftData'
 
 // Middleware
 app.use(cors());
