@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const reviewsSchema = new mongoose.Schema({
-   
     id: Number,
     user_id: { type: Number, required: true },
     game_id: { type: Number, required: true },
