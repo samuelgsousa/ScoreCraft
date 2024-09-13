@@ -12,24 +12,15 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Rota para obter um perfil pelo ID
-router.get('/:id', async (req, res) => {
-  try {
-    const profile = await Profile.findById(req.params.id);
-    if (profile == null) {
-      return res.status(404).json({ message: 'Perfil não encontrado' });
-    }
-    res.json(profile);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
 // Rota para criar um novo perfil
 router.post('/', async (req, res) => {
   const profile = new Profile({
-    name: req.body.name,
-    // adicione outros campos conforme necessário
+    nome: req.body.nome,
+    email: req.body.email,
+    senha: req.body.senha,
+    foto_perfil: req.body.foto_perfil,
+    bio: req.body.bio
   });
   try {
     const newProfile = await profile.save();
@@ -39,18 +30,55 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Rota para atualizar um perfil
-router.put('/:id', async (req, res) => {
+// Rota para obter um perfil pelo ID
+router.get('/:id', async (req, res) => {
+  const profileId = parseInt(req.params.id);
   try {
-    const updatedProfile = await Profile.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (updatedProfile == null) {
+    const profile = await Profile.findOne({ id: profileId });
+    if (!profile) {
       return res.status(404).json({ message: 'Perfil não encontrado' });
     }
-    res.json(updatedProfile);
+    res.json(profile);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
+
+// Rota para obter seguidores de um usuário específico
+router.get('/followers/:id', async (req, res) => {
+  try {
+    const profileId = parseInt(req.params.id);
+    const profiles = await Profile.find({ seguindo: profileId });  // Ajuste conforme sua estrutura de dados
+    res.json(profiles);
+  } catch (error) {
+    res.status(500).send({ message: 'Erro ao buscar seguidores', error });
+  }
+});
+
+// Atualiza um campo específico de um perfil
+router.patch('/:userId', async (req, res) => {
+  const { userId } = req.params; // O ID que você vai usar para buscar o perfil
+  const { field, value } = req.body; // Campo e valor para atualizar
+
+  try {
+    // Atualiza o perfil pelo campo numérico `id`
+    const updatedProfile = await Profile.findOneAndUpdate(
+      { id: userId }, // Filtra pelo campo numérico `id`
+      { [field]: value }, // Atualiza o campo dinâmico
+      { new: true } // Retorna o documento atualizado
+    );
+
+    if (!updatedProfile) {
+      return res.status(404).send({ message: 'Perfil não encontrado' });
+    }
+    res.send(updatedProfile);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send({ message: 'Erro ao atualizar o perfil', error });
+  }
+});
+
+
 
 // Rota para deletar um perfil
 router.delete('/:id', async (req, res) => {

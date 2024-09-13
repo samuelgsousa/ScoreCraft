@@ -15,7 +15,6 @@ export class UsersComponent {
   
   [x: string]: any;
   allUsersList: Profile[] =[]
-  allUsersService: ProfileService = inject(ProfileService)
 
   profilePicture: string | undefined;
 
@@ -31,13 +30,19 @@ export class UsersComponent {
     './petcons/watermelonparrot_by_hyanna_natsu_daaq3ne.png',
   ]
 
-  constructor(){
+  constructor(private allUsersService: ProfileService){
     this.getAllUsers();
     this.profilePicture = this.user?.foto_perfil || this.getPetProfilePicture();
   }
 
   async getAllUsers() {
-    this.allUsersList = await this.allUsersService.getAllUsers();
+    this.allUsersService.getAllUsers().subscribe(users => {
+      this.allUsersList = users;
+    }, error => {
+      console.error('Erro ao buscar usuários', error);
+    });
+
+    
   }
 
   getPetProfilePicture(): string{

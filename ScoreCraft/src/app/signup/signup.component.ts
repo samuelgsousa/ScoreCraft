@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, NgModule } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Component, NgModule } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProfileService } from '../interfaces/profile.service';
 import { Profile } from '../interfaces/profile';
 
@@ -10,13 +9,11 @@ import { Profile } from '../interfaces/profile';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
 
-
   accountForm!: FormGroup;
-
   petPhotos: string[] = [
     './petcons/blueberry_by_hyanna_natsu_daaq3p4.png',
     './petcons/bonbonbear_by_hyanna_natsu_dacb1le.png',
@@ -27,69 +24,68 @@ export class SignupComponent {
     './petcons/popcorn_by_hyanna_natsu_dacb1l4.png',
     './petcons/sushipanda_by_hyanna_natsu_daaq3nr.png',
     './petcons/watermelonparrot_by_hyanna_natsu_daaq3ne.png',
-  ]
- 
+  ];
+
+  profilePhoto: string = './petcons/default_profile.png'; // Foto padrão
 
   constructor(private fb: FormBuilder, private profileUserService: ProfileService) {}
 
   ngOnInit(): void {
     this.accountForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      nome: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      foto_perfil: this.profilePhoto,
+      senha: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
       bio: ['', [Validators.maxLength(300)]],
     }, { validators: this.passwordMatchValidator });
-   
+
     this.getPetProfilePicture();
   }
 
-    toggleIconSelection(){
-      (document.querySelector("#iconSelection") as HTMLImageElement).classList.toggle('show')
+  toggleIconSelection(): void {
+    (document.querySelector("#iconSelection") as HTMLDivElement).classList.toggle('show');
+  }
+
+  // Validação personalizada para confirmar se as senhas coincidem
+  passwordMatchValidator(form: FormGroup): { [s: string]: boolean } | null {
+    if (form.get('senha')?.value !== form.get('confirmPassword')?.value) {
+      return { passwordMismatch: true };
     }
+    return null;
+  }
 
-    // Validação personalizada para confirmar se as senhas coincidem
-    passwordMatchValidator(form: FormGroup): { [s: string]: boolean } | null {
-      if (form.get('password')?.value !== form.get('confirmPassword')?.value) {
-        return { passwordMismatch: true };
-      }
-      return null;
-    }
-
-    onSubmit(): void {
-      if (this.accountForm.valid) {
-        console.log('Formulário enviado com sucesso', this.accountForm.value);
-
-        const formValue = this.accountForm.value;
-        const nextId = this.profileUserService.getNextId();
-
-        const newProfile: Profile ={
-          id: nextId,
-          nome: formValue.username,
-          foto_perfil: String((document.querySelector("#Profile_Photo") as HTMLImageElement).src),
-          fav_gen: null,
-          streamer: false,
-          seguindo: null,
-          wallpaper: null,
-          bio: formValue.bio,
-          fav_games: null,
-          email: formValue.email,
-          senha: formValue.password,
+  onSubmit(): void {
+    if (this.accountForm.valid) {
+      const profile = {
+        nome: this.accountForm.get('nome')?.value,
+        email: this.accountForm.get('email')?.value,
+        senha: this.accountForm.get('senha')?.value,
+        foto_perfil: this.profilePhoto, // Adicionando a foto do perfil
+        bio: this.accountForm.get('bio')?.value,
+      };
+      console.log(profile);
+      
+      this.profileUserService.addProfile(profile).subscribe(
+        newProfile => {
+          console.log('Perfil adicionado com sucesso:', newProfile);
+          // Atualize a lista de perfis ou faça qualquer outra ação necessária
+        },
+        error => {
+          console.error('Erro ao adicionar perfil:', error);
         }
-        this.profileUserService.addProfile(newProfile)
-
-      } else {
-        console.log('Formulário inválido');
-      }
+      );
+    } else {
+      console.error('Formulário inválido');
     }
+  }
 
-    getPetProfilePicture(){
-        const randomIndex = Math.floor(Math.random() * this.petPhotos.length); 
-        (document.querySelector("#Profile_Photo") as HTMLImageElement).src = this.petPhotos[randomIndex]
-    
-    }
+  getPetProfilePicture(): void {
+    const randomIndex = Math.floor(Math.random() * this.petPhotos.length); 
+    this.profilePhoto = this.petPhotos[randomIndex];
+  }
 
-    changePetProfilePicture(photo: string) {
-      (document.querySelector("#Profile_Photo") as HTMLImageElement).src = photo;}
-
+  changePetProfilePicture(photo: string): void {
+    this.profilePhoto = photo;
+  }
 }

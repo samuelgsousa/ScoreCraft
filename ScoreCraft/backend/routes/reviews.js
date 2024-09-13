@@ -13,20 +13,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Rota para obter uma avaliação específica por ID
-router.get('/:id', async (req, res) => {
-  try {
-    const review = await Review.findById(req.params.id).populate('user_id').populate('game_id');
-    if (review) {
-      res.json(review);
-    } else {
-      res.status(404).json({ message: 'Review not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
 // Rota para criar uma nova avaliação
 router.post('/', async (req, res) => {
   const { user_id, game_id, rating, review_text } = req.body;
@@ -46,35 +32,78 @@ router.post('/', async (req, res) => {
 });
 
 // Rota para atualizar uma avaliação
-router.put('/:id', async (req, res) => {
-  const { user_id, game_id, rating, review_text } = req.body;
+router.patch('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { review_text, rating } = req.body;
+
   try {
-    const updatedReview = await Review.findByIdAndUpdate(
-      req.params.id,
-      { user_id, game_id, rating, review_text },
-      { new: true }
-    ).populate('user_id').populate('game_id');
-    if (updatedReview) {
-      res.json(updatedReview);
-    } else {
-      res.status(404).json({ message: 'Review not found' });
-    }
+      // Atualiza a review no banco de dados
+      const updatedReview = await Review.findOneAndUpdate(
+          { id: id }, // Utiliza o campo id para encontrar a review
+          { review_text, rating },
+          { new: true } // Retorna o documento atualizado
+      );
+
+      if (!updatedReview) {
+          return res.status(404).send({ message: 'Review não encontrada' });
+      }
+      res.send(updatedReview);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+      res.status(400).send({ message: 'Erro ao atualizar a review', error });
   }
 });
 
 // Rota para deletar uma avaliação
 router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const deletedReview = await Review.findByIdAndDelete(req.params.id);
+    // Converte o id para número se necessário (caso esteja armazenado como string)
+    const deletedReview = await Review.findOneAndDelete({ id: id });
+
     if (deletedReview) {
-      res.json({ message: 'Review deleted' });
+      res.json({ message: 'Review deletada com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Review não encontrada' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao deletar a review', error });
+  }
+});
+
+// Rota para obter uma avaliação específica por ID
+router.get('/:id', async (req, res) => {
+  try {
+    const reviewId = parseInt(req.params.id)
+    const review = await Review.findOne({id: reviewId})
+    if (review) {
+      res.json(review);
     } else {
       res.status(404).json({ message: 'Review not found' });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+// Endpoint para obter reviews filtradas por user_id
+router.get('/user/:id', async (req, res) => {
+  try {
+    // Extrair o user_id da URL
+    const userId = parseInt(req.params.id);
+
+    // Validar o user_id
+    if (!userId) {
+      return res.status(400).json({ message: 'user_id é necessário' });
+    }
+    // Consultar o banco de dados para encontrar reviews com o user_id fornecido
+    const reviews = await Review.find({ user_id: userId });
+
+    // Retornar as reviews filtradas
+    res.json(reviews);
+  } catch (error) {
+    console.error('Erro ao buscar reviews:', error);
+    res.status(500).json({ message: 'Erro interno do servidor' });
   }
 });
 

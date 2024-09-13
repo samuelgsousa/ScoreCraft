@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Games } from './games';
 
 @Injectable({
@@ -12,21 +12,27 @@ export class GamesService {
 
   constructor(private http: HttpClient) { }
 
-  getFavGames(favG: Array<number>): Observable<Games[]> {
-    return this.http.get<Games[]>(`${this.baseUrl}/favorites`, {
-      params: {
-        ids: favG.join(',')
-      }
-    });
+  getAllGames(): Observable<Games[]> {
+    return this.http.get<Games[]>(this.baseUrl);
   }
 
   getGameDetailsById(id: number): Observable<Games> {
     return this.http.get<Games>(`${this.baseUrl}/${id}`);
-  }
+  } 
 
-  getAllGames(): Observable<Games[]> {
-    return this.http.get<Games[]>(this.baseUrl);
+  getFavGames(favG: Array<number>): Observable<Games[]> {
+    // Primeiro, obtenha todos os jogos
+    return this.getAllGames().pipe(
+      map(games => {
+        // Filtre os jogos que correspondem aos IDs fornecidos
+        return games.filter(game => favG.includes(game.id));
+      })
+    );
   }
+  
+
+
+
 }
 
 

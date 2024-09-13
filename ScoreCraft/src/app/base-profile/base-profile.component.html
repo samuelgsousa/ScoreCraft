@@ -2,7 +2,7 @@
 <div id="cover">
             
     <div id="avatar">
-        <img [src]="profilePicture" alt="" class="Profile-picture">
+        <img [src]="user?.foto_perfil" alt="" class="Profile-picture">
         
         <span class="text-light fw-semibold text-expand-lg" id="nickname">{{user?.nome}}<img src="#" alt="" id="follow"></span> 
         <input *ngIf="isEditing" type="text" class="form-control" placeholder='Digite seu novo apelido' [(ngModel)]="profileData.nome"> 
@@ -32,7 +32,7 @@
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="lives-tab" data-bs-toggle="tab" data-bs-target="#statistics-tab-pane" type="button" role="tab" aria-controls="lives-tab-pane" aria-selected="false">{{ statsText }}</button>
       </li>
-      
+       
   </ul>
 <!--/Guias de Navegação-->
 

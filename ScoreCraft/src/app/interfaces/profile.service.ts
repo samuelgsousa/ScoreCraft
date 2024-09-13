@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Profile } from './profile';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
+
+  private baseUrl = 'http://localhost:3000/api/profiles';
 
   protected userList: Profile[] =[
     {
@@ -205,41 +208,33 @@ export class ProfileService {
     }
   ]
   
+  constructor(private http: HttpClient) { }
+  
 
-  async getAllUsers(): Promise<Profile[]>{
-    return new Promise(resolve => resolve(this.userList));
+  getAllUsers(): Observable<Profile[]>{
+    return this.http.get<Profile[]>(this.baseUrl);
   }
 
-  async getUserById(id: number): Promise<Profile | undefined>{
-    return new Promise(resolve => resolve(this.userList[id]))
+  getUserById(id: number): Observable<Profile>{
+    return this.http.get<Profile>(`${this.baseUrl}/${id}`)
   }
 
-  async getFollowersById(id: number): Promise<Profile[]>{
-    return new Promise(resolve => resolve(this.userList.filter(follower => follower.seguindo?.includes(id))))
-    
-    
+  getFollowersById(id: number): Observable<Profile[]> {
+    return this.http.get<Profile[]>(`${this.baseUrl}/followers/${id}`);
   }
 
-  addProfile(profile: Profile): void{
-    this.userList.push(profile)
-    console.log(this.userList)
+  addProfile(profile: Profile): Observable<Profile> {
+    return this.http.post<Profile>(this.baseUrl, profile);
   }
 
-  getNextId(): number{
-    const lastProfile = this.userList[this.userList.length - 1];
-    return lastProfile ? lastProfile.id + 1 : 1;
-  }
+ 
 
-  updateProfileField(userId: number, field: string, value: any): void {
-    const profile = this.getUserById(userId)
-    if(profile){
-      (profile as any)[field] = value
-      console.log(`Campo ${field} atualizado para: ${value}`)
-      console.log(profile) //a função está funcionando, só não exibe na página pois não criei uma síntaxe para atualizar a página
-    } else {
-      console.error('Perfil não encontrado')
-    }
-  } //uma função para alterar qualquer campo
+  updateProfileField(userId: number, field: string, value: any): Observable<any> {
+    const body = { field, value };
+
+    // Faz uma requisição PATCH para atualizar o campo específico do perfil
+    return this.http.patch(`${this.baseUrl}/${userId}`, body);
+  }
 
 
     

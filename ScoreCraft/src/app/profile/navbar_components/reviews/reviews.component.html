@@ -1,7 +1,6 @@
 <div *ngFor="let review of this.userReviews; ; let i = index" class="game-review border-bottom border-secondary" >
-    <img [src]="[]" alt="" class="img-game-review rounded float-start" *ngIf="getGameDetails(review.game_id) as game">
-        <h1 class="text-light" *ngIf="getGameDetails(review.game_id) as game"></h1>
-
+    <img [src]="gameDetails[review.game_id]?.picture" alt="" class="img-game" *ngIf="gameDetails[review.game_id]">
+    <h1 class="text-light">{{gameDetails[review.game_id]?.name}}</h1>
             <span class="text-success rating">
                 <ngb-rating [(rate)]="review.rating" [max]="5" [readonly]="!editStates[i]"/>      
             </span>
@@ -14,4 +13,5 @@
             <button (click)="enableEdit(i)" *ngIf="isCurrentUser && !editStates[i]">Editar Review</button>
             <button *ngIf="isCurrentUser && editStates[i]" (click)="updateReview(i, review.id)">salvar</button>
             <button *ngIf="isCurrentUser && editStates[i]" (click)="cancelEdit(i)">cancelar</button>
+            <button *ngIf="isCurrentUser && editStates[i]" (click)="deleteReview(i, review.id)">! Deletar Review</button>
 </div>

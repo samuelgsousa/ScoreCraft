@@ -55,10 +55,21 @@ export class BaseProfileComponent {
   }
 
 
-  async getUser() {
-    this.user = await this.profileUserService.getUserById(this.route.snapshot.params['id']);
-    this.insertWallpaper(String(this.user?.wallpaper));
+  async getUser(): Promise<void> {
+    // Assinando o retorno do Observable para obter os dados do usuário
+    this.profileUserService.getUserById((this.route.snapshot.params['id']))
+      .subscribe(user => {
+        this.user = user;  // Atualiza 'this.user' com os dados retornados
+  
+        // Verifica se o wallpaper existe antes de chamar a função
+        // if (this.user?.wallpaper) {
+        //   this.insertWallpaper(String(this.user.wallpaper));  // Chama 'insertWallpaper' com o valor do wallpaper
+        // }
+      }, error => {
+        console.error('Erro ao buscar usuário:', error);  // Tratamento de erros
+      });
   }
+  
 
   insertWallpaper(wallpaperUrl: string) {
     const cover = document.querySelector("div#cover") as HTMLElement;
@@ -66,30 +77,20 @@ export class BaseProfileComponent {
   }
 
   ngOnInit(): void {
-    this.profilePicture = this.user?.foto_perfil || this.getPetProfilePicture();
 
-    if (this.user) {
-      this.profileData = {
-        nome: this.user.nome || '',
-        bio: this.user.bio || '',
-        // Adicione outros campos conforme necessário
-      };
-    }
-    if(this.isCurrentUser){
-      console.log('é o usuário atual')
-    }
+    // if (this.user) {
+    //   this.profileData = {
+    //     nome: this.user.nome || '',
+    //     bio: this.user.bio || '',
+    //     // Adicione outros campos conforme necessário
+    //   };
+    // }
+    // if(this.isCurrentUser){
+    //   console.log('é o usuário atual')
+    // }
 
   }
   
-
-  getPetProfilePicture(): string{
-    if(this.user?.foto_perfil != null){
-      return this.user.foto_perfil;
-    } else{
-      const randomIndex = Math.floor(Math.random() * this.petPhotos.length);
-      return this.petPhotos[randomIndex]
-    }
-  }
 
   enableEdit() {
     this.isEditing = true; // Habilita o modo de edição
@@ -100,10 +101,18 @@ export class BaseProfileComponent {
   }
 
   update(field: string){ //uma única função para alterar qualquer dado de acordo com os parâmetros
+   
+    if(this.user && this.user?.id !== undefined){
  
-    if(this.user){
-       this.profileUserService.updateProfileField(this.user?.id, field, this.profileData[field])
-      // console.log(`O campo alterado deve ser o ${field} que receberá o valor: ${this.profileData[field]}`)
+       this.profileUserService.updateProfileField(this.user?.id, field, this.profileData[field]).subscribe(
+        response => {
+          console.log('Perfil atualizado:', response);
+          // Atualize o perfil local ou faça outras ações necessárias
+        },
+        error => {
+          console.error('Erro ao atualizar o perfil:', error);
+        })
+
    }
   }
 }

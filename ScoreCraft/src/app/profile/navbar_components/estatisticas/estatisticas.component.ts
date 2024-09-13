@@ -13,27 +13,45 @@ import { RouterLink, RouterModule } from '@angular/router';
   templateUrl: './estatisticas.component.html',
   styleUrl: './estatisticas.component.css'
 })
+
 export class EstatisticasComponent {
   @Input() profile: Profile | undefined;
-
   userReviews: Reviews[] = [];
-  followers: Profile[] = [];
+  followers: Profile[] = []; // Inicializado como um array vazio
   review: any;
 
   constructor(private reviewsService: ReviewsService, private profileService: ProfileService) {}
 
   async ngOnInit(): Promise<void> {
-    // Chamando o método para buscar as reviews
     if (this.profile?.id !== undefined) {
-      this.reviewsService.getUserReviews(this.profile?.id);
-      this.gerarGrafico();
-      this.followers = await this.profileService.getFollowersById(this.profile?.id)
-      
+
+      this.reviewsService.getUserReviews(this.profile.id).subscribe(
+        (reviews: Reviews[]) => {
+          this.userReviews = reviews;
+          
+          this.userReviews.forEach(review => {
+            console.log(review.rating);
+          });
+
+          this.gerarGrafico(); // Atualiza o gráfico após carregar as reviews
+        },
+        error => {
+          console.error('Erro ao buscar reviews:', error);
+        }
+      );
+
+      this.profileService.getFollowersById(this.profile.id).subscribe(
+        (followers: Profile[]) => {
+          this.followers = followers;
+
+        },
+        error => {
+          console.error('Erro ao buscar seguidores:', error);
+        }
+      );
     }
-
-    
+    // this.gerarGrafico()
   }
-
 
   gerarGrafico(): void {
     const ctx = document.querySelector('#myChart') as HTMLCanvasElement | null;
@@ -42,19 +60,17 @@ export class EstatisticasComponent {
       Chart.defaults.font.size = 25;
       Chart.defaults.color = 'white'; // Cor da fonte
 
+      const ratingCounts = [1, 2, 3, 4, 5].map(rating => 
+        this.userReviews.filter(review => review.rating === rating).length
+      );
+
       new Chart(ctx, {
         type: 'bar', // Tipo de gráfico
         data: {
           labels: ['★', '★', '★', '★', '★'],
           datasets: [{
             label: '',
-            data: [
-              this.userReviews.filter(review => review.rating === 1).length,
-              this.userReviews.filter(review => review.rating === 2).length,
-              this.userReviews.filter(review => review.rating === 3).length,
-              this.userReviews.filter(review => review.rating === 4).length,
-              this.userReviews.filter(review => review.rating === 5).length
-            ], // Número de avaliações por estrela
+            data: ratingCounts, // Número de avaliações por estrela
             borderWidth: 1,
             backgroundColor: ['rgb(8, 255, 111)']
           }]
@@ -72,3 +88,4 @@ export class EstatisticasComponent {
     }
   }
 }
+

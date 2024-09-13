@@ -21,17 +21,22 @@ export class JogosComponent {
 
   ngOnInit(): void {
     this.loadFavGames();
-    // this.getAllFavGames()
+    
   }
 
   loadFavGames(): void {
     if (this.profile?.fav_games) {
-      this.gamesService.getFavGames(this.profile.fav_games); 
-     
+      this.gamesService.getFavGames(this.profile.fav_games).subscribe({
+        next: (games) => {
+          this.favoriteGames = games;
+        },
+        error: (error) => {
+          console.error('Erro ao carregar jogos favoritos', error);
+        }
+      });
     }
-
-
-}
+  }
+  
 }
 
 

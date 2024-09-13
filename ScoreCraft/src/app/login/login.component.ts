@@ -30,8 +30,10 @@ export class LoginComponent {
   async onSubmit(): Promise<void> {
     if (this.loginForm.valid) {
       const { email, senha } = this.loginForm.value;
-      if (await this.authService.login(email, senha)) {
-        this.router.navigate(['/dashboard']); // Redirecione para a página desejada após o login
+      const isAuthenticated = await this.authService.login(email, senha); // Use "await" para aguardar a Promise
+  
+      if (isAuthenticated) {
+        this.router.navigate(['/dashboard']); // Redirecionar para a página desejada após o login
       } else {
         console.error('Credenciais inválidas');
       }
@@ -39,6 +41,8 @@ export class LoginComponent {
       console.error('Formulário inválido');
     }
   }
+  
+  
 
 
 }

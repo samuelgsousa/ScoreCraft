@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { Profile } from '../interfaces/profile';
 import { ProfileService } from '../interfaces/profile.service';
 
@@ -13,20 +13,37 @@ export class AuthService {
   profileService: ProfileService = inject(ProfileService);
 
   //Método para realizar o login
-  async login(email: string, senha: string): Promise<boolean>{
-     // Aqui você deve verificar as credenciais com seu backend ou dados locais
-     const user = this.findUserByEmailAndPassword(email, senha)
-     if(user){
-      this.currentUserSubject.next(await user)
-      return true
-     }
-     return false
-  }
 
-  private async findUserByEmailAndPassword(email: string, senha: string): Promise<Profile | null>{
-    const users = this.profileService.getAllUsers();
-    return (await users).find(user => user.email === email && user.senha === senha) || null
+  login(email: string, senha: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.profileService.getAllUsers().subscribe(users => {
+        const user = users.find(user => user.email === email && user.senha === senha) || null;
+        
+        if (user) {
+          this.currentUserSubject.next(user);
+          console.log('Login bem-sucedido');
+          resolve(true); // Resolve a promessa como "true" se o login for bem-sucedido
+        } else {
+          console.log('Credenciais inválidas');
+          resolve(false); // Resolve a promessa como "false" se as credenciais forem inválidas
+        }
+      }, error => {
+        console.error('Erro ao buscar usuários', error);
+        reject(error); // Rejeita a promessa se ocorrer um erro
+      });
+    });
   }
+  
+
+
+  private findUserByEmailAndPassword(email: string, senha: string): void {
+    this.profileService.getAllUsers().subscribe(users => {
+      const user = users.find(user => user.email === email && user.senha === senha) || null;
+      // Aqui você pode tratar o que fazer com o 'user' encontrado
+      console.log(user);
+    });
+  }
+  
 
   logout(): void {
     this.currentUserSubject.next(null);
