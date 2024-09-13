@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const profileSchema = new mongoose.Schema({
-    id: Number,
+    profile_id: { type: Number },  // Campo para auto-incremento
+    id: { type: Number },  // Campo id para o código existente
     nome: { type: String, required: true },
     foto_perfil: { type: String, default: null },
     fav_gen: { type: [String], default: [] }, // Array de strings
@@ -13,6 +15,18 @@ const profileSchema = new mongoose.Schema({
     email: { type: String, default: null, required: true },
     senha: { type: String, default: null, required: true },
 });
+
+profileSchema.plugin(AutoIncrement, { inc_field: 'profile_id' });  // Auto-incremento em profile_id
+
+// Middleware para copiar profile_id para id
+profileSchema.pre('save', function (next) {
+    if (!this.id) {
+        this.id = this.profile_id;
+    }
+    next();
+});
+
+
 
 module.exports = mongoose.model('Profile', profileSchema);
 

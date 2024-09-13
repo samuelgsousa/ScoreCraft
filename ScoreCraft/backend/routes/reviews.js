@@ -33,13 +33,12 @@ router.post('/', async (req, res) => {
 
 // Rota para atualizar uma avaliação
 router.patch('/:id', async (req, res) => {
-  const { id } = req.params;
   const { review_text, rating } = req.body;
 
   try {
       // Atualiza a review no banco de dados
       const updatedReview = await Review.findOneAndUpdate(
-          { id: id }, // Utiliza o campo id para encontrar a review
+        
           { review_text, rating },
           { new: true } // Retorna o documento atualizado
       );
