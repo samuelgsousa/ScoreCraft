@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 const getNextSequenceValue = async (sequenceName) => {
-  const sequenceDocument = await ScoreCraftData.collection('counters').findOneAndUpdate(
+  const sequenceDocument = await db.collection('counters').findOneAndUpdate(
     { id: sequenceName },
     { $inc: { sequence_value: 1 } },
     { returnOriginal: false }
