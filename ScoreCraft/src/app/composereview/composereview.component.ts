@@ -24,6 +24,7 @@ export class ComposereviewComponent {
   rating: number = 0;       // Variável para armazenar a avaliação
   userId: number | null | undefined;
   AllReviews: Reviews[] | undefined;
+  newId: number | undefined;
   
   constructor(
     private gamesService: GamesService, 
@@ -35,16 +36,6 @@ export class ComposereviewComponent {
   
   ngOnInit(): void {
     
-   const t =  this.reviewsService.getLastReviewId().subscribe(review => {
-    review; // Armazena os detalhes do jogo
-    console.log('largura deve srrr', review); // Exibe os detalhes do jogo no console
-  }, error => {
-    console.error('Erro ao obter detalhes do jogo:', error);
-  });
-
-   console.log("RESULTADO" + t)
-    
-
     const gameId = this.route.snapshot.params['id']; // Captura o ID do jogo da rota
     this.getGameDetails(gameId); // Chama a função para obter os detalhes
     this.authService.getUserId().subscribe(id => this.userId = id); // Obter o ID do usuário
@@ -70,24 +61,43 @@ export class ComposereviewComponent {
   }
 
   createReview() {
-    if (this.gameDetails  && this.userId !== undefined) {
-      console.log(this.userId)
-      const newReview: Reviews = {
-        id: 0,
-        game_id: this.gameDetails.id, // ID do jogo
-        review_text: this.reviewText, // Texto da review
-        rating: this.rating,
-        user_id: Number(this.userId),
-      };
+    if (this.gameDetails && this.userId !== undefined) {
+      this.reviewsService.getLastReviewId().subscribe(
+        review => {
+          this.newId = Number(review); // Converte o valor para número
+          console.log('Novo ID da review:', this.newId) // Verifica o valor de newId
 
-      this.reviewsService.createReview(newReview).subscribe(response => {
-        console.log('Review criada com sucesso:', response);
-        window.alert('Review criada com sucesso! Você será redirecionado')
-        this.router.navigate(['/dashboard']);
-        // Redirecione ou faça outras ações após a criação bem-sucedida
-      }, error => {
-        console.error('Erro ao criar review:', error);
-      });
+          if (this.gameDetails && this.newId) { 
+            const newReview: Reviews = {
+              id: this.newId,
+              game_id: this.gameDetails.id, // ID do jogo
+              review_text: this.reviewText, // Texto da review
+              rating: this.rating,
+              user_id: Number(this.userId),
+            }
+  
+            this.reviewsService.createReview(newReview).subscribe(
+              response => {
+                console.log('Review criada com sucesso:', response);
+                window.alert('Review criada com sucesso! Você será redirecionado');
+                this.router.navigate(['/dashboard']);
+              },
+              error => {
+                console.error('Erro ao criar review:', error);
+              }
+            );
+          } else {
+            console.error('Detalhes do jogo não estão disponíveis.');
+          }
+        },
+        error => {
+          console.error('Erro ao obter o último ID da review:', error);
+        }
+      );
+    } else {
+      console.error('Detalhes do jogo ou ID do usuário não estão definidos.');
     }
   }
+  
+  
 }

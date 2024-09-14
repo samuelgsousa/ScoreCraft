@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 // Rota para criar uma nova avaliação
 router.post('/', async (req, res) => {
-  const { user_id, game_id, rating, review_text } = req.body;
+  const { newId, user_id, game_id, rating, review_text } = req.body;
 
   try {
 

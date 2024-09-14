@@ -20,9 +20,10 @@ export class ReviewsService{
         return this.http.get<Reviews[]>(this.baseUrl)
     }
 
-    getLastReviewId(): Observable<Reviews> {
-      return this.http.get<Reviews>(`${this.baseUrl}/last`);
+    getLastReviewId(): Observable<number> {
+      return this.http.get<number>(`${this.baseUrl}/reviews/last`);
     }
+    
     
     //rota para buscar as reviews de determinado usuário
     getUserReviews(user_id: number): Observable<Reviews[]> {
