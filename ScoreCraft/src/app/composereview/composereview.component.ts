@@ -63,9 +63,7 @@ export class ComposereviewComponent {
 
   createReview() {
     if (this.gameDetails  && this.userId !== undefined) {
-      console.log(this.userId)
-      const newReview: Reviews = {
-        id: 0,
+        const newReview: Reviews = {
         game_id: this.gameDetails.id, // ID do jogo
         review_text: this.reviewText, // Texto da review
         rating: this.rating,

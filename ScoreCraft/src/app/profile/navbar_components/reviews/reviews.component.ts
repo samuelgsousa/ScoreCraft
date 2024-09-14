@@ -72,7 +72,7 @@ export class ReviewsComponent {
     if (!this.gameDetails[id]) {
       this.gamesService.getGameDetailsById(id).subscribe(game => {
         this.gameDetails[id] = game; // Armazena os detalhes do jogo
-        console.log('Game Details:', game); // Exibe os detalhes do jogo no console
+       
       }, error => {
         console.error('Erro ao obter detalhes do jogo:', error);
       });

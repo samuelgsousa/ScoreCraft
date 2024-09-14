@@ -13,25 +13,21 @@ router.get('/', async (req, res) => {
   }
 });
 
-const getNextSequenceValue = async (sequenceName) => {
-  const sequenceDocument = await ScoreCraftData.collection('counters').findOneAndUpdate(
-    { id: sequenceName },
-    { $inc: { sequence_value: 1 } },
-    { returnOriginal: false }
-  );
-  return sequenceDocument.value.sequence_value;
-};
+
+
 
 // Rota para criar uma nova avaliação
 router.post('/', async (req, res) => {
   const { user_id, game_id, rating, review_text } = req.body;
 
-
-
   try {
-    const reviewId = await getNextSequenceValue('reviews_id');  // Obtém o próximo ID
+
+    const lastReview = await Review.findOne().sort({ id: -1 });
+    const newId = lastReview ? lastReview.id + 1 : 1; // Caso não haja reviews, começa com ID 1
+
+
     const review = new Review({
-      id: reviewId,
+      id: newId,
       user_id,
       game_id,
       rating,
@@ -42,6 +38,16 @@ router.post('/', async (req, res) => {
     res.status(201).json(newReview);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+});
+
+router.get('/last', async (req, res) => {
+  try {
+    // Encontra a última review baseada no campo `id`
+    const lastReview = await Review.findOne().sort({ id: -1 }).populate('user_id').populate('game_id');
+    res.json(lastReview);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
