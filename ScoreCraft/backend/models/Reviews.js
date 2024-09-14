@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const reviewsSchema = new mongoose.Schema({
-    id: { type: Number },
+    id: { type: Number, required: true },
     review_id: { type: Number },
     user_id: { type: Number, required: true },
     game_id: { type: Number, required: true },
