@@ -116,7 +116,7 @@ router.get('/user/:id', async (req, res) => {
 router.get('/reviews/last', async (req, res) => {
   try {
     const reviews = await Review.find().populate('user_id').populate('game_id');
-    res.json(reviews.length);
+    res.json(reviews.length + 1);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
