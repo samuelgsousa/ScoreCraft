@@ -12,7 +12,7 @@ const reviewsSchema = new mongoose.Schema({
 });
 
 function getNextSequenceValue(sequenceName) {
-    var sequenceDocument = ScoreCraftData.counters.findAndModify({
+    var sequenceDocument = db.counters.findAndModify({
       query: { _id: sequenceName },
       update: { $inc: { sequence_value: 1 } },
       new: true
