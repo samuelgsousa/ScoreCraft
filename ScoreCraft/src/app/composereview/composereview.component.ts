@@ -34,7 +34,16 @@ export class ComposereviewComponent {
   ) {}
   
   ngOnInit(): void {
- 
+    
+   const t =  this.reviewsService.getLastReviewId().subscribe(review => {
+    review; // Armazena os detalhes do jogo
+    console.log('largura deve srrr', review); // Exibe os detalhes do jogo no console
+  }, error => {
+    console.error('Erro ao obter detalhes do jogo:', error);
+  });
+
+   console.log("RESULTADO" + t)
+    
 
     const gameId = this.route.snapshot.params['id']; // Captura o ID do jogo da rota
     this.getGameDetails(gameId); // Chama a função para obter os detalhes
@@ -45,7 +54,6 @@ export class ComposereviewComponent {
     this.gamesService.getGameDetailsById(id).subscribe(
       game => {
         this.gameDetails = game; // Armazena os detalhes do jogo
-        console.log(this.gameDetails); // Verifica se o gameDetails foi preenchido corretamente
       },
       error => {
         console.error('Erro ao obter detalhes do jogo:', error);

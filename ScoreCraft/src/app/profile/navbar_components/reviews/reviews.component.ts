@@ -44,7 +44,6 @@ export class ReviewsComponent {
           this.editStates = this.userReviews.map(() => false);
           // Inicializa a variável temporária com o texto das reviews
           this.tempReviewText = this.userReviews.map(review => review.review_text);
-           console.log(this.userReviews);
 
            this.loadGameDetails()
         },
@@ -72,7 +71,6 @@ export class ReviewsComponent {
     if (!this.gameDetails[id]) {
       this.gamesService.getGameDetailsById(id).subscribe(game => {
         this.gameDetails[id] = game; // Armazena os detalhes do jogo
-        console.log('Game Details:', game); // Exibe os detalhes do jogo no console
       }, error => {
         console.error('Erro ao obter detalhes do jogo:', error);
       });

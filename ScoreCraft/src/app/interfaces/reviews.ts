@@ -1,5 +1,5 @@
 export interface Reviews{
-    id?: number
+    id: number
     user_id: number
     game_id: number
     played_data?: Date

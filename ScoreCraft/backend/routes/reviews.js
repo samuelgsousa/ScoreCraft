@@ -13,25 +13,15 @@ router.get('/', async (req, res) => {
   }
 });
 
-const getNextSequenceValue = async (sequenceName) => {
-  const sequenceDocument = await db.collection('counters').findOneAndUpdate(
-    { id: sequenceName },
-    { $inc: { sequence_value: 1 } },
-    { returnOriginal: false }
-  );
-  return sequenceDocument.value.sequence_value;
-};
 
 // Rota para criar uma nova avaliação
 router.post('/', async (req, res) => {
   const { user_id, game_id, rating, review_text } = req.body;
 
-
-
   try {
-    const reviewId = await getNextSequenceValue('reviews_id');  // Obtém o próximo ID
+
     const review = new Review({
-      id: reviewId,
+      id: newId,
       user_id,
       game_id,
       rating,
@@ -44,6 +34,9 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+
+
 
 // Rota para atualizar uma avaliação
 router.patch('/:id', async (req, res) => {
@@ -119,5 +112,16 @@ router.get('/user/:id', async (req, res) => {
     res.status(500).json({ message: 'Erro interno do servidor' });
   }
 });
+
+router.get('/reviews/last', async (req, res) => {
+  try {
+    const reviews = await Review.find().populate('user_id').populate('game_id');
+    res.json(reviews.length);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 
 module.exports = router;

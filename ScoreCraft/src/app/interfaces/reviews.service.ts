@@ -10,15 +10,18 @@ import { Profile } from './profile';
 
 export class ReviewsService{
 
-     private baseUrl = 'https://scorecraft.onrender.com/api/reviews'
-    //private baseUrl = 'http://localhost:3000/api/reviews'
+     //private baseUrl = 'https://scorecraft.onrender.com/api/reviews'
+    private baseUrl = 'http://localhost:3000/api/reviews'
    
     constructor(private http: HttpClient) { }
 
 
     asyncgetAllReviews(): Observable<Reviews[]>{
         return this.http.get<Reviews[]>(this.baseUrl)
-        
+    }
+
+    getLastReviewId(): Observable<Reviews> {
+      return this.http.get<Reviews>(`${this.baseUrl}/last`);
     }
     
     //rota para buscar as reviews de determinado usuário
