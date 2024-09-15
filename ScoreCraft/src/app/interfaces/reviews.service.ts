@@ -10,8 +10,8 @@ import { Profile } from './profile';
 
 export class ReviewsService{
 
-    // private baseUrl = 'https://scorecraft.onrender.com/api/reviews'
-    private baseUrl = 'http://localhost:3000/api/reviews'
+    private baseUrl = 'https://scorecraft.onrender.com/api/reviews'
+    //private baseUrl = 'http://localhost:3000/api/reviews'
    
     constructor(private http: HttpClient) { }
 
