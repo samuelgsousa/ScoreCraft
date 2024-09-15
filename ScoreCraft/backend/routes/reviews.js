@@ -16,17 +16,20 @@ router.get('/', async (req, res) => {
 
 // Rota para criar uma nova avaliação
 router.post('/', async (req, res) => {
-  const { newId, user_id, game_id, rating, review_text } = req.body;
-
+  const { id, game_id, review_text, rating, user_id} = req.body;
+  
+  console.log('Dados recebidos no backend:', req.body);
   try {
 
     const review = new Review({
-      id: newId,
-      user_id,
+      id,
       game_id,
+      review_text, 
       rating,
-      review_text
+      user_id,
     });
+
+    console.log('reviews.js dados recebidos: ' + review)
 
     const newReview = await review.save();
     res.status(201).json(newReview);

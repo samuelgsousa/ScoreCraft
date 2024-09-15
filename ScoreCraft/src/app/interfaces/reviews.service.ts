@@ -10,8 +10,8 @@ import { Profile } from './profile';
 
 export class ReviewsService{
 
-     //private baseUrl = 'https://scorecraft.onrender.com/api/reviews'
-    private baseUrl = 'http://localhost:3000/api/reviews'
+     private baseUrl = 'https://scorecraft.onrender.com/api/reviews'
+    //private baseUrl = 'http://localhost:3000/api/reviews'
    
     constructor(private http: HttpClient) { }
 
@@ -35,7 +35,7 @@ export class ReviewsService{
     }
 
     createReview(newReview: Reviews): Observable<Reviews> {
-      console.log(newReview)
+      console.log('reviews.service, dados recebidos, a serem passados para o db' + newReview)
       return this.http.post<Reviews>(`${this.baseUrl}`, newReview);
     }
 

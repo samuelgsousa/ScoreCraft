@@ -28,6 +28,7 @@ export class SignupComponent {
   ];
 
   profilePhoto: string = './petcons/default_profile.png'; // Foto padrão
+  newId: number | undefined;
 
   constructor(private fb: FormBuilder, private profileUserService: ProfileService, private authService: AuthService, private router: Router) {}
 
@@ -58,28 +59,36 @@ export class SignupComponent {
 
   onSubmit(): void {
     if (this.accountForm.valid) {
-      const profile = {
-        nome: this.accountForm.get('nome')?.value,
-        email: this.accountForm.get('email')?.value,
-        senha: this.accountForm.get('senha')?.value,
-        foto_perfil: this.profilePhoto, // Adicionando a foto do perfil
-        bio: this.accountForm.get('bio')?.value,
-      };
-      console.log(profile);
-      
-      this.profileUserService.addProfile(profile).subscribe(
-        async newProfile => {
-          console.log('Perfil adicionado com sucesso:', newProfile);
-          const isAuthenticated = await this.authService.login(profile.email, profile.senha);
-          if (isAuthenticated) {
-            this.router.navigate(['/dashboard']); // Redirecionar para a página desejada após o login
-          }
-          // Atualize a lista de perfis ou faça qualquer outra ação necessária
-        },
-        error => {
-          console.error('Erro ao adicionar perfil:', error);
+      this.profileUserService.getLastUserid().subscribe(
+        lastProfile => {
+          this.newId = Number(lastProfile)
+          
+          const profile = {
+            id: this.newId,
+            nome: this.accountForm.get('nome')?.value,
+            email: this.accountForm.get('email')?.value,
+            senha: this.accountForm.get('senha')?.value,
+            foto_perfil: this.profilePhoto, // Adicionando a foto do perfil
+            bio: this.accountForm.get('bio')?.value,
+          };
+          console.log('signup component, dados passados:', profile)
+          
+          this.profileUserService.addProfile(profile).subscribe(
+            async newProfile => {
+              console.log('Perfil adicionado com sucesso:', newProfile);
+              const isAuthenticated = await this.authService.login(profile.email, profile.senha);
+              if (isAuthenticated) {
+                this.router.navigate(['/dashboard']); // Redirecionar para a página desejada após o login
+              }
+              // Atualize a lista de perfis ou faça qualquer outra ação necessária
+            },
+            error => {
+              console.error('Erro ao adicionar perfil:', error);
+            }
+          );
         }
-      );
+      )
+
     } else {
       console.error('Formulário inválido');
     }

@@ -65,7 +65,7 @@ export class ComposereviewComponent {
       this.reviewsService.getLastReviewId().subscribe(
         review => {
           this.newId = Number(review); // Converte o valor para número
-          console.log('Novo ID da review:', this.newId) // Verifica o valor de newId
+
 
           if (this.gameDetails && this.newId) { 
             const newReview: Reviews = {
@@ -75,6 +75,7 @@ export class ComposereviewComponent {
               rating: this.rating,
               user_id: Number(this.userId),
             }
+            console.log('composer review component, dados passados:', newReview) // Verifica o valor de newId
   
             this.reviewsService.createReview(newReview).subscribe(
               response => {

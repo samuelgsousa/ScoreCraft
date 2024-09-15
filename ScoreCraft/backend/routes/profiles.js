@@ -12,16 +12,28 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Rota para obter id do último perfil
+router.get('/profiles/last', async (req, res) => {
+  try {
+    const profiles = await Profile.find();
+    res.json(profiles.length + 1);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 // Rota para criar um novo perfil
 router.post('/', async (req, res) => {
   const profile = new Profile({
+    id: req.body.id,
     nome: req.body.nome,
     email: req.body.email,
     senha: req.body.senha,
     foto_perfil: req.body.foto_perfil,
     bio: req.body.bio
   });
+  console.log('Dados recebidos no backend (profile.js):', req.body);
   try {
     const newProfile = await profile.save();
     res.status(201).json(newProfile);
