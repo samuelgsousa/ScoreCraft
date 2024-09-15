@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const Profile = require('../models/Profile'); // Certifique-se de que o caminho está correto
 
+router.get('/', async (req, res) => {
+    try {
+        res.json(1500);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+})
 // Rota para login
 router.post('/login', async (req, res) => {
     res.json(1500)
