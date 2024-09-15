@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "baseHref": "/browser/index.html",
+            "baseHref": "/",
             "outputPath": "dist/score-craft",
             "index": "src/index.html",
             "browser": "src/main.ts",

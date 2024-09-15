@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { Profile } from '../../../interfaces/profile';
 import { CommonModule } from '@angular/common';
 import { ProfileService } from '../../../interfaces/profile.service';
@@ -6,6 +6,7 @@ import { Reviews } from '../../../interfaces/reviews';
 import { ReviewsService } from '../../../interfaces/reviews.service';
 import Chart from 'chart.js/auto';
 import { RouterLink, RouterModule } from '@angular/router';
+
 @Component({
   selector: 'user-estatisticas',
   standalone: true,
@@ -13,44 +14,44 @@ import { RouterLink, RouterModule } from '@angular/router';
   templateUrl: './estatisticas.component.html',
   styleUrl: './estatisticas.component.css'
 })
-
-export class EstatisticasComponent {
+export class EstatisticasComponent implements OnChanges {
   @Input() profile: Profile | undefined;
   userReviews: Reviews[] = [];
-  followers: Profile[] = []; // Inicializado como um array vazio
-  review: any;
+  followers: Profile[] = [];
 
   constructor(private reviewsService: ReviewsService, private profileService: ProfileService) {}
 
-  async ngOnInit(): Promise<void> {
-    if (this.profile?.id !== undefined) {
-
-      this.reviewsService.getUserReviews(this.profile.id).subscribe(
-        (reviews: Reviews[]) => {
-          this.userReviews = reviews;
-          
-          this.userReviews.forEach(review => {
-            console.log(review.rating);
-          });
-
-          this.gerarGrafico(); // Atualiza o gráfico após carregar as reviews
-        },
-        error => {
-          console.error('Erro ao buscar reviews:', error);
-        }
-      );
-
-      this.profileService.getFollowersById(this.profile.id).subscribe(
-        (followers: Profile[]) => {
-          this.followers = followers;
-
-        },
-        error => {
-          console.error('Erro ao buscar seguidores:', error);
-        }
-      );
+  // Detecta mudanças nas propriedades de entrada (profile)
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['profile'] && this.profile?.id !== undefined) {
+      this.loadUserReviews();
+      this.loadFollowers();
     }
-    // this.gerarGrafico()
+  }
+
+  // Função que carrega as reviews do usuário
+  loadUserReviews(): void {
+    this.reviewsService.getUserReviews(Number(this.profile!.id)).subscribe(
+      (reviews: Reviews[]) => {
+        this.userReviews = reviews;
+        this.gerarGrafico(); // Atualiza o gráfico após carregar as reviews
+      },
+      error => {
+        console.error('Erro ao buscar reviews:', error);
+      }
+    );
+  }
+
+  // Função que carrega os seguidores do usuário
+  loadFollowers(): void {
+    this.profileService.getFollowersById(Number(this.profile!.id)).subscribe(
+      (followers: Profile[]) => {
+        this.followers = followers;
+      },
+      error => {
+        console.error('Erro ao buscar seguidores:', error);
+      }
+    );
   }
 
   gerarGrafico(): void {
@@ -88,4 +89,3 @@ export class EstatisticasComponent {
     }
   }
 }
-

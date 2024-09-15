@@ -1,81 +1,75 @@
-import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Reviews } from '../../../interfaces/reviews';
 import { ReviewsService } from '../../../interfaces/reviews.service';
 import { GamesService } from '../../../interfaces/games.service';
 import { FormsModule } from '@angular/forms';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { Games } from '../../../interfaces/games';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'user-reviews',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbRatingModule],
+  imports: [CommonModule,FormsModule, NgbRatingModule],
   templateUrl: './reviews.component.html',
   styleUrl: './reviews.component.css'
 })
-export class ReviewsComponent {
+export class ReviewsComponent implements OnChanges {
 
-  rating = 1;
-  @Input() userId: number | undefined // Recebe o user_id como input de outro componente
+  @Input() userId: number | undefined;
   @Input() isCurrentUser: boolean = false;
 
   isEditing: boolean = false;
   userReviews: Reviews[] = [];
-  review: any;
   editStates: boolean[] = []; 
-  tempReviewText: string[] = []; // Variável para armazenar o texto temporário
-  
+  tempReviewText: string[] = []; 
   gameDetails: { [key: number]: Games } = {}; 
 
-  // Injetando o serviço
   constructor(private reviewsService: ReviewsService, private gamesService: GamesService) {}
-  
 
-  ngOnInit(): void {
-    // Chamando o método para buscar as reviews
+  // Detecta mudanças nas propriedades de entrada (userId)
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['userId'] && this.userId !== undefined) {
+      // Só carrega as reviews se o userId estiver definido
+      this.loadUserReviews();
+    }
+  }
 
+  // Função que carrega as reviews do usuário
+  loadUserReviews(): void {
     if (this.userId !== undefined) {
       this.reviewsService.getUserReviews(this.userId).subscribe({
         next: (reviews) => {
-          // Atualize a lista de reviews do usuário
           this.userReviews = reviews;
-          // Inicializa a variável editStates
           this.editStates = this.userReviews.map(() => false);
-          // Inicializa a variável temporária com o texto das reviews
           this.tempReviewText = this.userReviews.map(review => review.review_text);
-
-           this.loadGameDetails()
+          this.loadGameDetails();
         },
         error: (error) => {
           console.error('Erro ao carregar reviews do usuário', error);
         }
       });
     }
-
-    
   }
-  
 
-  loadGameDetails(): void {
+  async loadGameDetails(): Promise<void> {
     this.userReviews.forEach(review => {
       if (!this.gameDetails[review.game_id]) {
-        this.getGameDetails(review.game_id); // Função que busca detalhes do jogo
+        this.getGameDetails(review.game_id);
       }
     });
   }
 
   async getGameDetails(id: number): Promise<void> {
-    // Verifica se os detalhes do jogo já foram carregados
-  
     if (!this.gameDetails[id]) {
       this.gamesService.getGameDetailsById(id).subscribe(game => {
-        this.gameDetails[id] = game; // Armazena os detalhes do jogo
+        this.gameDetails[id] = game;
       }, error => {
         console.error('Erro ao obter detalhes do jogo:', error);
       });
     }
   }
+
   enableEdit(index: number) {
     this.editStates[index] = true; // Habilita o modo de edição para o review específico
   }

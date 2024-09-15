@@ -34,3 +34,28 @@ h1{
 
 }
 
+.userdata{
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    margin-top: 0.8rem;
+    align-items: center;
+}
+
+.userdata h2{
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.userProfilePicture{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+ngb-rating{
+    align-self: last baseline;
+    font-size: 1.5rem;
+}
