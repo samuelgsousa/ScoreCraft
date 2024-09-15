@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const authRoutes = require('./routes/auth'); 
 
 const app = express();
 const port = 3000;
