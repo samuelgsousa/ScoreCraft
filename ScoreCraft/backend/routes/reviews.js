@@ -46,21 +46,23 @@ router.patch('/:id', async (req, res) => {
   const { review_text, rating } = req.body;
 
   try {
-      // Atualiza a review no banco de dados
+      // Atualiza a review no banco de dados usando o id da URL
       const updatedReview = await Review.findOneAndUpdate(
-        
-          { review_text, rating },
+          { id: req.params.id }, // Busca pelo campo `id`
+          { review_text, rating }, // Atualiza os campos
           { new: true } // Retorna o documento atualizado
       );
 
       if (!updatedReview) {
           return res.status(404).send({ message: 'Review não encontrada' });
       }
+
       res.send(updatedReview);
   } catch (error) {
       res.status(400).send({ message: 'Erro ao atualizar a review', error });
   }
 });
+
 
 // Rota para deletar uma avaliação
 router.delete('/:id', async (req, res) => {
