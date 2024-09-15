@@ -15,6 +15,24 @@ const profileSchema = new mongoose.Schema({
     senha: { type: String, default: null, required: true },
 });
 
+profileSchema.pre('save', async function(next) {
+  if (this.isModified('senha') || this.isNew) {
+    try {
+      const salt = await bcrypt.genSalt(10); // Gera um salt
+      this.senha = await bcrypt.hash(this.senha, salt); // Faz o hash da senha
+      next();
+    } catch (err) {
+      next(err);
+    }
+  } else {
+    return next();
+  }
+});
+
+// Método para verificar se a senha é válida
+profileSchema.methods.comparePassword = function(candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.senha);
+};
 
 module.exports = mongoose.model('Profile', profileSchema);
 

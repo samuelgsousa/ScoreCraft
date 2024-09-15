@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Profile } from '../interfaces/profile';
-import { ProfileService } from '../interfaces/profile.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,27 +9,27 @@ import { ProfileService } from '../interfaces/profile.service';
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<Profile | null>(null);
   public currentUser$: Observable<Profile | null> = this.currentUserSubject.asObservable();
-  profileService: ProfileService = inject(ProfileService);
 
-  constructor() {}
+  private apiUrl = 'http://localhost:3000/api/auth'; // URL da API de autenticação
+
+  constructor(private http: HttpClient) {}
 
   // Método para realizar o login
   login(email: string, senha: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      this.profileService.getAllUsers().subscribe(users => {
-        const user = users.find(user => user.email === email && user.senha === senha) || null;
-        
-        if (user) {
-          this.currentUserSubject.next(user);
-          console.log('Login bem-sucedido');
-          resolve(true); // Resolve a promessa como "true" se o login for bem-sucedido
-        } else {
-          console.log('Credenciais inválidas');
-          resolve(false); // Resolve a promessa como "false" se as credenciais forem inválidas
+      this.http.post<{ message: string }>(`${this.apiUrl}/login`, { email, senha }).subscribe({
+        next: (response) => {
+          if (response.message === 'Login bem-sucedido') {
+            this.currentUserSubject.next({ email, senha } as Profile); // Ajuste conforme necessário
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao realizar login', error);
+          reject(error);
         }
-      }, error => {
-        console.error('Erro ao buscar usuários', error);
-        reject(error); // Rejeita a promessa se ocorrer um erro
       });
     });
   }
