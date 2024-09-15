@@ -107,35 +107,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
-// Rota de login
-router.post('/auth/login', async (req, res) => {
-  const { email, senha } = req.body;
-
-  try {
-    const user = await Profile.findOne({ email });
-    
-    if (!user) {
-      return res.status(401).json({ message: 'Usuário não encontrado' });
-    }
-
-    // Verifica se a senha é válida
-    const isMatch = await bcrypt.compare(senha, user.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ message: 'Credenciais inválidas' });
-    }
-
-    // Cria e envia o token JWT
-    const token = jwt.sign({ id: user._id }, 'seu_segredo_jwt', { expiresIn: '1h' });
-    
-    res.json({ token });
-  } catch (error) {
-    res.status(500).json({ message: 'Erro ao fazer login', error });
-  }
-});
-
-
 module.exports = router;
