@@ -8,8 +8,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProfileService {
 
-  private baseUrl = 'https://scorecraft.onrender.com/api/profiles';
-    //private baseUrl = 'http://localhost:3000/api/profiles'
+  //private baseUrl = 'https://scorecraft.onrender.com/api/profiles';
+    private baseUrl = 'http://localhost:3000/api/profiles'
 
   
   constructor(private http: HttpClient) { }

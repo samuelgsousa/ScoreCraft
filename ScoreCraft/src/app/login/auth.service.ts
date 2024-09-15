@@ -1,7 +1,8 @@
-import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Profile } from '../interfaces/profile';
-import { ProfileService } from '../interfaces/profile.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,39 +10,35 @@ import { ProfileService } from '../interfaces/profile.service';
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<Profile | null>(null);
   public currentUser$: Observable<Profile | null> = this.currentUserSubject.asObservable();
-  profileService: ProfileService = inject(ProfileService);
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   // Método para realizar o login
   login(email: string, senha: string): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.profileService.getAllUsers().subscribe(users => {
-        const user = users.find(user => user.email === email && user.senha === senha) || null;
-        
+    return this.http.post<Profile>('http://localhost:3000/api/auth/login', { email, senha })
+      .toPromise()
+      .then(user => {
         if (user) {
           this.currentUserSubject.next(user);
           console.log('Login bem-sucedido');
-          resolve(true); // Resolve a promessa como "true" se o login for bem-sucedido
-        } else {
-          console.log('Credenciais inválidas');
-          resolve(false); // Resolve a promessa como "false" se as credenciais forem inválidas
+          return true;
         }
-      }, error => {
-        console.error('Erro ao buscar usuários', error);
-        reject(error); // Rejeita a promessa se ocorrer um erro
+        return false;
+      })
+      .catch(error => {
+        console.error('Erro no login', error);
+        return false;
       });
-    });
+  }
+
+  logout(): void {
+    this.currentUserSubject.next(null);
   }
 
   // Método para obter o ID do usuário atual
   getUserId(): Observable<number | undefined> {
     return this.currentUser$.pipe(
-      map(user => user?.id) // Supondo que o 'Profile' tem um campo 'id'
+      map(user => user?.id)
     );
-  }
-
-  logout(): void {
-    this.currentUserSubject.next(null);
   }
 }

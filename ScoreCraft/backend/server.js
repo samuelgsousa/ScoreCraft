@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const authRoutes = require('./routes/auth'); 
 
 const app = express();
 const port = 3000;
@@ -43,6 +44,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use('/api/profiles', require('./routes/profiles'));
 app.use('/api/games', require('./routes/games')); 
 app.use('/api/reviews', require('./routes/reviews')); 
+app.use('/api/auth', authRoutes);   
 
 // Iniciar o servidor
 app.listen(port, () => {
