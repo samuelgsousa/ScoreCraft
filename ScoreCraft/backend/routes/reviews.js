@@ -118,12 +118,14 @@ router.get('/user/:id', async (req, res) => {
 
 router.get('/reviews/last', async (req, res) => {
   try {
-    const reviews = await Review.find().populate('user_id').populate('game_id');
-    res.json(reviews.length + 1);
+    const lastReview = await Review.findOne().sort({ id: -1 }); // Ordena pelo campo 'id' em ordem decrescente e pega o primeiro
+    const nextId = lastReview ? lastReview.id + 1 : 1; // Se existir uma review, pega o maior id, senão começa de 1
+    res.json(nextId);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 
 

@@ -15,12 +15,14 @@ router.get('/', async (req, res) => {
 // Rota para obter id do último perfil
 router.get('/profiles/last', async (req, res) => {
   try {
-    const profiles = await Profile.find();
-    res.json(profiles.length + 1);
+    const lastProfile = await Profile.findOne().sort({ id: -1 }); // Ordena pelo campo 'id' em ordem decrescente e pega o maior
+    const nextId = lastProfile ? lastProfile.id + 1 : 1; // Se existir um perfil, pega o maior id, senão começa de 1
+    res.json(nextId);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 
 // Rota para criar um novo perfil
