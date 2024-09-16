@@ -13,6 +13,8 @@
   --SquareBgColor: #1d1d1d;
   --SquareShadowColor: #000;
   --MainBackground: #212529;
+  --SaveButton: rgb(17, 216, 100);
+  --CancelButton: rgb(230, 46, 33);
 }
 #WebSiteTitle h1{
   color: white;
@@ -35,4 +37,30 @@
     background-color: var(--BackGround);
     min-height: 100%;
     max-height: none;
+  }
+
+  .crud-button{
+    margin-top: 1rem;
+    margin-right: 1rem;
+    width: 5rem;
+    height: 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+  }
+
+  .save-button{
+    background-color: var(--SaveButton);
+    border-color: var(--SaveButton);
+  }
+
+  .cancel-button{
+    background-color: var(--CancelButton);
+    border-color: var(--CancelButton);
+  }
+
+  .neutral-button{
+    background-color: var(--SecondaryColor);
+    border-color: var(--SecondaryColor);
   }

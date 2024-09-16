@@ -58,7 +58,7 @@ export const routes: Routes = [
         path: 'newreview/:id',
         component: ComposereviewComponent,
         title: 'Nova Review',
-        canActivate: [AuthGuard]
+         canActivate: [AuthGuard]
     },
     {
         path: '**', 

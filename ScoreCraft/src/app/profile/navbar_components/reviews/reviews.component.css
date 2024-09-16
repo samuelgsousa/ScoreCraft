@@ -60,3 +60,11 @@ textarea {
     width: 70%;
     min-height: auto;
   }
+
+button{
+    margin-top: 1rem;
+    margin-right: 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: white;
+  }

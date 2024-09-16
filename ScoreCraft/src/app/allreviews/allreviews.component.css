@@ -59,3 +59,9 @@ ngb-rating{
     align-self: last baseline;
     font-size: 1.5rem;
 }
+
+.reviewtext{
+    max-width: 90%;
+    max-height: none;
+    word-break: break-all;
+}

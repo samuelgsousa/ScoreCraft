@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { Reviews } from '../../../interfaces/reviews';
 import { ReviewsService } from '../../../interfaces/reviews.service';
 import { GamesService } from '../../../interfaces/games.service';
@@ -70,8 +70,9 @@ export class ReviewsComponent implements OnChanges {
     }
   }
 
-  enableEdit(index: number) {
+  enableEdit(index: number): void {
     this.editStates[index] = true; // Habilita o modo de edição para o review específico
+
   }
 
   cancelEdit(index: number) {

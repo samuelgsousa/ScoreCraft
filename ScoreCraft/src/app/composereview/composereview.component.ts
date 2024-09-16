@@ -52,8 +52,10 @@ export class ComposereviewComponent {
     );
   }
 
-  autoResize($event: Event) {
-    throw new Error('Method not implemented.');
+  autoResize(event: any): void {
+    const textarea = event.target;
+    textarea.style.height = 'auto';  // Redefine a altura para auto para calcular corretamente
+    textarea.style.height = textarea.scrollHeight + 'px';  // Define a altura com base no conteúdo
   }
 
   cancelCreation() {

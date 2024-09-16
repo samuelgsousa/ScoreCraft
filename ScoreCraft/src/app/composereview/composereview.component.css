@@ -16,11 +16,15 @@ main::-webkit-scrollbar {
 
 
 .game-review{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 21rem;
     padding: 1%;
     margin-bottom: 10px;
     word-break: normal;
 }
+
 
 .img-game-review{
     border-radius: 5px;
@@ -31,7 +35,7 @@ main::-webkit-scrollbar {
     display: flex;
     justify-content: center;
     object-fit: cover;
-    margin-right: clamp(10px,10px + 1vw,30px);
+    margin-bottom: 2rem;
 }
 
 .game-review h1{
@@ -45,8 +49,6 @@ main::-webkit-scrollbar {
     margin-right: 1%;
 }
 
-@media(max-width: 350px){ .date-rate{ display: inline-block;}}
-
 .game-review p{
     font-size: 1rem;
     margin-top: 1%;
@@ -58,5 +60,21 @@ textarea {
     overflow-y: hidden; /* Oculta a barra de rolagem vertical */
     resize: none;       /* Evita o redimensionamento manual */
     width: 70%;
-    min-height: auto;
+    min-height: 10rem;
+    margin-top: 2rem;
   }
+
+  
+@media(max-width: 850px){ 
+    textarea {
+        width: 90%;
+    }
+}
+
+
+  .composing{    
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+}
