@@ -8,7 +8,7 @@ export interface Profile{
     // avaliacoes: Array<number> !Não será necessário, visto que posso acessar o review_list e de lá contabilizar o total de cada estrela de avaliações
     streamer?: boolean
     seguindo?: Array<number> | null
-    wallpaper?: string | null
+    wallpaper: string
     bio?: string | null
     // review_list: Array<number>
     fav_games?: Array<number> | null

@@ -36,6 +36,7 @@ router.post('/', async (req, res) => {
     wallpaper: req.body.wallpaper,
     bio: req.body.bio
   });
+  
   console.log('Dados recebidos no backend (profile.js):', req.body);
   try {
     const newProfile = await profile.save();

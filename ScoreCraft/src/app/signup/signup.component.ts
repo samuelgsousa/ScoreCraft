@@ -37,7 +37,7 @@ export class SignupComponent {
   ]
 
   profilePhoto: string = './petcons/default_profile.png'; // Foto padrão
-  wallpaperPhoto: string | undefined
+  wallpaperPhoto: string = ''
 
   newId: number | undefined;
 
