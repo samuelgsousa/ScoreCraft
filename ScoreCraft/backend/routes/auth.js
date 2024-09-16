@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Profile = require('../models/Profile'); // Certifique-se de que o caminho está correto
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs'); 
 
 // Rota para login
 
