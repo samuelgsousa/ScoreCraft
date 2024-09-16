@@ -35,6 +35,7 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']); // Redirecionar para a página desejada após o login
       } else {
         console.error('Credenciais inválidas');
+        window.alert('Email e/ou Senha incorretos')
       }
     } else {
       console.error('Formulário inválido');
