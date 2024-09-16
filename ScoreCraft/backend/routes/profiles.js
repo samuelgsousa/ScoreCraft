@@ -33,6 +33,7 @@ router.post('/', async (req, res) => {
     email: req.body.email,
     senha: req.body.senha,
     foto_perfil: req.body.foto_perfil,
+    wallpaper: req.body.wallpaper,
     bio: req.body.bio
   });
   console.log('Dados recebidos no backend (profile.js):', req.body);
