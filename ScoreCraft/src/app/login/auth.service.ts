@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<Profile | null>(null);
   public currentUser$: Observable<Profile | null> = this.currentUserSubject.asObservable();
-  private baseUrl = 'http://localhost:3000/api/auth'
+  private baseUrl = 'https://scorecraft.onrender.com/api/auth'
 
   constructor(private http: HttpClient) {}
 
