@@ -85,6 +85,7 @@ export class SignupComponent {
             email: this.accountForm.get('email')?.value,
             senha: this.accountForm.get('senha')?.value,
             foto_perfil: this.profilePhoto, // Adicionando a foto do perfil
+            wallpaper: this.wallpaperPhoto, // Adicionando Wallpaper
             bio: this.accountForm.get('bio')?.value,
           };
           console.log('signup component, dados passados:', profile)
