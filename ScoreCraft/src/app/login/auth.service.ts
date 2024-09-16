@@ -10,12 +10,13 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<Profile | null>(null);
   public currentUser$: Observable<Profile | null> = this.currentUserSubject.asObservable();
+  private baseUrl = 'http://localhost:3000/api/auth'
 
   constructor(private http: HttpClient) {}
 
   // Método para realizar o login
   login(email: string, senha: string): Promise<boolean> {
-    return this.http.post<Profile>('http://localhost:3000/api/auth/login', { email, senha })
+    return this.http.post<Profile>(`${this.baseUrl}/login`, { email, senha })
       .toPromise()
       .then(user => {
         if (user) {
