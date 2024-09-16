@@ -5,6 +5,15 @@ label{
 
 }
 
+.cover{
+    background-size: cover;
+    background-position: center center;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 input, textarea{
     font-size: 2rem;
     border-radius: 5px;
@@ -42,7 +51,27 @@ form{
     transition: opacity 0.5s ease-in-out, max-height 0.3s ease-in-out;
 }
 
-#iconSelection.show {
+#wppSelect{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    opacity: 0; /* Inicialmente oculto */
+    max-height: 0; /* Inicialmente escondido */
+    overflow: hidden; /* Oculta o conteúdo que excede max-height */
+    transition: opacity 0.5s ease-in-out, max-height 0.3s ease-in-out;
+}
+
+.wppSelection{
+    width: 10rem;
+    height: 5.5rem;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+}
+
+#iconSelection.show, #wppSelect.show {
     opacity: 1; /* Visível */
     max-height: 500px; /* Ajuste conforme necessário */
 }
@@ -69,6 +98,7 @@ form button{
     margin-top: 15px;
     font-size: 1.5rem;
     color: #7A4AFA;
+
 }
 
 form button[type="submit"]:disabled{
@@ -76,4 +106,14 @@ form button[type="submit"]:disabled{
     color: #543a9b;
     border-color: #543a9b;
     
+}
+
+.content{
+    min-height: 150vh;
+}
+
+@media(max-height: 755px){
+    .content{
+        min-height: 180vh;
+    }
 }

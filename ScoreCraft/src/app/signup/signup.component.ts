@@ -15,6 +15,7 @@ import { AuthService } from '../login/auth.service';
 export class SignupComponent {
 
   accountForm!: FormGroup;
+
   petPhotos: string[] = [
     './petcons/blueberry_by_hyanna_natsu_daaq3p4.png',
     './petcons/bonbonbear_by_hyanna_natsu_dacb1le.png',
@@ -27,7 +28,17 @@ export class SignupComponent {
     './petcons/watermelonparrot_by_hyanna_natsu_daaq3ne.png',
   ];
 
+  wppPhotos: string[] = [
+    'https://images3.alphacoders.com/136/thumb-1920-1368376.png',
+    'https://images5.alphacoders.com/710/thumb-1920-710940.png',
+    'https://images7.alphacoders.com/132/thumb-1920-1326068.jpeg',
+    'https://images3.alphacoders.com/137/thumb-1920-1374373.jpg',
+    'https://images6.alphacoders.com/131/thumb-1920-1311862.jpeg',
+  ]
+
   profilePhoto: string = './petcons/default_profile.png'; // Foto padrão
+  wallpaperPhoto: string | undefined
+
   newId: number | undefined;
 
   constructor(private fb: FormBuilder, private profileUserService: ProfileService, private authService: AuthService, private router: Router) {}
@@ -37,16 +48,21 @@ export class SignupComponent {
       nome: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       foto_perfil: this.profilePhoto,
+      wallpaper: this.wallpaperPhoto,
       senha: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
       bio: ['', [Validators.maxLength(300)]],
     }, { validators: this.passwordMatchValidator });
 
     this.getPetProfilePicture();
+    this.getWallpaper();
   }
 
   toggleIconSelection(): void {
     (document.querySelector("#iconSelection") as HTMLDivElement).classList.toggle('show');
+  }
+  toggleWppSelection(): void {
+    (document.querySelector("#wppSelect") as HTMLDivElement).classList.toggle('show');
   }
 
   // Validação personalizada para confirmar se as senhas coincidem
@@ -99,7 +115,20 @@ export class SignupComponent {
     this.profilePhoto = this.petPhotos[randomIndex];
   }
 
+  getWallpaper(): void {
+    const randomIndex = Math.floor(Math.random() * this.wppPhotos.length); 
+    this.wallpaperPhoto = this.wppPhotos[randomIndex];
+    const cover = document.querySelector('#cover') as HTMLElement
+    cover.style.backgroundImage = `url(${this.wallpaperPhoto})`
+  }
+
   changePetProfilePicture(photo: string): void {
     this.profilePhoto = photo;
+  }
+  changeWallpaper(photo: string): void {
+    const cover = document.querySelector('#cover') as HTMLElement
+    this.wallpaperPhoto = photo;
+    cover.style.backgroundImage = `url(${this.wallpaperPhoto})`
+    
   }
 }
