@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt'); // Importar bcrypt para criptografar senhas
+const bcrypt = require('bcryptjs'); // Importar bcrypt para criptografar senhas
 
 const profileSchema = new mongoose.Schema({
     id: { type: Number },
