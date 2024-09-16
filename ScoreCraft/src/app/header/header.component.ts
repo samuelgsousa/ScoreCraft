@@ -8,7 +8,7 @@ import { Profile } from '../interfaces/profile';
   standalone: true,
   imports: [RouterLink, CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
 
@@ -34,12 +34,18 @@ export class HeaderComponent {
   const setGrid = () => {
     const container = document.querySelector('div#magic-grid')
     
+    
     const SQUARES = 800
     
     for(let i = 0; i < SQUARES; i++) {
         const square = document.createElement('div')
         square.classList.add('square')
-    
+        square.style.width = '16px'
+        square.style.height = '16px'
+        square.style.backgroundColor = '#1d1d1d'
+        square.style.transition = '2s ease'
+
+
         square.addEventListener('mouseover', () => setColor(square))
     
         square.addEventListener('mouseout', () => removeColor(square))
@@ -50,13 +56,18 @@ export class HeaderComponent {
 
 const setColor = (element: HTMLDivElement) => {
    const color = getRandomColor()
-   element.style.background = color
-   element.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`
+    element.style.transition = '0s'
+
+    element.style.background = color
+    element.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`
 }
 
 const removeColor = (element: HTMLDivElement) => {
-   element.style.background = '#1d1d1d'
-   element.style.boxShadow = '0 0 2px #000'
+    element.classList.add('DeactivateSquare')
+    element.style.transition = '2s ease'
+    element.style.backgroundColor = '#1d1d1d'
+    element.style.boxShadow = 'none'
+    element.style.borderColor = 'transparent'
 }
 
 const getRandomColor = () => {

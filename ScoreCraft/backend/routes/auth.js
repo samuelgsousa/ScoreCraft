@@ -30,25 +30,4 @@ const bcrypt = require('bcryptjs');
      }
  });
 
-// Rota temporária para hash de todas as senhas não hasheadas
-// router.put('/hash-passwords', async (req, res) => {
-//     try {
-//       // Encontra todos os perfis
-//       const profiles = await Profile.find();
-  
-//       // Itera sobre os perfis e hashea senhas que não estão hasheadas
-//       for (let profile of profiles) {
-//         if (profile.senha && !profile.senha.startsWith('$2b$')) {  // Verifica se a senha não é nula e não é um hash do bcrypt
-//           const salt = await bcrypt.genSalt(10);
-//           profile.senha = await bcrypt.hash(profile.senha, salt);
-//           await profile.save();  // Salva o perfil com a senha hasheada
-//         }
-//       }
-  
-//       res.status(200).json({ message: 'Senhas criptografadas com sucesso' });
-//     } catch (err) {
-//       res.status(500).json({ message: err.message });
-//     }
-//   });
-
 module.exports = router;

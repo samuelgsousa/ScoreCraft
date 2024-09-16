@@ -63,7 +63,7 @@ export class BaseProfileComponent {
   
         // Verifica se o wallpaper existe antes de chamar a função
         // if (this.user?.wallpaper) {
-        //   this.insertWallpaper(String(this.user.wallpaper));  // Chama 'insertWallpaper' com o valor do wallpaper
+        this.insertWallpaper(String(this.user.wallpaper));  // Chama 'insertWallpaper' com o valor do wallpaper
         // }
       }, error => {
         console.error('Erro ao buscar usuário:', error);  // Tratamento de erros
