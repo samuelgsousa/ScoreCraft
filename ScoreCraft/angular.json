@@ -15,7 +15,7 @@
           "options": {
             "baseHref": "/browser/index.html",
             "outputPath": "dist/score-craft",
-            "index": "src/index.html",
+            "index": "src/index.html", 
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js",
