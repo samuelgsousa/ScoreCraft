@@ -15,14 +15,6 @@
 
 }
 
-@media(max-width: 600px){
-    #cover{
-        align-items: last baseline;
-        justify-content: center;
-        padding-top: 10%;
-    }
-}
-
 #avatar{
     height: 25%;
     width: auto;
@@ -84,6 +76,14 @@
 
 }
 
+.nav-link{
+    color: var( --SecondaryColor);
+}
+
+.nav-underline .nav-link.active{
+    color: var(--MainColor);
+}
+
 ng-template{
     height: 100vh ;
     background-color: blue;
@@ -97,3 +97,21 @@ ng-template{
 .show{
     display: inherit;
 }
+
+
+@media(max-width: 600px){
+    #cover{
+        align-items: center;
+        justify-content: center;
+        padding-top: 10%;
+        flex-direction: column;
+    }
+
+    #avatar{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+}
+

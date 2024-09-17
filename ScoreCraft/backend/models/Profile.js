@@ -8,7 +8,7 @@ const profileSchema = new mongoose.Schema({
     fav_gen: { type: [String], default: [] },
     streamer: { type: Boolean, default: false },
     seguindo: { type: [Number], default: [] },
-    wallpaper: { type: String, default: null },
+    wallpaper: { type: String, required: true },
     bio: { type: String, default: null },
     fav_games: { type: [Number], default: [] },
     email: { type: String, required: true, unique: true },
