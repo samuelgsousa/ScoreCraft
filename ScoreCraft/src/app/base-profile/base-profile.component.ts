@@ -9,11 +9,13 @@ import { ReviewsComponent } from '../profile/navbar_components/reviews/reviews.c
 import { AuthService } from '../login/auth.service'; // Serviço de autenticação
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { RouterModule } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-base-profile',
   standalone: true,
-  imports: [NgbNavModule, JogosComponent, ReviewsComponent, EstatisticasComponent, CommonModule, FormsModule],
+  imports: [NgbNavModule, JogosComponent, ReviewsComponent, EstatisticasComponent, CommonModule, FormsModule, RouterModule, RouterLink],
   templateUrl: './base-profile.component.html',
   styleUrl: './base-profile.component.css'
 })
@@ -23,6 +25,7 @@ export class BaseProfileComponent {
   @Input() reviewsText: string = 'Reviews';
   @Input() statsText: string = 'Estatísticas';
   @Input() isCurrentUser: boolean = false;
+  @Input() wallpaper: string | null | undefined
 
   route: ActivatedRoute = inject(ActivatedRoute);
   profileUserService: ProfileService = inject(ProfileService);
@@ -49,34 +52,56 @@ export class BaseProfileComponent {
   }
  
 
-  constructor(private authService: AuthService) {
-    this.getUser();
+  constructor(private authService: AuthService, private router: Router) {
+ 
+
+    
     // this.loggedInUserId = this.authService.getCurrentUser()?.id || null;
   }
 
 
   async getUser(): Promise<void> {
-    // Assinando o retorno do Observable para obter os dados do usuário
-    this.profileUserService.getUserById((this.route.snapshot.params['id']))
-      .subscribe(user => {
-        this.user = user;  // Atualiza 'this.user' com os dados retornados
+    let userId: number | undefined;
   
-        // Verifica se o wallpaper existe antes de chamar a função
-        // if (this.user?.wallpaper) {
-        this.insertWallpaper(String(this.user.wallpaper));  // Chama 'insertWallpaper' com o valor do wallpaper
-        // }
-      }, error => {
-        console.error('Erro ao buscar usuário:', error);  // Tratamento de erros
-      });
+    if (this.isCurrentUser) {
+      // Pegue o id do usuário logado
+     this.authService.getUserId().subscribe(
+      uId => {
+        userId = uId
+      }
+     );
+    } else {
+      // Pegue o id da rota, como antes
+      const routeParams = this.route.snapshot.params;
+
+      userId = Number(this.route.snapshot.params['id']);
+
+    }
+  
+    if (userId) {
+      this.profileUserService.getUserById(userId).subscribe(
+        user => {
+          this.user = user;
+          
+          this.insertWallpaper(String(this.user.wallpaper));
+        },
+        error => {
+          console.error('Erro ao buscar usuário:', error);
+        }
+      );
+    }
   }
   
 
   insertWallpaper(wallpaperUrl: string) {
+    console.log(wallpaperUrl)
     const cover = document.querySelector("div#cover") as HTMLElement;
     cover.style.backgroundImage = `url(${wallpaperUrl})`;
   }
 
   ngOnInit(): void {
+
+    this.getUser();
 
     // if (this.user) {
     //   this.profileData = {

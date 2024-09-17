@@ -15,6 +15,7 @@ export class DashboardComponent {
 
   currentUser: Profile | null = null
   isCurrentUser: boolean = true;
+  wallpapper: string | null | undefined
 
   constructor(private authService: AuthService){
   }
@@ -23,7 +24,8 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.authService.currentUser$.subscribe((user) => {
       this.currentUser = user;
-      this.isCurrentUser = true;  // Você define isso como true para o usuário logado
+      this.isCurrentUser = true; 
+      this.wallpapper = user?.wallpaper // Você define isso como true para o usuário logado
     });
   }
 

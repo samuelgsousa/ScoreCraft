@@ -34,9 +34,9 @@
     justify-content: center;
 }
 
-#createAccount:active{
-    background-color: var(--ActiveMButtonColor);
-    border-color: var(--ActiveMButtonColor);
+#createAccount:hover{
+    background-color: var(--ActiveMButtonColor) !important;
+    border-color: var(--ActiveMButtonColor) !important;
 }
 
 .modal-title{
