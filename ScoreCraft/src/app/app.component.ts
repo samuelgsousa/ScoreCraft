@@ -17,7 +17,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class AppComponent {
   title = 'ScoreCraft';
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {} 
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
