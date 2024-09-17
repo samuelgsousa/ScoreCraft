@@ -10,6 +10,7 @@ import { JogosComponent } from './jogos/jogos.component';
 import { AllreviewsComponent } from './allreviews/allreviews.component';
 import path from 'path';
 import { ComposereviewComponent } from './composereview/composereview.component';
+import { MyaccountComponent } from './myaccount/myaccount.component';
 
 export const routes: Routes = [
     {
@@ -65,5 +66,11 @@ export const routes: Routes = [
         redirectTo: '', 
         pathMatch: 'full'
   
+    },
+    {
+        path: 'myaccount',
+        component: MyaccountComponent,
+        title: 'Minha Conta',
+        // canActivate: [AuthGuard],
     }
 ];
