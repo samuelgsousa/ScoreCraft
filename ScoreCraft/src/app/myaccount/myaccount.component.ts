@@ -64,15 +64,6 @@ ngOnInit(): void {
     bio: new FormControl('', [Validators.maxLength(300)])
   });
 
-  this.authService.currentUser$.subscribe((user) => {
-    this.currentUser = user;
-
-    if(user?.foto_perfil) this.profilePhoto = user?.foto_perfil;
-    if(user?.wallpaper) this.wallpaperPhoto = user?.wallpaper;
-    
-    const cover = document.querySelector("div#cover") as HTMLElement;
-    cover.style.backgroundImage = `url(${this.currentUser?.wallpaper})`;
-  });
 }
 
 
