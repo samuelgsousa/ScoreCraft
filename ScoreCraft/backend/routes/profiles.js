@@ -71,16 +71,16 @@ router.get('/followers/:id', async (req, res) => {
   }
 });
 
-// Atualiza um campo específico de um perfil
+// Atualiza o perfil
 router.patch('/:userId', async (req, res) => {
-  const { userId } = req.params; // O ID que você vai usar para buscar o perfil
-  const { field, value } = req.body; // Campo e valor para atualizar
+  const { userId } = req.params; // O ID para buscar o perfil
+  const updatedProfileData = req.body; // Objeto contendo todos os dados atualizados do perfil
 
   try {
-    // Atualiza o perfil pelo campo numérico `id`
+    // Atualiza todos os campos do perfil
     const updatedProfile = await Profile.findOneAndUpdate(
       { id: userId }, // Filtra pelo campo numérico `id`
-      { [field]: value }, // Atualiza o campo dinâmico
+      updatedProfileData, // Atualiza todos os campos com os dados recebidos
       { new: true } // Retorna o documento atualizado
     );
 
@@ -93,6 +93,7 @@ router.patch('/:userId', async (req, res) => {
     res.status(400).send({ message: 'Erro ao atualizar o perfil', error });
   }
 });
+
 
 
 

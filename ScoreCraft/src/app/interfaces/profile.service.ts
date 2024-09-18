@@ -38,11 +38,9 @@ export class ProfileService {
 
  
 
-  updateProfileField(userId: number, field: string, value: any): Observable<any> {
-    const body = { field, value };
-
-    // Faz uma requisição PATCH para atualizar o campo específico do perfil
-    return this.http.patch(`${this.baseUrl}/${userId}`, body);
+  updateProfile(profile: Profile): Observable<any> {
+    console.log("Dados recebidos no profile.service.ts serem alterados: " + profile)
+    return this.http.patch(`${this.baseUrl}/${profile.id}`, profile);
   }
 
 

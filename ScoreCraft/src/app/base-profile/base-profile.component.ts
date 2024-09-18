@@ -125,21 +125,7 @@ export class BaseProfileComponent {
     this.isEditing = false;
   }
 
-  update(field: string){ //uma única função para alterar qualquer dado de acordo com os parâmetros
-   
-    if(this.user && this.user?.id !== undefined){
- 
-       this.profileUserService.updateProfileField(this.user?.id, field, this.profileData[field]).subscribe(
-        response => {
-          console.log('Perfil atualizado:', response);
-          // Atualize o perfil local ou faça outras ações necessárias
-        },
-        error => {
-          console.error('Erro ao atualizar o perfil:', error);
-        })
 
-   }
-  }
 }
 
 NgModule({
