@@ -74,26 +74,28 @@ router.get('/followers/:id', async (req, res) => {
 
 // Atualiza o perfil
 router.patch('/:id', async (req, res) => {
-  console.log(req.body);
+  console.log(req.body); // Verifica os dados recebidos
   try {
-      let profile = await Profile.findOne({ id: req.params.id });
+    let profile = await Profile.findOne({ id: req.params.id });
+    
+    if (!profile) {
+      return res.status(404).send({ message: 'Perfil não encontrado' });
+    }
 
-      if (!profile) {
-          return res.status(404).send({ message: 'Perfil não encontrado' });
-      }
-      // Atualize o perfil com os dados recebidos
-      profile = await Profile.findOneAndUpdate(
-          { id: req.params.id },
-          updatedProfileData,
-          { new: true }
-      );
+    profile = await Profile.findOneAndUpdate(
+      { id: req.params.id },
+      req.body,
+      { new: true }
+    );
 
-      res.send(profile);
+    res.send(profile);
   } catch (error) {
-      console.error(error);
-      res.status(400).send({ message: 'Erro ao atualizar o perfil', error });
+    console.error(error);
+    res.status(400).send({ message: 'Erro ao atualizar o perfil', error: error.message });
   }
 });
+
+
 
 
 
