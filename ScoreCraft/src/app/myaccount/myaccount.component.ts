@@ -106,12 +106,6 @@ onSubmit() {
       wallpaper: this.wallpaperPhoto,
       bio: this.accountForm.get('bio')?.value,
     };
-
-    // Se o usuário alterou a senha, adicione ao objeto
-    if (this.accountForm.get('senha')?.value) {
-      profile.senha = this.accountForm.get('senha')?.value;
-    }
-
     this.profileUserService.updateProfile(profile)
       .subscribe(
         response => console.log('Perfil atualizado com sucesso', response),

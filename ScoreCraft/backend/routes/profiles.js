@@ -76,20 +76,11 @@ router.get('/followers/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   console.log(req.body);
   try {
-      const { senha, ...updatedProfileData } = req.body;
       let profile = await Profile.findOne({ id: req.params.id });
 
       if (!profile) {
           return res.status(404).send({ message: 'Perfil não encontrado' });
       }
-
-      // Se a senha foi enviada, faça o hash
-      if (senha) {
-          const salt = await bcrypt.genSalt(10);
-          const hash = await bcrypt.hash(senha, salt);
-          updatedProfileData.senha = hash;
-      }
-
       // Atualize o perfil com os dados recebidos
       profile = await Profile.findOneAndUpdate(
           { id: req.params.id },

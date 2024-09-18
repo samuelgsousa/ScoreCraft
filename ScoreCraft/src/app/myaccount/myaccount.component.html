@@ -45,28 +45,10 @@
         </div>
       </div>
     
-      
-    
       <textarea  id="bio" formControlName="bio" rows="5" cols="50" placeholder="Escreva sua bio..."></textarea >
     
       <div *ngIf="accountForm.get('bio')?.invalid && accountForm.get('bio')?.touched">
         <small *ngIf="accountForm.get('bio')?.errors?.maxlength">A bio não pode exceder 300 caracteres.</small>
-      </div>
-
-      <div >
-        <input id="senha" formControlName="senha" type="password" placeholder="Alterar senha">
-        <div *ngIf="accountForm.get('senha')?.invalid && accountForm.get('senha')?.touched">
-          <small *ngIf="accountForm.get('senha')?.errors?.required">Senha é obrigatória.</small>
-          <small *ngIf="accountForm.get('senha')?.errors?.minlength">A senha deve ter pelo menos 6 caracteres.</small>
-        </div>
-      </div>
-    
-      <div >
-        <input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="Confirmar Senha">
-        <div *ngIf="accountForm.get('confirmPassword')?.invalid && accountForm.get('confirmPassword')?.touched">
-          <small *ngIf="accountForm.get('confirmPassword')?.errors?.required">Confirmação de senha é obrigatória.</small>
-          <small *ngIf="accountForm.errors?.passwordMismatch">As senhas não coincidem.</small>
-        </div>
       </div>
     
       <br>
