@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Profile } from './profile';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
  
 @Injectable({
@@ -39,8 +39,14 @@ export class ProfileService {
  
 
   updateProfile(profile: Partial<Profile>): Observable<Profile> {
-    console.log("Dados recebidos no profile.service.ts serem alterados: " + profile)
-    return this.http.patch<Profile>(`${this.baseUrl}/${profile.id}`, profile);
+    console.log("Dados recebidos no profile.service.ts serem alterados: ", profile);
+    return this.http.patch<Profile>(`${this.baseUrl}/${profile.id}`, profile)
+      .pipe(
+        catchError(error => {
+          console.error('Erro ao atualizar o perfil:', error);
+          return throwError(error); // Propaga o erro
+        })
+      );
   }
 
 
