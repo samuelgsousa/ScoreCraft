@@ -72,7 +72,7 @@ router.get('/followers/:id', async (req, res) => {
 });
 
 // Atualiza o perfil
-router.patch('/updating/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
   console.log("rota em profiles.js foi chamada")
   const { userId } = req.params; // O ID para buscar o perfil
   const updatedProfileData = req.body; // Objeto contendo todos os dados atualizados do perfil

@@ -40,7 +40,7 @@ export class ProfileService {
 
   updateProfile(profile: Profile): Observable<any> {
     console.log("Dados recebidos no profile.service.ts serem alterados: " + profile)
-    return this.http.patch(`${this.baseUrl}/updating/${profile.id}`, profile);
+    return this.http.patch(`${this.baseUrl}/${profile.id}`, profile);
   }
 
 

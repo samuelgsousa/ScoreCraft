@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../login/auth.service';
 import { Profile } from '../interfaces/profile';
 import { ProfileService } from '../interfaces/profile.service';
@@ -52,6 +52,24 @@ ngOnInit(): void {
     
     // console.log(`Foto de perfil: ${this.profilePhoto} e foto de capa: ${this.wallpaperPhoto}`)
 
+    const cover = document.querySelector("div#cover") as HTMLElement;
+    cover.style.backgroundImage = `url(${this.currentUser?.wallpaper})`;
+  });
+
+  this.accountForm = new FormGroup({
+    nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    senha: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    confirmPassword: new FormControl('', [Validators.required]),
+    bio: new FormControl('', [Validators.maxLength(300)])
+  });
+
+  this.authService.currentUser$.subscribe((user) => {
+    this.currentUser = user;
+
+    if(user?.foto_perfil) this.profilePhoto = user?.foto_perfil;
+    if(user?.wallpaper) this.wallpaperPhoto = user?.wallpaper;
+    
     const cover = document.querySelector("div#cover") as HTMLElement;
     cover.style.backgroundImage = `url(${this.currentUser?.wallpaper})`;
   });
