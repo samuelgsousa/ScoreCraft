@@ -73,19 +73,19 @@ router.get('/followers/:id', async (req, res) => {
 
 // Atualiza o perfil
 router.patch('/:id', async (req, res) => {
-  console.log("rota em profiles.js foi chamada")
-  const { userId } = req.params; // O ID para buscar o perfil
+  console.log("Rota em profiles.js foi chamada");
+  
+  const { id } = req.params; // O ID para buscar o perfil
   const updatedProfileData = req.body; // Objeto contendo todos os dados atualizados do perfil
 
   try {
     // Atualiza todos os campos do perfil
     const updatedProfile = await Profile.findOneAndUpdate(
-      { id: userId }, // Filtra pelo campo numérico `id`
+      { id: id }, // Filtra pelo campo numérico `id`
       updatedProfileData, // Atualiza todos os campos com os dados recebidos
       { new: true } // Retorna o documento atualizado
-      
     );
-    console.log(updatedProfile)
+    console.log(updatedProfile);
 
     if (!updatedProfile) {
       return res.status(404).send({ message: 'Perfil não encontrado' });
@@ -96,6 +96,7 @@ router.patch('/:id', async (req, res) => {
     res.status(400).send({ message: 'Erro ao atualizar o perfil', error });
   }
 });
+
 
 
 
