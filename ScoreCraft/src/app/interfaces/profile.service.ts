@@ -8,8 +8,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProfileService {
 
-  private baseUrl = 'https://scorecraft.onrender.com/api/profiles';
-    //private baseUrl = 'http://localhost:3000/api/profiles'
+ private baseUrl = 'https://scorecraft.onrender.com/api/profiles';
+   // private baseUrl = 'http://localhost:3000/api/profiles'
 
   
   constructor(private http: HttpClient) { }
@@ -38,9 +38,9 @@ export class ProfileService {
 
  
 
-  updateProfile(profile: Profile): Observable<any> {
+  updateProfile(profile: Partial<Profile>): Observable<Profile> {
     console.log("Dados recebidos no profile.service.ts serem alterados: " + profile)
-    return this.http.patch(`${this.baseUrl}/${profile.id}`, profile);
+    return this.http.patch<Profile>(`${this.baseUrl}/${profile.id}`, profile);
   }
 
 
