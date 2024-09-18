@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Profile = require('../models/Profile');
 
 // Rota para obter todos os perfis
@@ -73,7 +74,7 @@ router.get('/followers/:id', async (req, res) => {
 
 // Atualiza o perfil
 router.patch('/:id', async (req, res) => {
-  
+
   console.log("Rota em profiles.js foi chamada");
   
   // const { id } = req.params; // O ID para buscar o perfil
