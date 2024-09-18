@@ -97,22 +97,31 @@ cancelEdit(){
 onSubmit() {
   if (this.accountForm.valid) {
 
-    const profile = {
+    // Criar objeto profile sem a senha inicialmente
+    const profile: any = {
       id: this.currentUser?.id,
       nome: this.accountForm.get('nome')?.value,
       email: this.accountForm.get('email')?.value,
-      senha: this.accountForm.get('senha')?.value,
-      foto_perfil: this.profilePhoto, // Adicionando a foto do perfil
-      wallpaper: this.wallpaperPhoto, // Adicionando Wallpaper
+      foto_perfil: this.profilePhoto,
+      wallpaper: this.wallpaperPhoto,
       bio: this.accountForm.get('bio')?.value,
     };
 
+    // Se o usuário alterou a senha, adicione ao objeto
+    if (this.accountForm.get('senha')?.value) {
+      profile.senha = this.accountForm.get('senha')?.value;
+    }
+
     this.profileUserService.updateProfile(profile)
-    console.log('myaccount component, dados passados:', profile)
+      .subscribe(
+        response => console.log('Perfil atualizado com sucesso', response),
+        error => console.error('Erro ao atualizar o perfil', error)
+      );
 
   } else {
     console.error('Formulário inválido');
   }
-  }
+}
+
 
 }

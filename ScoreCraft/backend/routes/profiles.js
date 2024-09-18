@@ -74,30 +74,35 @@ router.get('/followers/:id', async (req, res) => {
 
 // Atualiza o perfil
 router.patch('/:id', async (req, res) => {
+  try {
+      const { senha, ...updatedProfileData } = req.body;
+      let profile = await Profile.findOne({ id: req.params.id });
 
-  console.log("Rota em profiles.js foi chamada");
-  
-  // const { id } = req.params; // O ID para buscar o perfil
-  // const updatedProfileData = req.body; // Objeto contendo todos os dados atualizados do perfil
+      if (!profile) {
+          return res.status(404).send({ message: 'Perfil não encontrado' });
+      }
 
-  // try {
-  //   // Atualiza todos os campos do perfil
-  //   const updatedProfile = await Profile.findOneAndUpdate(
-  //     { id: id }, // Filtra pelo campo numérico `id`
-  //     updatedProfileData, // Atualiza todos os campos com os dados recebidos
-  //     { new: true } // Retorna o documento atualizado
-  //   );
-  //   console.log(updatedProfile);
+      // Se a senha foi enviada, faça o hash
+      if (senha) {
+          const salt = await bcrypt.genSalt(10);
+          const hash = await bcrypt.hash(senha, salt);
+          updatedProfileData.senha = hash;
+      }
 
-  //   if (!updatedProfile) {
-  //     return res.status(404).send({ message: 'Perfil não encontrado' });
-  //   }
-  //   res.send(updatedProfile);
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(400).send({ message: 'Erro ao atualizar o perfil', error });
-  // }
+      // Atualize o perfil com os dados recebidos
+      profile = await Profile.findOneAndUpdate(
+          { id: req.params.id },
+          updatedProfileData,
+          { new: true }
+      );
+
+      res.send(profile);
+  } catch (error) {
+      console.error(error);
+      res.status(400).send({ message: 'Erro ao atualizar o perfil', error });
+  }
 });
+
 
 
 
