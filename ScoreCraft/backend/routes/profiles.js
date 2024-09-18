@@ -74,6 +74,7 @@ router.get('/followers/:id', async (req, res) => {
 
 // Atualiza o perfil
 router.patch('/:id', async (req, res) => {
+  console.log(req.body);
   try {
       const { senha, ...updatedProfileData } = req.body;
       let profile = await Profile.findOne({ id: req.params.id });
