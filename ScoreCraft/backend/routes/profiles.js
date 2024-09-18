@@ -82,7 +82,9 @@ router.patch('/:userId', async (req, res) => {
       { id: userId }, // Filtra pelo campo numérico `id`
       updatedProfileData, // Atualiza todos os campos com os dados recebidos
       { new: true } // Retorna o documento atualizado
+      
     );
+    console.log(updatedProfile)
 
     if (!updatedProfile) {
       return res.status(404).send({ message: 'Perfil não encontrado' });
