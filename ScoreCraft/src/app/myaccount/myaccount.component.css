@@ -110,10 +110,49 @@ form button[type="submit"]:disabled{
 
 .content{
     min-height: 150vh;
+    align-items: center;
+
 }
 
 @media(max-height: 755px){
     .content{
         min-height: 180vh;
     }
+}
+
+.actualData{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    align-items: center;
+    text-align: center;
+}
+
+.actualData p{
+    font-size: 2rem;
+}
+
+.buttonsDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+button{
+    margin-top: 1rem;
+    margin-right: 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: white;
+    background-color: var(--SecondaryColor);
+}
+
+button:hover{
+    color: white;
+    background-color: var(--SecondaryColor);
+}
+
+.btn-danger, .btn-danger:hover{
+    background-color: rgb(250, 59, 59);
 }

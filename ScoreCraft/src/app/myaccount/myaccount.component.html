@@ -6,14 +6,18 @@
 
     
     
-      <button *ngIf="!isEditing" type="submit" (click)="enableEdit()">Editar</button>
-      <button *ngIf="isEditing" type="submit" (click)="cancelEdit()">Cancelar</button>
+      <div class="buttonsDiv">
+        <button *ngIf="!isEditing" type="submit" (click)="enableEdit()" class="btn ">Editar</button>
+        <button *ngIf="isEditing" type="submit" (click)="cancelEdit()" class="btn btn-danger">Cancelar</button>
+      </div>
 
       <div class="actualData" *ngIf="!isEditing">
-        <h1>{{this.currentUser?.nome}}</h1>
-        <h1>{{this.currentUser?.email}}</h1>
-        <p>{{this.currentUser?.bio}}</p>
-        <h1>Senha: ***</h1>
+
+
+        <h1>Nome: {{this.currentUser?.nome}}</h1>
+        <h1>E-mail: {{this.currentUser?.email}}</h1>
+        <p>Bio:</p>
+        <p>{{this.currentUser?.bio}}</p> 
       </div>
       
       <div id="iconSelection" *ngIf="isEditing">
@@ -34,8 +38,6 @@
           <small *ngIf="accountForm.get('nome')?.errors?.minlength">O nome deve ter pelo menos 3 caracteres.</small>
         </div>
       </div>
-
-      <h1>{{this.currentUser?.email}}</h1>
     
       <div>
         <input id="email" formControlName="email" type="email" placeholder="Email">

@@ -9,7 +9,7 @@
             <div class="magic-grid" id="magic-grid"></div> <!--//Grid mágico\-->
     
             <!--Botão de menu-->
-              <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="botaoMenu">
+              <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="botaoMenu" >
                 <span class="toggler-icon top-bar"></span>
                 <span class="toggler-icon middle-bar"></span>
                 <span class="toggler-icon bottom-bar"></span>
@@ -25,7 +25,7 @@
                 <a class="nav-link active link-light " aria-current="page" [routerLink]="['']" (click)="toggleMenu()">Início</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active link-light " aria-current="page" [routerLink]="['myaccount']" (click)="toggleMenu()">Minha Conta</a>
+                <a class="nav-link active link-light " aria-current="page" [routerLink]="['myaccount']" (click)="toggleMenu()" *ngIf="currentUser">Minha Conta</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link link-light" [routerLink]="['jogos']" (click)="toggleMenu()">Jogos</a>

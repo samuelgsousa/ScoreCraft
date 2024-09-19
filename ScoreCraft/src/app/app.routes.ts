@@ -64,7 +64,8 @@ export const routes: Routes = [
     {
         path: 'myaccount',
         component: MyaccountComponent,
-        title: 'Minha Conta'
+        title: 'Minha Conta',
+        canActivate: [AuthGuard]
     },
     {
         path: '**', 
