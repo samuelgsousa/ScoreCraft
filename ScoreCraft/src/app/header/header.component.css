@@ -188,17 +188,14 @@
     height: 10vh;
   }
 
-  ul{
-    height: 32vh;
-  }
   
   li{
     font-size: 1.7rem;
     padding-right: 5px;
   }
 
-  #navbarSupportedContent{
-    height: 32vh;
+  #navbarSupportedContent, ul{
+    height: 400px;
   }
   
 @media(max-width:619px){
