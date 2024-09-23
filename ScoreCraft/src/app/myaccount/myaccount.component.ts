@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../login/auth.service';
 import { Profile } from '../interfaces/profile';
 import { ProfileService } from '../interfaces/profile.service';
+import { TokenConfirmService } from '../interfaces/token-confirm.service';
 
 @Component({
   selector: 'app-myaccount',
@@ -41,7 +42,11 @@ wppPhotos: string[] = [
 ]
 
 
-constructor( private authService: AuthService, private profileUserService: ProfileService) {}
+constructor( 
+  private authService: AuthService, 
+  private profileUserService: ProfileService,
+  private tokenService: TokenConfirmService
+) {}
 
 ngOnInit(): void {
   this.authService.currentUser$.subscribe((user) => {
@@ -90,6 +95,10 @@ enableEdit() {
 
 cancelEdit(){
   this.isEditing = false;
+}
+
+resetPassword(){
+  
 }
 
 onSubmit() {
