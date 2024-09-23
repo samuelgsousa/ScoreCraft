@@ -14,7 +14,7 @@ export class HeaderComponent {
 
   collapsed = true;
   currentUser: Profile | null = null;
-  
+
   toggleMenu() {
     document.querySelector('#navbarSupportedContent')?.classList.toggle('show')
     document.querySelector('#botaoMenu')?.classList.toggle('collapsed')
@@ -74,9 +74,7 @@ const getRandomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)]
 }
 
-window.alert(window.innerWidth)
-if (window.innerWidth > 619){setGrid()}
-
+setGrid()
 
 
 
