@@ -20,8 +20,8 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
-    this.toggleSquareDisplay(); // Call on initialization
-    this.setGrid(); // Call your existing setGrid function
+    this.setGrid(); 
+    this.toggleSquareDisplay(); 
   }
 
   // Function to toggle display of "square" divs based on window width
