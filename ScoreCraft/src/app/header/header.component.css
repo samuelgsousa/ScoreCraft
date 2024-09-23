@@ -183,4 +183,8 @@
     #magic-grid{
       display: none;
     }
+
+    .navbar{
+      height: 8vh;
+    }
   }
