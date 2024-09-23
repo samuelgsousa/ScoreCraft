@@ -44,7 +44,6 @@ app.use('/api/profiles', require('./routes/profiles'));
 app.use('/api/games', require('./routes/games')); 
 app.use('/api/reviews', require('./routes/reviews')); 
 app.use('/api/auth', require('./routes/auth'));   
-app.use('/api/tokensecurity', require('./routes/tokensecurity')); 
 
 // Iniciar o servidor
 app.listen(port, () => {

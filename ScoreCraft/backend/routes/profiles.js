@@ -96,6 +96,12 @@ router.patch('/:id', async (req, res) => {
 });
 
 
+
+
+
+
+
+
 // Rota para deletar um perfil
 router.delete('/:id', async (req, res) => {
   try {
