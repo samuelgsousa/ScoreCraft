@@ -183,8 +183,16 @@
     display: none;
   }
 
+  .navbar{
+    height: 100%;
+    height: 12vh;
+  }
 
+  #WebSiteTitle h1{
+    font-size: 2.6rem;
+  }
 
+  
 @media(max-width:619px){
 
 #WebSiteTitle h1{
