@@ -74,6 +74,7 @@ const getRandomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)]
 }
 
+window.alert(window.innerWidth)
 if (window.innerWidth > 619){setGrid()}
 
 
