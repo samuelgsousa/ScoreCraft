@@ -43,7 +43,8 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use('/api/profiles', require('./routes/profiles'));
 app.use('/api/games', require('./routes/games')); 
 app.use('/api/reviews', require('./routes/reviews')); 
-app.use('/api/auth', require('./routes/auth'));   
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/reset-password', require('./routes/generatetoken'));      
 
 // Iniciar o servidor
 app.listen(port, () => {
