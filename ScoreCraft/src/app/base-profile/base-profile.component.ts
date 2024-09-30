@@ -30,6 +30,8 @@ export class BaseProfileComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   profileUserService: ProfileService = inject(ProfileService);
 
+  isFollowing: boolean = false;
+
   active = 1;
   profilePicture: string | undefined;
   isEditing = false;
@@ -50,11 +52,11 @@ export class BaseProfileComponent {
     bio: '',
   
   }
+userId: any;
  
 
   constructor(private authService: AuthService, private router: Router) {
  
-
     
     // this.loggedInUserId = this.authService.getCurrentUser()?.id || null;
   }
@@ -68,6 +70,8 @@ export class BaseProfileComponent {
      this.authService.getUserId().subscribe(
       uId => {
         userId = uId
+        console.log('base-profile. O usuário logado é: '+ userId)
+
       }
      );
     } else {
@@ -102,7 +106,8 @@ export class BaseProfileComponent {
   ngOnInit(): void {
 
     this.getUser();
-
+    console.log('isCurrentUser:', this.isCurrentUser);
+console.log('userId:', this.userId);
     // if (this.user) {
     //   this.profileData = {
     //     nome: this.user.nome || '',
