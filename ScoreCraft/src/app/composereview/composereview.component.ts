@@ -37,6 +37,7 @@ export class ComposereviewComponent {
   ngOnInit(): void {
     
     const gameId = this.route.snapshot.params['id']; // Captura o ID do jogo da rota
+    console.log(gameId)
     this.getGameDetails(gameId); // Chama a função para obter os detalhes
     this.authService.getUserId().subscribe(id => this.userId = id); // Obter o ID do usuário
   }

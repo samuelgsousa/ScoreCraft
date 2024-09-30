@@ -67,17 +67,21 @@ router.post('/', igdbAuth, async (req, res) => {
 router.post('/:id', igdbAuth, async (req, res) => {
     try {
         const gameId = req.params.id;
+        console.log(`Fetching game with ID: ${gameId}`); // Log do ID do jogo
         const response = await axios.post(`${IGDB_API_URL}`, `fields *; where id = ${gameId};`, {
             headers: req.headers
         });
+        
         if (response.data.length === 0) {
             return res.status(404).send({ message: 'Game not found' });
         }
         res.json(response.data[0]);
     } catch (error) {
+        console.error('Error fetching game:', error); // Log do erro
         res.status(500).send({ message: 'Server error', error });
     }
 });
+
 
 
 // // Rota para criar um novo jogo
