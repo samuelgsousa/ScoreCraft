@@ -21,7 +21,7 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
         // Consulta para obter os jogos pela popularidade
         const query = 'fields game_id,value,popularity_type; sort value desc; limit 10;';
         
-        // Fazendo a requisição à API do IGDB
+        // Fazendo a requisição à API do IGDB para popularidade
         const response = await axios.post('https://api.igdb.com/v4/popularity_primitives', query, {
             headers: {
                 'Client-ID': req.headers['Client-ID'],
@@ -35,16 +35,53 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
             return res.status(404).send({ message: 'No popular games found' });
         }
 
-        // Retorna os dados dos jogos populares
-        console.log(response.data);
-        res.json(response.data);
+        // Extrai os IDs dos jogos populares
+        const gameIds = response.data.map(game => game.game_id);
+
+        // Busca os detalhes dos jogos com base nos IDs populares
+        const gameQuery = `fields *; where id = (${gameIds.join(',')});`;
+        const gamesResponse = await axios.post(IGDB_API_URL, gameQuery, {
+            headers: {
+                'Client-ID': req.headers['Client-ID'],
+                'Authorization': req.headers['Authorization'],
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+
+        // Coleta os IDs das capas (cover) para fazer uma segunda requisição
+        const coverIds = gamesResponse.data.map(game => game.cover).filter(Boolean);
+
+        // Requisição para obter apenas as URLs das capas
+        if (coverIds.length > 0) {
+            const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
+                `fields url; where id = (${coverIds.join(',')});`, 
+                {
+                    headers: {
+                        'Client-ID': req.headers['Client-ID'],
+                        'Authorization': req.headers['Authorization'],
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                }
+            );
+
+            const covers = coverResponse.data;
+
+            // Associa as URLs das capas aos jogos correspondentes
+            gamesResponse.data.forEach(game => {
+                const cover = covers.find(c => c.id === game.cover);
+                if (cover) {
+                    game.cover_url = cover.url; // Adiciona a URL da capa ao objeto do jogo
+                }
+            });
+        }
+
+        // Retorna os jogos populares com as URLs das capas adicionadas
+        res.json(gamesResponse.data);
     } catch (error) {
         console.error("Error fetching popular games:", error.message); // Log para depuração
         res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
-
-
 
 
 router.post('/:id', igdbAuth, async (req, res) => {
