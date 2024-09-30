@@ -18,7 +18,7 @@ const igdbAuth = (req, res, next) => {
 
 router.post('/', igdbAuth, async (req, res) => {
     try {
-        const response = await axios.post(IGDB_API_URL, 'fields name,cover; limit 25;', {
+        const response = await axios.post(IGDB_API_URL, 'fields *,cover; limit 25;', {
             headers: {
                 'Client-ID': req.headers['Client-ID'],
                 'Authorization': req.headers['Authorization']
