@@ -18,12 +18,26 @@ const igdbAuth = (req, res, next) => {
 
 router.post('/', igdbAuth, async (req, res) => {
     try {
-        // Busca todos os campos dos jogos, incluindo o campo cover (que contém o ID da capa)
-        const response = await axios.post(IGDB_API_URL, 'fields *; limit 25;', {
+        // Pega parâmetros de consulta da requisição
+        const { search, order, limit = 25 } = req.body;
+
+        // Formata a consulta
+        let query = `fields *;`;
+        if (search) {
+            query += ` where name ~ *"${search}*";`; // Filtra jogos pelo nome
+        }
+        if (order) {
+            query += ` order ${order};`; // Define a ordem dos resultados
+        }
+        query += ` limit ${limit};`; // Limita os resultados
+
+        // Fazendo a requisição à API do IGDB
+        const response = await axios.post(IGDB_API_URL, query, {
             headers: {
                 'Client-ID': req.headers['Client-ID'],
-                'Authorization': req.headers['Authorization']
-            }
+                'Authorization': req.headers['Authorization'],
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
         });
 
         const games = response.data;
@@ -60,6 +74,7 @@ router.post('/', igdbAuth, async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 
 router.post('/:id', igdbAuth, async (req, res) => {

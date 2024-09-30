@@ -4,7 +4,9 @@ h1{
 
 #AllGamesList{
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 40px;
 }
 
 .game{
@@ -14,7 +16,8 @@ h1{
     word-break: normal;
     display: flex;
     padding-right: 10px;
-    width: 100% !important;
+    justify-content: center;
+    align-items: center;
 }
 
 .img-game{

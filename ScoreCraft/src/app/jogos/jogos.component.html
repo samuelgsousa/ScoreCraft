@@ -2,16 +2,20 @@
 
 <div id="AllGamesList">
     <div *ngFor="let game of gameList" class="game">
+
     <img [src]="[game?.cover_url]" alt="" class="img-game" loading="lazy">
-        <div class="game-data">
-            <h1 class="text-light">{{ game.name }}</h1>
-            <span class="text-success rating">
-                <!-- <ngb-rating [(rate)]="null" [max]="5" readonly="true"/>       -->
-            </span>
-            <p class="text-light">{{game.release_date| date:'dd MMM yyyy'}}</p>
-            <p class="text-light">{{game.summary}}</p>
-            <button id="avaliar"  [routerLink]="['../newreview/' + game.id]">Avaliar</button>
-        </div>
+
+
         
     </div>
 </div>
+<!-- 
+        <div class="game-data">
+            <h1 class="text-light">{{ game.name }}</h1>
+            <span class="text-success rating"> -->
+                <!-- <ngb-rating [(rate)]="null" [max]="5" readonly="true"/>       -->
+            <!-- </span>
+            <p class="text-light">{{game.release_date| date:'dd MMM yyyy'}}</p>
+            <p class="text-light">{{game.summary}}</p>
+            <button id="avaliar"  [routerLink]="['../newreview/' + game.id]">Avaliar</button>
+        </div> -->
