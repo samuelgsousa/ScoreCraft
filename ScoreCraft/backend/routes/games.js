@@ -15,10 +15,13 @@ const igdbAuth = (req, res, next) => {
 
 
 // Rota para obter todos os jogos
-router.get('/', igdbAuth, async (req, res) => {
+router.post('/', igdbAuth, async (req, res) => {
     try {
         const response = await axios.post(IGDB_API_URL, 'fields *; limit 100;', {
-            headers: req.headers
+            headers: {
+                'Client-ID': req.headers['Client-ID'],
+                'Authorization': req.headers['Authorization']
+            }
         });
         res.json(response.data);
     } catch (err) {
@@ -26,7 +29,8 @@ router.get('/', igdbAuth, async (req, res) => {
     }
 });
 
-router.get('/:id', igdbAuth, async (req, res) => {
+
+router.post('/:id', igdbAuth, async (req, res) => {
     try {
         const gameId = req.params.id;
         const response = await axios.post(`${IGDB_API_URL}`, `fields *; where id = ${gameId};`, {
