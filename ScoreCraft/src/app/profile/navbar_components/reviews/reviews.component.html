@@ -1,5 +1,5 @@
 <div *ngFor="let review of this.userReviews; ; let i = index" class="game-review border-bottom border-secondary" >
-    <img [src]="gameDetails[review.game_id].cover" alt="" class="img-game-review" *ngIf="gameDetails[review.game_id]">
+    <img [src]="gameDetails[review.game_id].cover_url" alt="" class="img-game-review" *ngIf="gameDetails[review.game_id]">
     <h1 class="text-light">{{gameDetails[review.game_id].name}}</h1>
             <span class="text-success rating">
                 <ngb-rating [(rate)]="review.rating" [max]="5" [readonly]="!editStates[i]"/>      
