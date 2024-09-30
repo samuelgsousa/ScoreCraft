@@ -47,12 +47,12 @@
       </div>
     </div>
   
-    <textarea id="bio" formControlName="bio" rows="5" cols="50" placeholder="Escreva sua bio..."></textarea>
+    <textarea id="bio" formControlName="bio" rows="5" cols="50" placeholder="Escreva sua bio..."></textarea> 
   
     <div *ngIf="accountForm.get('bio')?.invalid && accountForm.get('bio')?.touched">
       <small *ngIf="accountForm.get('bio')?.errors?.maxlength">A bio não pode exceder 300 caracteres.</small>
     </div>
-  
+   
     <br>
     <button type="submit" [disabled]="accountForm.invalid || isLoading">Criar Conta</button>
   </form>
