@@ -24,7 +24,7 @@ router.post('/', igdbAuth, async (req, res) => {
         // Inicia a consulta
         let query = `fields *; `;
         
-        // Adiciona filtros de busca
+        // Adiciona filtro de busca se houver
         if (search) {
             query += `where name ~ *"${search}"*; `;
         }
@@ -43,7 +43,33 @@ router.post('/', igdbAuth, async (req, res) => {
 
         const games = response.data;
 
-        // Retorna os dados dos jogos
+        // Coleta os IDs das capas (cover) para fazer uma segunda requisição
+        const coverIds = games.map(game => game.cover).filter(Boolean); // Filtra jogos que têm capa
+
+        if (coverIds.length > 0) {
+            // Requisição para obter apenas as URLs das capas
+            const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
+                `fields url; where id = (${coverIds.join(',')});`, 
+                {
+                    headers: {
+                        'Client-ID': req.headers['Client-ID'],
+                        'Authorization': req.headers['Authorization']
+                    }
+                }
+            );
+
+            const covers = coverResponse.data;
+
+            // Associa as URLs das capas aos jogos correspondentes
+            games.forEach(game => {
+                const cover = covers.find(c => c.id === game.cover);
+                if (cover) {
+                    game.cover_url = cover.url; // Adiciona a URL da capa ao objeto do jogo
+                }
+            });
+        }
+
+        // Retorna os jogos com as URLs das capas adicionadas
         res.json(games);
     } catch (error) {
         console.error("Error fetching games:", error.message); // Log para depuração
