@@ -62,25 +62,35 @@ router.post('/', igdbAuth, async (req, res) => {
 });
 
 
-
-
 router.post('/:id', igdbAuth, async (req, res) => {
     try {
         const gameId = req.params.id;
-        console.log(`Fetching game with ID: ${gameId}`); // Log do ID do jogo
-        const response = await axios.post(`${IGDB_API_URL}`, `fields *; where id = ${gameId};`, {
-            headers: req.headers
-        });
         
+        // Formatação da consulta
+        const query = `fields *; where id = ${gameId};`;
+        
+        // Fazendo a requisição à API do IGDB
+        const response = await axios.post(`${IGDB_API_URL}`, query, {
+            headers: {
+                'Client-ID': req.headers['Client-ID'],
+                'Authorization': req.headers['Authorization'],
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+
+        // Verifica se o jogo foi encontrado
         if (response.data.length === 0) {
             return res.status(404).send({ message: 'Game not found' });
         }
+
+        // Retorna os dados do jogo
         res.json(response.data[0]);
     } catch (error) {
-        console.error('Error fetching game:', error); // Log do erro
-        res.status(500).send({ message: 'Server error', error });
+        console.error("Error fetching game data:", error.message); // Log para depuração
+        res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
+
 
 
 
