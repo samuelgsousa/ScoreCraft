@@ -38,8 +38,11 @@ export class SignupComponent {
 
   profilePhoto: string = './petcons/default_profile.png'; // Foto padrão
   wallpaperPhoto: string = ''
-
+  
   newId: number | undefined;
+
+  isLoading: boolean = false;
+
 
   constructor(private fb: FormBuilder, private profileUserService: ProfileService, private authService: AuthService, private router: Router) {}
 
@@ -75,6 +78,9 @@ export class SignupComponent {
 
   onSubmit(): void {
     if (this.accountForm.valid) {
+      
+      this.isLoading = true;
+
       this.profileUserService.getLastUserid().subscribe(
         lastProfile => {
           this.newId = Number(lastProfile)
@@ -101,6 +107,9 @@ export class SignupComponent {
             },
             error => {
               console.error('Erro ao adicionar perfil:', error);
+              window.alert('[ERROR!] Erro ao criar perfil! Tente novamente')
+              this.isLoading = false; // Reabilita o botão em caso de erro
+            
             }
           );
         }
