@@ -7,7 +7,6 @@ import { EstatisticasComponent } from "./navbar_components/estatisticas/estatist
 import { ProfileService } from '../interfaces/profile.service';
 import { Profile } from '../interfaces/profile';
 import { BaseProfileComponent } from "../base-profile/base-profile.component";
-import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,19 +16,5 @@ import { AuthService } from '../login/auth.service';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  
-  constructor(private authService: AuthService) {
-    
-    // this.authService.getUserId().subscribe(
-    //   uId => {
-    //     const userId = uId
-    //     console.log("o user logado é: " + userId)
-        
-    //   }
-    //  );
-  }
-
-
-
 }
 
