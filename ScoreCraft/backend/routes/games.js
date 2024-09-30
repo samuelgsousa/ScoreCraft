@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Game = require('../models/Games'); 
+// const Game = require('../models/Games'); 
 const axios = require('axios'); // Importar axios para fazer requisições HTTP
 
 const IGDB_API_URL = 'https://api.igdb.com/v4/games'; // URL da API
@@ -14,10 +14,13 @@ const igdbAuth = (req, res, next) => {
 
 // Rota para obter todos os jogos
 
+// Rota para obter todos os jogos
 router.get('/', igdbAuth, async (req, res) => {
     try {
-        const games = await Game.find();
-        res.json(games);
+        const response = await axios.post(IGDB_API_URL, 'fields *; limit 100;', {
+            headers: req.headers
+        });
+        res.json(response.data);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
