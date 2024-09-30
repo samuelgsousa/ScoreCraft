@@ -69,7 +69,7 @@ router.post('/:id', igdbAuth, async (req, res) => {
         // Formatação da consulta
         const query = `fields *; where id = ${gameId};`;
         
-        // Fazendo a requisição à API do IGDB
+        // Fazendo a requisição à API do IGDB para buscar o jogo
         const response = await axios.post(`${IGDB_API_URL}`, query, {
             headers: {
                 'Client-ID': req.headers['Client-ID'],
@@ -83,13 +83,36 @@ router.post('/:id', igdbAuth, async (req, res) => {
             return res.status(404).send({ message: 'Game not found' });
         }
 
-        // Retorna os dados do jogo
-        res.json(response.data[0]);
+        const game = response.data[0];
+
+        // Se o jogo possui um ID de capa, busque a URL da capa
+        if (game.cover) {
+            const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
+                `fields url; where id = ${game.cover};`, 
+                {
+                    headers: {
+                        'Client-ID': req.headers['Client-ID'],
+                        'Authorization': req.headers['Authorization'],
+                    }
+                }
+            );
+
+            // Se a capa foi encontrada, adicione a URL ao jogo
+            if (coverResponse.data.length > 0) {
+                game.cover_url = coverResponse.data[0].url; // Adiciona a URL da capa ao objeto do jogo
+            } else {
+                game.cover_url = null; // Se não encontrou a capa, pode definir como null
+            }
+        }
+
+        // Retorna os dados do jogo com a URL da capa, se disponível
+        res.json(game);
     } catch (error) {
         console.error("Error fetching game data:", error.message); // Log para depuração
         res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
+
 
 
 
