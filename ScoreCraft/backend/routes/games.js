@@ -18,27 +18,12 @@ const igdbAuth = (req, res, next) => {
 
 router.post('/', igdbAuth, async (req, res) => {
     try {
-        // Extrai parâmetros de consulta
-        const { search, order = 'popularity.desc', limit = 25 } = req.query;
-
-        // Inicia a consulta
-        let query = `fields *; `;
-        
-        // Adiciona filtro de busca se houver
-        if (search) {
-            query += `where name ~ *"${search}"*; `;
-        }
-
-        // Adiciona ordenação e limite
-        query += `order ${order}; limit ${limit};`;
-
-        // Faz a requisição à API do IGDB
-        const response = await axios.post(IGDB_API_URL, query, {
+        // Busca todos os campos dos jogos, incluindo o campo cover (que contém o ID da capa)
+        const response = await axios.post(IGDB_API_URL, 'fields *; limit 25;', {
             headers: {
                 'Client-ID': req.headers['Client-ID'],
-                'Authorization': req.headers['Authorization'],
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
+                'Authorization': req.headers['Authorization']
+            }
         });
 
         const games = response.data;
@@ -71,12 +56,10 @@ router.post('/', igdbAuth, async (req, res) => {
 
         // Retorna os jogos com as URLs das capas adicionadas
         res.json(games);
-    } catch (error) {
-        console.error("Error fetching games:", error.message); // Log para depuração
-        res.status(500).send({ message: 'Server error', error: error.message });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
-
 
 
 router.post('/:id', igdbAuth, async (req, res) => {
