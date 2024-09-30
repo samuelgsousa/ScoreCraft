@@ -18,7 +18,8 @@ const igdbAuth = (req, res, next) => {
 
 router.post('/', igdbAuth, async (req, res) => {
     try {
-        const response = await axios.post(IGDB_API_URL, 'fields *,cover; limit 25;', {
+        // Busca todos os campos dos jogos, incluindo o campo cover (que contém o ID da capa)
+        const response = await axios.post(IGDB_API_URL, 'fields *; limit 25;', {
             headers: {
                 'Client-ID': req.headers['Client-ID'],
                 'Authorization': req.headers['Authorization']
@@ -27,11 +28,11 @@ router.post('/', igdbAuth, async (req, res) => {
 
         const games = response.data;
 
-        // Agora precisamos buscar as capas
+        // Coleta os IDs das capas (cover) para fazer uma segunda requisição
         const coverIds = games.map(game => game.cover).filter(Boolean); // Filtra jogos que têm capa
 
         if (coverIds.length > 0) {
-            // Requisição para obter as URLs das capas
+            // Requisição para obter apenas as URLs das capas
             const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
                 `fields url; where id = (${coverIds.join(',')});`, 
                 {
@@ -53,11 +54,13 @@ router.post('/', igdbAuth, async (req, res) => {
             });
         }
 
+        // Retorna os jogos com as URLs das capas adicionadas
         res.json(games);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 
 
