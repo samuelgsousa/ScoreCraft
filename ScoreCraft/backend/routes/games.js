@@ -36,6 +36,7 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
         }
 
         // Retorna os dados dos jogos populares
+        console.log(response.data);
         res.json(response.data);
     } catch (error) {
         console.error("Error fetching popular games:", error.message); // Log para depuração
