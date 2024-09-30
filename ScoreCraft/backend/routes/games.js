@@ -16,23 +16,13 @@ const igdbAuth = (req, res, next) => {
 
 // Rota para obter todos os jogos com as capas
 
-router.post('/', igdbAuth, async (req, res) => {
+router.post('/popularidade', igdbAuth, async (req, res) => {
     try {
-        // Pega parâmetros de consulta da requisição
-        const { search, order, limit = 25 } = req.body;
-
-        // Formata a consulta
-        let query = `fields *;`;
-        if (search) {
-            query += ` where name ~ *"${search}*";`; // Filtra jogos pelo nome
-        }
-        if (order) {
-            query += ` order ${order};`; // Define a ordem dos resultados
-        }
-        query += ` limit ${limit};`; // Limita os resultados
-
+        // Consulta para obter os jogos pela popularidade
+        const query = 'fields game_id,value,popularity_type; sort value desc; limit 10;';
+        
         // Fazendo a requisição à API do IGDB
-        const response = await axios.post(IGDB_API_URL, query, {
+        const response = await axios.post('https://api.igdb.com/v4/popularity_primitives', query, {
             headers: {
                 'Client-ID': req.headers['Client-ID'],
                 'Authorization': req.headers['Authorization'],
@@ -40,40 +30,19 @@ router.post('/', igdbAuth, async (req, res) => {
             },
         });
 
-        const games = response.data;
-
-        // Coleta os IDs das capas (cover) para fazer uma segunda requisição
-        const coverIds = games.map(game => game.cover).filter(Boolean); // Filtra jogos que têm capa
-
-        if (coverIds.length > 0) {
-            // Requisição para obter apenas as URLs das capas
-            const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
-                `fields url; where id = (${coverIds.join(',')});`, 
-                {
-                    headers: {
-                        'Client-ID': req.headers['Client-ID'],
-                        'Authorization': req.headers['Authorization']
-                    }
-                }
-            );
-
-            const covers = coverResponse.data;
-
-            // Associa as URLs das capas aos jogos correspondentes
-            games.forEach(game => {
-                const cover = covers.find(c => c.id === game.cover);
-                if (cover) {
-                    game.cover_url = cover.url; // Adiciona a URL da capa ao objeto do jogo
-                }
-            });
+        // Verifica se os jogos foram encontrados
+        if (response.data.length === 0) {
+            return res.status(404).send({ message: 'No popular games found' });
         }
 
-        // Retorna os jogos com as URLs das capas adicionadas
-        res.json(games);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+        // Retorna os dados dos jogos populares
+        res.json(response.data);
+    } catch (error) {
+        console.error("Error fetching popular games:", error.message); // Log para depuração
+        res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
+
 
 
 
