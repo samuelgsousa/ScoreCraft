@@ -1,7 +1,7 @@
 export interface Games{
     id: number
     name: string
-    picture: string
+    cover: string
     release_date: Date
     summary: string
     producer: string

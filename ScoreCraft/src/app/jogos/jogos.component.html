@@ -2,7 +2,7 @@
 
 <div id="AllGamesList">
     <div *ngFor="let game of gameList" class="game">
-    <img [src]="[game.picture]" alt="" class="img-game">
+    <img [src]="[game.cover]" alt="" class="img-game">
         <div class="game-data">
             <h1 class="text-light">{{ game.name }}</h1>
             <span class="text-success rating">
