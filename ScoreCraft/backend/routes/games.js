@@ -4,7 +4,7 @@ const router = express.Router();
 const axios = require('axios'); // Importar axios para fazer requisições HTTP
 
 const IGDB_API_URL = 'https://api.igdb.com/v4/games'; // URL da API
-const IGDB_API_KEY = 'yqfxo07jpz3d01hcccr0e6ffqcce2l'; // Substitua pela sua chave da IGDB
+const IGDB_API_KEY = 'yqfxo07jpz3d01hcccr0e6ffqcce2l'; //chave da IGDB
 
 const igdbAuth = (req, res, next) => {
     req.headers['Client-ID'] = 'h13prjmj1dgeq891fwaxyn3ydom2t6'; // Client ID
@@ -12,10 +12,10 @@ const igdbAuth = (req, res, next) => {
     next();
 };
 
-// Rota para obter todos os jogos
+
 
 // Rota para obter todos os jogos
-router.post('/', igdbAuth, async (req, res) => {
+router.get('/', igdbAuth, async (req, res) => {
     try {
         const response = await axios.post(IGDB_API_URL, 'fields *; limit 100;', {
             headers: req.headers
@@ -26,7 +26,7 @@ router.post('/', igdbAuth, async (req, res) => {
     }
 });
 
-router.post('/:id', igdbAuth, async (req, res) => {
+router.get('/:id', igdbAuth, async (req, res) => {
     try {
         const gameId = req.params.id;
         const response = await axios.post(`${IGDB_API_URL}`, `fields *; where id = ${gameId};`, {
