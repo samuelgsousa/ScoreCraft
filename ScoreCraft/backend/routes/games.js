@@ -18,45 +18,17 @@ const igdbAuth = (req, res, next) => {
 
 router.post('/', igdbAuth, async (req, res) => {
     try {
-        const response = await axios.post(IGDB_API_URL, 'fields name,cover; limit 100;', {
+        const response = await axios.post(IGDB_API_URL, 'fields *; limit 100;', {
             headers: {
                 'Client-ID': req.headers['Client-ID'],
                 'Authorization': req.headers['Authorization']
             }
         });
-        
-        const games = response.data;
-        const coverIds = games.map(game => game.cover).filter(cover => cover); // Obtém os IDs das capas
-        
-        // Se houver IDs de capas, faz uma requisição separada para buscar as imagens
-        if (coverIds.length > 0) {
-            const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
-                `fields image_id,url;width,height; where id = (${coverIds.join(',')});`, {
-                headers: {
-                    'Client-ID': req.headers['Client-ID'],
-                    'Authorization': req.headers['Authorization']
-                }
-            });
-            
-            // Associa as capas aos jogos
-            const covers = coverResponse.data;
-            const gamesWithCovers = games.map(game => {
-                const cover = covers.find(c => c.id === game.cover);
-                return {
-                    ...game,
-                    cover: cover ? cover.url : null // Adiciona a URL da capa ao jogo
-                };
-            });
-
-            res.json(gamesWithCovers); // Retorna os jogos com URLs de capa
-        } else {
-            res.json(games); // Retorna apenas os jogos se não houver capas
-        }
+        res.json(response.data);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
-
 
 
 router.post('/:id', igdbAuth, async (req, res) => {
