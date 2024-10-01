@@ -119,13 +119,8 @@ router.post('/:id', igdbAuth, async (req, res) => {
                 }
             );
 
-            // Se a capa foi encontrada, adicione a URL ao jogo
-            if (coverResponse.data.length > 0) {
-                game.cover_url = coverResponse.data[0].url.replace('t_thumb', 't_cover_big'); // Adiciona a URL da capa ao objeto do jogo
-                
-            } else {
-                game.cover_url = null; // Se não encontrou a capa, pode definir como null
-            }
+            game.cover_url = coverResponse.data[0].url.replace('t_thumb', 't_cover_big');
+
         }
 
         // Retorna os dados do jogo com a URL da capa, se disponível
