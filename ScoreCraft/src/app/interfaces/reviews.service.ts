@@ -16,8 +16,8 @@ export class ReviewsService{
     constructor(private http: HttpClient) { }
 
 
-    asyncgetAllReviews(page: number = 1, limit: number = 10): Observable<{ totalReviews: number; totalPages: number; currentPage: number; reviews: Reviews[] }> {
-      return this.http.get<{ totalReviews: number; totalPages: number; currentPage: number; reviews: Reviews[] }>(`${this.baseUrl}?page=${page}&limit=${limit}`);
+    asyncgetAllReviews(): Observable<Reviews[]>{
+        return this.http.get<Reviews[]>(this.baseUrl)
     }
 
     getLastReviewId(): Observable<number> {
