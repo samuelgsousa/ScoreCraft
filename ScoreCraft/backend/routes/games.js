@@ -36,11 +36,8 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
         // Extrai os IDs dos jogos populares
         const gameIds = response.data.map(game => game.game_id);
         console.log("Game IDs:", gameIds); // Verifica se os IDs estão corretos
-
         // Busca os detalhes dos jogos com base nos IDs populares
         const gameQuery = `fields *; where id = (${gameIds.join(',')});`;
-        console.log("Game Query:", gameQuery); // Verifica a consulta gerada
-        
         const gamesResponse = await axios.post(IGDB_API_URL, gameQuery, {
             headers: {
                 'Client-ID': req.headers['Client-ID'],
