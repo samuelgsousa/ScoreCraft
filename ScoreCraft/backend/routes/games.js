@@ -12,14 +12,12 @@ const igdbAuth = (req, res, next) => {
     next();
 };
 
-
-
 // Rota para obter todos os jogos com as capas
 
 router.post('/popularidade', igdbAuth, async (req, res) => {
     try {
         // Consulta para obter os jogos pela popularidade
-        const query = 'fields game_id,value,popularity_type; sort value desc; limit 10;';
+        const query = 'fields game_id,value,popularity_type; sort value desc; limit 20;';
         
         // Fazendo a requisição à API do IGDB para popularidade
         const response = await axios.post('https://api.igdb.com/v4/popularity_primitives', query, {
@@ -73,6 +71,7 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
         }
 
         // Retorna os jogos populares com as URLs das capas ajustadas
+        console.log("backend games.js resposta: " + gamesResponse.data)
         res.json(gamesResponse.data);
     } catch (error) {
         console.error("Error fetching popular games:", error.message);
