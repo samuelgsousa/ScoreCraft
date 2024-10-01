@@ -67,4 +67,28 @@
 
 
   
+.popoverGameDetails .popover {
+  color: white; /* para texto branco no popover */
+  background-color: var(--MainBackground);
+
+}
+
+.popoverGameDetails .popover-header {
+  color: white;
+  background-color: var(--MainBackground);
+}
+
+.popoverGameDetails .popover-body {
+  padding: 20px;
+  background-color: var(--MainBackground);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  color: white;
+}
+
+
+.popoverGameDetails h1{
+  font-size: 1.8rem;
+}
+
   
