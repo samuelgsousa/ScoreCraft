@@ -5,7 +5,7 @@ const axios = require('axios'); // Importar axios para fazer requisições HTTP
 
 const IGDB_API_URL = 'https://api.igdb.com/v4/games'; // URL da API
 const IGDB_API_KEY = 'yqfxo07jpz3d01hcccr0e6ffqcce2l'; //chave da IGDB
-const Qlimit = 30;
+const Qlimit = 20;
 
 const igdbAuth = (req, res, next) => {
     req.headers['Client-ID'] = 'h13prjmj1dgeq891fwaxyn3ydom2t6'; // Client ID
