@@ -103,6 +103,7 @@ router.post('/:id', igdbAuth, async (req, res) => {
             return res.status(404).send({ message: 'Game not found' });
         }
 
+
         const game = response.data[0];
 
         // Se o jogo possui um ID de capa, busque a URL da capa
@@ -119,7 +120,8 @@ router.post('/:id', igdbAuth, async (req, res) => {
 
             // Se a capa foi encontrada, adicione a URL ao jogo
             if (coverResponse.data.length > 0) {
-                game.cover_url = coverResponse.data[0].url; // Adiciona a URL da capa ao objeto do jogo
+                game.cover_url = coverResponse.data[0].url.replace('t_thumb', 't_cover_big'); // Adiciona a URL da capa ao objeto do jogo
+                
             } else {
                 game.cover_url = null; // Se não encontrou a capa, pode definir como null
             }
@@ -132,81 +134,3 @@ router.post('/:id', igdbAuth, async (req, res) => {
         res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
-
-
-
-
-
-// // Rota para criar um novo jogo
-// router.post('/', async (req, res) => {
-//     const game = new Game({
-//         id: req.body.id,
-//         name: req.body.name,
-//         picture: req.body.picture,
-//         release_date: req.body.release_date,
-//         summary: req.body.summary,
-//         producer: req.body.producer,
-//         genres: req.body.genres
-//     });
-//     try {
-//         const newGame = await game.save();
-//         res.status(201).json(newGame);
-//     } catch (err) {
-//         res.status(400).json({ message: err.message });
-//     }
-// });
-
-// // Rota para atualizar um jogo existente
-// router.patch('/:id', async (req, res) => {
-//     if (req.body.name != null) {
-//         res.game.name = req.body.name;
-//     }
-//     if (req.body.picture != null) {
-//         res.game.picture = req.body.picture;
-//     }
-//     if (req.body.release_date != null) {
-//         res.game.release_date = req.body.release_date;
-//     }
-//     if (req.body.summary != null) {
-//         res.game.summary = req.body.summary;
-//     }
-//     if (req.body.producer != null) {
-//         res.game.producer = req.body.producer;
-//     }
-//     if (req.body.genres != null) {
-//         res.game.genres = req.body.genres;
-//     }
-//     try {
-//         const updatedGame = await res.game.save();
-//         res.json(updatedGame);
-//     } catch (err) {
-//         res.status(400).json({ message: err.message });
-//     }
-// });
-
-// // Rota para deletar um jogo
-// router.delete('/:id', async (req, res) => {
-//     try {
-//         await res.game.remove();
-//         res.json({ message: 'Jogo removido com sucesso' });
-//     } catch (err) {
-//         res.status(500).json({ message: err.message });
-//     }
-// });
-
-// // Rota para obter um jogo específico pelo ID
-// router.get('/:id', async (req, res) => {
-//     try {
-//         const gameId = parseInt(req.params.id); // Converter para número se necessário
-//         const game = await Game.findOne({ id: gameId });
-//         if (!game) {
-//             return res.status(404).send({ message: 'Game not found' });
-//         }
-//         res.send(game);
-//     } catch (error) {
-//         res.status(500).send({ message: 'Server error', error });
-//     }
-// });
-
-
-module.exports = router;

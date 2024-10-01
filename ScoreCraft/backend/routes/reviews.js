@@ -38,9 +38,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-
-
-
 // Rota para atualizar uma avaliação
 router.patch('/:id', async (req, res) => {
   const { review_text, rating } = req.body;
@@ -129,6 +126,15 @@ router.get('/reviews/last', async (req, res) => {
 });
 
 
-
+// Rota para obter avaliações por game_id
+router.get('/game/:gameId', async (req, res) => {
+  const gameId = parseInt(req.params.gameId);
+  try {
+      const reviews = await Review.find({ game_id: gameId });
+      res.json(reviews);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router;
