@@ -55,10 +55,11 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
         //Busca as capas 
 
         const coverIds = gamesResponse.data.map(game => game.cover).filter(Boolean);
-
+        const missingCovers = [];
+        
         if (coverIds.length > 0) {
             const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
-                `fields url; where id = (${coverIds.join(',')});`, 
+                `fields url; where id = (${coverIds.join(',')}); limit ${Qlimit};`, 
                 {
                     headers: {
                         'Client-ID': req.headers['Client-ID'],
@@ -75,9 +76,18 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
                 const cover = covers.find(c => c.id === game.cover);
                 if (cover) {
                     game.cover_url = cover.url.replace('t_thumb', 't_cover_big'); // Modifica a URL
+                } 
+                else {
+                    // Adiciona o jogo ao array de jogos sem capa
+                    missingCovers.push({ id: game.id, coverId: game.cover });
                 }
             });
+
         }
+
+        
+
+
 
         // Retorna os jogos populares com as URLs das capas ajustadas
         console.log("backend games.js resposta: " + gamesResponse.data)
