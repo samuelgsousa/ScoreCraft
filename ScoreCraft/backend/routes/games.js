@@ -102,11 +102,10 @@ router.post('/:id', igdbAuth, async (req, res) => {
         if (response.data.length === 0) {
             return res.status(404).send({ message: 'Game not found' });
         }
-        else {response.data[0].cover_url.replace('t_thumb', 't_cover_big')}
-        console.log(response.data[0].cover_url.replace('t_thumb', 't_cover_big'))
 
         const game = response.data[0];
-
+        game.cover_url = cover.url.replace('t_thumb', 't_cover_big')
+        
         // Se o jogo possui um ID de capa, busque a URL da capa
         if (game.cover) {
             const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
@@ -119,7 +118,6 @@ router.post('/:id', igdbAuth, async (req, res) => {
                 }
             );
 
-            game.cover_url = coverResponse.data[0].url.replace('t_thumb', 't_cover_big');
 
         }
 
@@ -130,5 +128,6 @@ router.post('/:id', igdbAuth, async (req, res) => {
         res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
+
 
 module.exports = router;
