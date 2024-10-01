@@ -12,8 +12,12 @@
         
         <p class="text-light">{{ game.release_date | date:'dd MMM yyyy' }}</p>
         <p class="text-light">{{ game.summary }}</p>
-        <button id="avaliar" [routerLink]="['../newreview/' + game.id]">Avaliar</button>
-        <button class="btn btn-secondary" (click)="p.close()">Fechar</button>
+
+        <div class="bottom-btns">
+            <button id="avaliar" [routerLink]="['../newreview/' + game.id]">Avaliar</button>
+            <img src="./icons/close-btn.svg" alt="close button" class="close-btn" (click)="p.close()">
+        </div>
+        
       </div>
     </ng-template>
   </div>

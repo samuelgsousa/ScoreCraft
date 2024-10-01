@@ -102,7 +102,8 @@ router.post('/:id', igdbAuth, async (req, res) => {
         if (response.data.length === 0) {
             return res.status(404).send({ message: 'Game not found' });
         }
-
+        else {response.data[0].cover_url.replace('t_thumb', 't_cover_big')}
+        console.log(response.data[0].cover_url.replace('t_thumb', 't_cover_big'))
 
         const game = response.data[0];
 

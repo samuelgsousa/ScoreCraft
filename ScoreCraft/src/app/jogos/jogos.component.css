@@ -39,7 +39,7 @@ h1{
 }
 
 #avaliar{
-    margin-top: 1rem;
+
     width: 5rem;
     height: 2rem;
     border-radius: 10px;
@@ -48,4 +48,16 @@ h1{
     font-weight: 500;
     color: white;
     border-color: #7A4AFA;
+}
+
+.bottom-btns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center !important;
+}
+
+.close-btn{
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
 }
