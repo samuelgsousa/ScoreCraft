@@ -20,6 +20,11 @@ h1{
     align-items: center;
 }
 
+.game:hover{
+    transition: ease-in-out 0.4s;
+    transform: translateY(-50px);
+}
+
 .img-game{
     border-radius: 5px;
     height: clamp(70px,30px + 30vw,300px); 

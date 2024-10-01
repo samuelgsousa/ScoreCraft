@@ -30,7 +30,6 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
             },
         });
 
-        // Verifica se os jogos foram encontrados
         if (response.data.length === 0) {
             return res.status(404).send({ message: 'No popular games found' });
         }
@@ -48,10 +47,8 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
             },
         });
 
-        // Coleta os IDs das capas (cover) para fazer uma segunda requisição
         const coverIds = gamesResponse.data.map(game => game.cover).filter(Boolean);
 
-        // Requisição para obter apenas as URLs das capas
         if (coverIds.length > 0) {
             const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
                 `fields url; where id = (${coverIds.join(',')});`, 
@@ -66,22 +63,23 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
 
             const covers = coverResponse.data;
 
-            // Associa as URLs das capas aos jogos correspondentes
+            // Associa as URLs das capas aos jogos e substitui 't_thumb' por 't_cover_big'
             gamesResponse.data.forEach(game => {
                 const cover = covers.find(c => c.id === game.cover);
                 if (cover) {
-                    game.cover_url = cover.url; // Adiciona a URL da capa ao objeto do jogo
+                    game.cover_url = cover.url.replace('t_thumb', 't_cover_big'); // Modifica a URL
                 }
             });
         }
 
-        // Retorna os jogos populares com as URLs das capas adicionadas
+        // Retorna os jogos populares com as URLs das capas ajustadas
         res.json(gamesResponse.data);
     } catch (error) {
-        console.error("Error fetching popular games:", error.message); // Log para depuração
+        console.error("Error fetching popular games:", error.message);
         res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
+
 
 
 router.post('/:id', igdbAuth, async (req, res) => {
