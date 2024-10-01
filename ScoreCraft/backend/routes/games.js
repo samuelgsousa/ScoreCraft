@@ -5,6 +5,7 @@ const axios = require('axios'); // Importar axios para fazer requisições HTTP
 
 const IGDB_API_URL = 'https://api.igdb.com/v4/games'; // URL da API
 const IGDB_API_KEY = 'yqfxo07jpz3d01hcccr0e6ffqcce2l'; //chave da IGDB
+const Qlimit = 30;
 
 const igdbAuth = (req, res, next) => {
     req.headers['Client-ID'] = 'h13prjmj1dgeq891fwaxyn3ydom2t6'; // Client ID
@@ -17,8 +18,7 @@ const igdbAuth = (req, res, next) => {
 router.post('/popularidade', igdbAuth, async (req, res) => {
     try {
         // Consulta para obter os jogos pela popularidade
-        const query = 'fields game_id,value,popularity_type; sort value desc; limit 20;';
-
+        const query = `fields game_id,value,popularity_type; sort value desc; limit ${Qlimit};`;
 
         // Fazendo a requisição à API do IGDB para popularidade
         const response = await axios.post('https://api.igdb.com/v4/popularity_primitives', query, {
@@ -36,8 +36,11 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
         // Extrai os IDs dos jogos populares
         const gameIds = response.data.map(game => game.game_id);
         console.log("Game IDs:", gameIds); // Verifica se os IDs estão corretos
+
         // Busca os detalhes dos jogos com base nos IDs populares
-        const gameQuery = `fields *; where id = (${gameIds.join(',')});`;
+        const gameQuery = `fields *; where id = (${gameIds.join(',')}); limit ${Qlimit};`;
+        console.log("Game Query:", gameQuery); // Verifica a consulta gerada
+        
         const gamesResponse = await axios.post(IGDB_API_URL, gameQuery, {
             headers: {
                 'Client-ID': req.headers['Client-ID'],

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { Games } from './games';
 
 @Injectable({
@@ -8,15 +8,17 @@ import { Games } from './games';
 })
 export class GamesService {
 
-  private baseUrl = 'https://scorecraft.onrender.com/api/games'; // URL do seu backend
-  // private baseUrl = 'http://localhost:3000/api/games'
+  //private baseUrl = 'https://scorecraft.onrender.com/api/games'; // URL do seu backend
+   private baseUrl = 'http://localhost:3000/api/games'
 
   constructor(private http: HttpClient) { }
 
 
   getAllGames(): Observable<Games[]> {
-    return this.http.post<Games[]>(this.baseUrl + '/popularidade', {}); // Enviando um objeto vazio, caso o  backend não exija parâmetros
-  }
+    return this.http.post<Games[]>(this.baseUrl + '/popularidade', {}).pipe(
+        tap(data => console.log('Games data received:', data))
+    );
+}
 
   getGameDetailsById(id: number): Observable<Games> {
     return this.http.post<Games>(`${this.baseUrl}/${id}`, {}); // Novamente, enviando um objeto vazio
