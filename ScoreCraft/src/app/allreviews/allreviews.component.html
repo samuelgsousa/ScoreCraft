@@ -2,19 +2,31 @@
 
 <div id="AllReviewsList"></div>
 <div *ngFor="let review of reviewList" class="game">
-    <img [src]="gameDetails[review.game_id].cover_url" alt="" class="img-game" *ngIf="gameDetails[review.game_id]">
+    <img [src]="gameDetails[review.game_id]?.cover_url" alt="" class="img-game" *ngIf="gameDetails[review.game_id]">
     <div class="game-data">
-        <h1 class="text-light">{{gameDetails[review.game_id]?.name}}</h1>
+        <h1 class="text-light">{{ gameDetails[review.game_id]?.name }}</h1>
 
         <div class="userdata" [routerLink]="['/users/profile', (profileData[review.user_id]?.id)]">
             <img [src]="profileData[review.user_id]?.foto_perfil" alt="" class="userProfilePicture">
+            <h2 class="text-light">{{ profileData[review.user_id]?.nome }}</h2>
 
-            <h2 class="text-light" >{{profileData[review.user_id]?.nome}} 
-
-            <ngb-rating [(rate)]="review.rating" [max]="5" [readonly]="true" class="text-success"/>
-            </h2>
+            <ngb-rating [(rate)]="review.rating" [max]="5" [readonly]="true" class="text-success"></ngb-rating>
         </div>
-        <p class="text-light reviewtext">{{review.review_text}}</p>
-
+        <p class="text-light reviewtext">{{ review.review_text }}</p>
     </div>
 </div>
+
+<!-- Paginação -->
+<nav>
+    <ul class="pagination">
+        <li [class.disabled]="currentPage === 1">
+            <a (click)="changePage(currentPage - 1)">Anterior</a>
+        </li>
+        <li *ngFor="let page of [].constructor(totalPages); let i = index">
+            <a (click)="changePage(i + 1)" [class.active]="currentPage === i + 1">{{ i + 1 }}</a>
+        </li>
+        <li [class.disabled]="currentPage === totalPages">
+            <a (click)="changePage(currentPage + 1)">Próxima</a>
+        </li>
+    </ul>
+</nav>

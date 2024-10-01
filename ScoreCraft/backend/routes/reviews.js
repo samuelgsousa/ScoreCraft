@@ -3,15 +3,33 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Review = require('../models/Reviews');
 
-// Rota para obter todas as avaliações
+// Rota para obter todas as avaliações com paginação
 router.get('/', async (req, res) => {
   try {
-    const reviews = await Review.find().populate('user_id').populate('game_id');
-    res.json(reviews);
+      const page = parseInt(req.query.page) || 1; // Página atual, padrão para 1
+      const limit = parseInt(req.query.limit) || 10; // Limite de itens por página, padrão para 10
+      const skip = (page - 1) * limit; // Cálculo de quantos itens pular
+
+      // Busca as avaliações com base na página e no limite
+      const reviews = await Review.find()
+          .populate('user_id')
+          .populate('game_id')
+          .skip(skip) // Pula os primeiros 'skip' itens
+          .limit(limit); // Limita o número de resultados
+
+      const totalReviews = await Review.countDocuments(); // Conta o total de avaliações
+
+      res.json({
+          totalReviews,
+          totalPages: Math.ceil(totalReviews / limit), // Calcula o total de páginas
+          currentPage: page,
+          reviews,
+      });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
   }
 });
+
 
 
 // Rota para criar uma nova avaliação
