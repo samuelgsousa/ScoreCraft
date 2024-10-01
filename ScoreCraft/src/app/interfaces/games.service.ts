@@ -13,9 +13,9 @@ export class GamesService {
 
   constructor(private http: HttpClient) { }
 
-  // Modifique este método para usar POST
+
   getAllGames(): Observable<Games[]> {
-    return this.http.post<Games[]>(this.baseUrl, {}); // Enviando um objeto vazio, caso seu backend não exija parâmetros
+    return this.http.post<Games[]>(this.baseUrl + '/popularidade', {}); // Enviando um objeto vazio, caso o  backend não exija parâmetros
   }
 
   getGameDetailsById(id: number): Observable<Games> {
