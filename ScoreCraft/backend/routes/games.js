@@ -135,3 +135,5 @@ router.post('/:id', igdbAuth, async (req, res) => {
         res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
+
+module.exports = router;
