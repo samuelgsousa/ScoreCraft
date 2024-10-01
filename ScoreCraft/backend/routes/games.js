@@ -19,7 +19,7 @@ const igdbAuth = (req, res, next) => {
 router.post('/popularidade', igdbAuth, async (req, res) => {
     try {
         // Consulta para obter os jogos pela popularidade
-        const query = 'fields game_id,value,popularity_type; sort value desc; limit 10;';
+        const query = 'fields game_id,value,popularity_type; sort value desc; limit 50;';
         
         // Fazendo a requisição à API do IGDB para popularidade
         const response = await axios.post('https://api.igdb.com/v4/popularity_primitives', query, {
