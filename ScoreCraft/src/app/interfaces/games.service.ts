@@ -20,14 +20,6 @@ export class GamesService {
     );
 }
 
-getPaginatedGames(page: number, pageSize: number): Observable<{ games: any[], total: number }> {
-  const body = { page, pageSize };
-
-  return this.http.post<{ games: any[], total: number }>(`${this.baseUrl}/popularidade`, body);
-}
-
-
-
   getGameDetailsById(id: number): Observable<Games> {
     return this.http.post<Games>(`${this.baseUrl}/${id}`, {}); // Novamente, enviando um objeto vazio
   } 

@@ -24,38 +24,23 @@ export class JogosComponent {
   @Output() clickOutside = new EventEmitter<void>();
 
   gameList: Games[] = [];
-  paginatedGameList: any[] = [];  // Lista de jogos exibidos na página atual
-  currentPage = 1;  // Página atual
-  pageSize = 20;  // Quantidade de jogos por página
-  totalGames = 0;  // Total de jogos
-
+  
   constructor(private gamesService: GamesService) {}
 
 
 
   ngOnInit(): void {
-    this.loadGames();
-
+    this.gamesService.getAllGames().subscribe(
+      (data: Games[]) => {
+        this.gameList = data;
+       
+      },
+      (error) => {
+        console.error('Erro ao buscar jogos', error);
+      }
+    );
   }
-
-   // Carrega todos os jogos e define a paginação inicial
-  // Método que carrega os jogos da página atual
-  loadGames() {
-    this.gamesService.getPaginatedGames(this.currentPage, this.pageSize)
-      .subscribe(response => {
-        this.paginatedGameList = response.games;
-        this.totalGames = response.total;  // Total de jogos no banco de dados
-      });
-  }
-
-    // Método chamado quando a página é alterada
-    onPageChange(page: number) {
-      this.currentPage = page;
-      this.loadGames();
-    }
 
 }
-
-
 
 
