@@ -27,13 +27,21 @@ export class JogosComponent {
   
   constructor(private gamesService: GamesService) {}
 
-
+  currentPage = 1; // Página atual
+  totalGames = 500;  // Total de jogos
 
   ngOnInit(): void {
-    this.gamesService.getAllGames().subscribe(
+    this.loadGames(1)
+  }
+
+  loadGames(page: number){
+    
+    const range = page * 20
+
+    this.gamesService.getRangeGames(range).subscribe(
       (data: Games[]) => {
         this.gameList = data;
-       
+        // this.totalGames = data.length;
       },
       (error) => {
         console.error('Erro ao buscar jogos', error);

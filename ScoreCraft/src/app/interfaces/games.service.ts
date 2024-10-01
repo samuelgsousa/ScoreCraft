@@ -20,6 +20,13 @@ export class GamesService {
     );
 }
 
+  getRangeGames(range: number): Observable<Games[]> {
+    
+    return this.http.post<Games[]>(this.baseUrl + '/popularidade', {range}).pipe(
+        tap(data => console.log('Games data received:', data))
+    );
+  }
+
   getGameDetailsById(id: number): Observable<Games> {
     return this.http.post<Games>(`${this.baseUrl}/${id}`, {}); // Novamente, enviando um objeto vazio
   } 
