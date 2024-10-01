@@ -33,7 +33,7 @@ export class JogosComponent {
     this.gamesService.getAllGames().subscribe(
       (data: Games[]) => {
         this.gameList = data;
-        console.log(this.gameList);
+        console.log(this.gameList.map(game => ({ id: game.id, name: game.name })));
       },
       (error) => {
         console.error('Erro ao buscar jogos', error);
