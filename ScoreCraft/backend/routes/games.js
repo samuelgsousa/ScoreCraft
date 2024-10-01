@@ -104,8 +104,7 @@ router.post('/:id', igdbAuth, async (req, res) => {
         }
 
         const game = response.data[0];
-        game.cover_url = cover.url.replace('t_thumb', 't_cover_big')
-        
+
         // Se o jogo possui um ID de capa, busque a URL da capa
         if (game.cover) {
             const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
@@ -114,11 +113,16 @@ router.post('/:id', igdbAuth, async (req, res) => {
                     headers: {
                         'Client-ID': req.headers['Client-ID'],
                         'Authorization': req.headers['Authorization'],
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     }
                 }
             );
 
-
+            // Verifica se a resposta da capa possui dados
+            if (coverResponse.data.length > 0) {
+                const cover = coverResponse.data[0];
+                game.cover_url = cover.url.replace('t_thumb', 't_cover_big'); // Modifica a URL
+            }
         }
 
         // Retorna os dados do jogo com a URL da capa, se disponível
@@ -128,6 +132,7 @@ router.post('/:id', igdbAuth, async (req, res) => {
         res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
+
 
 
 module.exports = router;
