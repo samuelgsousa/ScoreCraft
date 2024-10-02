@@ -148,7 +148,7 @@ router.post('/:id', igdbAuth, async (req, res) => {
 });
 
 // Rota para buscar jogos
-router.post('/search', async (req, res) => {
+router.post('/search', igdbAuth, async (req, res) => {
     const searchTerm = req.body.search;
     
     console.log("backend termos recebidos: ", searchTerm)
