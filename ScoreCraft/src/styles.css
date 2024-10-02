@@ -73,6 +73,10 @@
 
 }
 
+.popover{
+  background-color: var(--MainBackground);
+}
+
 .popoverGameDetails .popover-header {
   color: white;
   background-color: var(--MainBackground);
@@ -91,8 +95,8 @@
   font-size: 1.8rem;
 }
 
-.pages{
-  
+div.popover-arrow::after{
+  --bs-popover-bg: var(--MainBackground);
 }
 
 .pages ul{

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-// const Game = require('../models/Games'); 
-const axios = require('axios'); // Importar axios para fazer requisições HTTP
+const axios = require('axios');
 
 const IGDB_API_URL = 'https://api.igdb.com/v4/games'; // URL da API
 const IGDB_API_KEY = 'yqfxo07jpz3d01hcccr0e6ffqcce2l'; //chave da IGDB
