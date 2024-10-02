@@ -84,9 +84,6 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
 
         }
 
-        
-
-
 
         // Retorna os jogos populares com as URLs das capas ajustadas
         console.log("backend games.js resposta: " + gamesResponse.data)
@@ -147,6 +144,33 @@ router.post('/:id', igdbAuth, async (req, res) => {
     } catch (error) {
         console.error("Error fetching game data:", error.message); // Log para depuração
         res.status(500).send({ message: 'Server error', error: error.message });
+    }
+});
+
+// Rota para buscar jogos
+router.post('/search', async (req, res) => {
+    const searchTerm = req.body.search;
+
+    if (!searchTerm) {
+        return res.status(400).json({ message: 'Search term is required' });
+    }
+
+    try {
+        const response = await axios.post('https://api.igdb.com/v4/games', 
+            `search "${searchTerm}";`, 
+            {
+                headers: {
+                    'Client-ID': req.headers['Client-ID'],
+                    'Authorization': req.headers['Authorization'],
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            }
+        );
+
+        res.json(response.data);
+    } catch (error) {
+        console.error("Error fetching games:", error.message);
+        res.status(500).json({ message: 'Error fetching games', error: error.message });
     }
 });
 
