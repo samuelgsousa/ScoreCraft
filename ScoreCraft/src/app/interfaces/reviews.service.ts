@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Reviews } from './reviews';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Profile } from './profile';
  
 @Injectable({
@@ -16,10 +16,17 @@ export class ReviewsService{
     constructor(private http: HttpClient) { }
 
 
-    asyncgetAllReviews(page: number): Observable<Reviews[]>{
+    getRangeReviews(page: number): Observable<Reviews[]>{
       const params = new HttpParams().set('page', page.toString());
         return this.http.get<Reviews[]>(this.baseUrl, {params})
     }
+
+    getReviewsLength(): Observable<number> {
+      return this.http.get<{ total: number }>(this.baseUrl + '/count').pipe(
+          map(response => response.total)
+      );
+  }
+  
 
 
     getLastReviewId(): Observable<number> {

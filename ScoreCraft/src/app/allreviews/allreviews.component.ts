@@ -20,6 +20,9 @@ export class AllreviewsComponent {
 
 
   reviewList: Reviews[] = [];
+
+  reviewListLength: any;
+
   gameDetails: { [key: number]: Games } = {}; 
   profileData: { [key: number]: Profile } = {}; 
   currentPage = 1; // Página atual
@@ -30,15 +33,25 @@ export class AllreviewsComponent {
   }
 
 ngOnInit(): void {
+  this.reviewsService.getReviewsLength().subscribe(
+    length => {
+      this.reviewListLength = length; // Atribuindo o total à variável
+      console.log(this.reviewListLength)
+  }
+  )
+
+  console.log(this.reviewListLength)
+  
   this.loadReviews(1)
   this.loadGameDetails()
 }
 
 loadReviews(page: number) {
   
-  this.reviewsService.asyncgetAllReviews(page).subscribe(
+  this.reviewsService.getRangeReviews(page - 1).subscribe(
     (reviews: Reviews[]) => {
         this.reviewList = reviews;
+
         this.loadGameDetails()
     },
     (error) => {

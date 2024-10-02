@@ -3,7 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Review = require('../models/Reviews');
 
-// Rota para obter todas as avaliações
+// Rota para obter as avaliações de acordo com a paginação
+
 router.get('/', async (req, res) => {
   const page = parseInt(req.query.page); // Pega a página da query string
   const limit = 5; // Define quantas reviews retornar
@@ -21,7 +22,18 @@ router.get('/', async (req, res) => {
       res.status(500).json({ message: error.message });
   }
 });
+
+//rota para obter o número total de Reviews
  
+router.get('/count', async (req, res) => {
+  try {
+      const total = await Review.countDocuments(); // Conta o total de documentos na coleção
+      res.json({total}); // Retorna o total em um objeto
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
+
 
 
 // Rota para criar uma nova avaliação
@@ -47,9 +59,6 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
-
-
 
 
 // Rota para atualizar uma avaliação

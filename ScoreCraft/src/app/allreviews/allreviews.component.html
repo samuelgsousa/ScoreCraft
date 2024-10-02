@@ -19,8 +19,8 @@
     </div>
 </div>
 
-<ngb-pagination  [collectionSize]="150" 
+<ngb-pagination  [collectionSize]="reviewListLength" 
 [(page)]="currentPage" 
 (pageChange)="loadReviews($event)" 
-[pageSize]="20" class="pages">
+[pageSize]="5" class="pages">
 </ngb-pagination>
