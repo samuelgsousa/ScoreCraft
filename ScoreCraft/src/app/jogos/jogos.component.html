@@ -1,7 +1,7 @@
 <h1>Confira nossa lista de jogos:</h1>
 
-<input type="text" placeholder="buscar">
-
+<input [(ngModel)]="searchTerm" placeholder="Buscar jogos...">
+<button (click)="searchGames()">Buscar</button>
 <div id="AllGamesList">
   <div *ngFor="let game of gameList" class="game" [ngbPopover]="popoverContent" 
        popoverTitle="Game Details" triggers="manual" #p="ngbPopover" 

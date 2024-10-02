@@ -37,11 +37,11 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
 
         // Extrai os IDs dos jogos populares
         const gameIds = response.data.map(game => game.game_id);
-        console.log("Game IDs:", gameIds); // Verifica se os IDs estão corretos
+      
 
         // Busca os detalhes dos jogos com base nos IDs populares
         const gameQuery = `fields name, cover, rating, summary; where id = (${gameIds.join(',')}); limit ${Qlimit};`;
-        console.log("Game Query:", gameQuery); // Verifica a consulta gerada
+        
         
         const gamesResponse = await axios.post(IGDB_API_URL, gameQuery, {
             headers: {
@@ -86,7 +86,7 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
 
 
         // Retorna os jogos populares com as URLs das capas ajustadas
-        console.log("backend games.js resposta: " + gamesResponse.data)
+       
         res.json(gamesResponse.data);
     } catch (error) {
         console.error("Error fetching popular games:", error.message);
@@ -137,7 +137,7 @@ router.post('/:id', igdbAuth, async (req, res) => {
                 const cover = coverResponse.data[0];
                 game.cover_url = cover.url.replace('t_thumb', 't_cover_big'); // Modifica a URL
             }
-        } else console.log("*** O JOGO NÃO TEM CAPA ***")
+        } 
 
         // Retorna os dados do jogo com a URL da capa, se disponível
         res.json(game);
@@ -150,6 +150,8 @@ router.post('/:id', igdbAuth, async (req, res) => {
 // Rota para buscar jogos
 router.post('/search', async (req, res) => {
     const searchTerm = req.body.search;
+    
+    console.log("backend termos recebidos: ", searchTerm)
 
     if (!searchTerm) {
         return res.status(400).json({ message: 'Search term is required' });

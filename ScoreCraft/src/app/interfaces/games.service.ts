@@ -8,8 +8,8 @@ import { Games } from './games';
 })
 export class GamesService {
 
-  //private baseUrl = 'https://scorecraft.onrender.com/api/games'; // URL do seu backend
-  private baseUrl = 'http://localhost:3000/api/games'
+  private baseUrl = 'https://scorecraft.onrender.com/api/games'; // URL do seu backend
+  //private baseUrl = 'http://localhost:3000/api/games'
 
   constructor(private http: HttpClient) { }
 
@@ -39,5 +39,9 @@ export class GamesService {
         return games.filter(game => favG.includes(game.id));
       })
     );
+  }
+
+  searchGame(searchTerm: string): Observable<Games[]> {
+    return this.http.post<Games[]>(`${this.baseUrl}/search`, { search: searchTerm });
   }
 }
