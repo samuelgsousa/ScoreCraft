@@ -31,27 +31,17 @@ export class JogosComponent {
   currentPage = 1; // Página atual
   totalGames = 500;  // Total de jogos
 
+  isSearching!: boolean | false;
   searchTerm: string = '';
 
-  searchGames() {
-    
-    this.gamesService.searchGame(this.searchTerm).subscribe(
-      (data: Games[]) => {
-        this.gameList = data;
-      },
-      (error) => {
-        console.error('Erro ao buscar jogos', error);
-      }
-    );
-  }
 
   ngOnInit(): void {
-    this.loadGames(1)
+    this.loadGames(0)
   }
 
   loadGames(page: number){
     
-    const range = page * 20
+    const range = (page - 1) * 20
 
     this.gamesService.getRangeGames(range).subscribe(
       (data: Games[]) => {
@@ -63,6 +53,31 @@ export class JogosComponent {
       }
     );
   }
+
+  searchGames() {
+
+    if(this.searchTerm == ""){
+      this.loadGames(0)
+      this.isSearching = false
+    } else{
+      this.isSearching = true;
+      this.gamesService.searchGame(this.searchTerm).subscribe(
+        (data: Games[]) => {
+          this.gameList = data;
+        },
+        (error) => {
+          console.error('Erro ao buscar jogos', error);
+        }
+      );
+    }
+  }
+
+  clearSearch(): void {
+    this.searchTerm = ''; 
+    this.loadGames(0);
+    this.isSearching = false;
+}
+
 
 }
 

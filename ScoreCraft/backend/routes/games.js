@@ -12,6 +12,85 @@ const igdbAuth = (req, res, next) => {
     next();
 };
 
+// Rota para buscar jogos
+router.post('/search', igdbAuth, async (req, res) => {
+    
+    const searchTerm = req.body.search;
+    
+    console.log("backend termos recebidos: ", searchTerm)
+    
+
+     if (!searchTerm) {
+         return res.status(400).json({ message: 'Search term is required' });
+     }
+
+     try {
+
+         const response = await axios.post('https:api.igdb.com/v4/games',
+             `search "${searchTerm}";`, 
+             {
+                 headers: {
+                     'Client-ID': req.headers['Client-ID'],
+                     'Authorization': req.headers['Authorization'],
+                     'Content-Type': 'application/x-www-form-urlencoded',
+                 }
+             }
+         );
+         
+         const gameIds = response.data.map(game => game.id);
+         
+        // Busca os detalhes dos jogos com base nos IDs populares
+        const gameQuery = `fields name, cover, rating, summary; where id = (${gameIds.join(',')}); limit ${Qlimit};`;
+
+        const gamesResponse = await axios.post(IGDB_API_URL, gameQuery, {
+            headers: {
+                'Client-ID': req.headers['Client-ID'],
+                'Authorization': req.headers['Authorization'],
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+
+        // console.log("Jogos encontrados: " + JSON.stringify(gamesResponse.data, null, 2))
+
+                //Busca as capas 
+
+                const coverIds = gamesResponse.data.map(game => game.cover).filter(Boolean);
+                
+                if (coverIds.length > 0) {
+                    const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
+                        `fields url; where id = (${coverIds.join(',')}); limit ${Qlimit + 10};`, 
+                        {
+                            headers: {
+                                'Client-ID': req.headers['Client-ID'],
+                                'Authorization': req.headers['Authorization'],
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            }
+                        }
+                    );
+        
+                    const covers = coverResponse.data;
+        
+                    // Associa as URLs das capas aos jogos e substitui 't_thumb' por 't_cover_big'
+                    gamesResponse.data.forEach(game => {
+                        const cover = covers.find(c => c.id === game.cover);
+                        if (cover) {
+                            game.cover_url = cover.url.replace('t_thumb', 't_cover_big'); // Modifica a URL
+                        } 
+                        
+                    });
+        
+                }
+
+        // console.log("Resposta final: " + JSON.stringify(response.data, null, 2));
+        
+         res.json(gamesResponse.data);
+     } catch (error) {
+         console.error("Error fetching games:", error.message);
+         res.status(500).json({ message: 'Error fetching games', error: error.message });
+     }
+});
+
+
 // Rota para obter todos os jogos com as capas
 
 router.post('/popularidade', igdbAuth, async (req, res) => {
@@ -147,34 +226,6 @@ router.post('/:id', igdbAuth, async (req, res) => {
     }
 });
 
-// Rota para buscar jogos
-router.post('/search', igdbAuth, async (req, res) => {
-    const searchTerm = req.body.search;
-    
-    console.log("backend termos recebidos: ", searchTerm)
-
-    if (!searchTerm) {
-        return res.status(400).json({ message: 'Search term is required' });
-    }
-
-    try {
-        const response = await axios.post('https://api.igdb.com/v4/games', 
-            `search "${searchTerm}";`, 
-            {
-                headers: {
-                    'Client-ID': req.headers['Client-ID'],
-                    'Authorization': req.headers['Authorization'],
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                }
-            }
-        );
-
-        res.json(response.data);
-    } catch (error) {
-        console.error("Error fetching games:", error.message);
-        res.status(500).json({ message: 'Error fetching games', error: error.message });
-    }
-});
 
 
 

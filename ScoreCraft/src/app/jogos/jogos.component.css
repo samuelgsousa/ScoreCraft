@@ -5,6 +5,39 @@ h1{
      margin-top: 25px;
 }
 
+.searchDiv{
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    height: 5vh;
+    gap: 15px;
+}
+
+.searchDiv input{
+    border-radius: 10px;
+    border-style: none;
+    padding-left: 5px;
+    width: 30%;
+}
+
+.searchBtn{
+    width: 5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    border-style: none;
+}
+
+.sendSearch{
+    background-color: var( --SaveButton);
+}
+
+.clean{
+    background-color: var(--SecondaryColor);
+}
+
+
 #AllGamesList{
     display: flex;
     flex-wrap: wrap;

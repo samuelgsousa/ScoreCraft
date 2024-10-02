@@ -1,7 +1,11 @@
 <h1>Confira nossa lista de jogos:</h1>
 
-<input [(ngModel)]="searchTerm" placeholder="Buscar jogos...">
-<button (click)="searchGames()">Buscar</button>
+<div class="searchDiv">
+  <input [(ngModel)]="searchTerm" placeholder="Buscar jogos...">
+  <button (click)="searchGames()" class="searchBtn sendSearch">Buscar</button>
+  <button (click)="clearSearch()" class="searchBtn clean">Limpar</button>
+</div>
+
 <div id="AllGamesList">
   <div *ngFor="let game of gameList" class="game" [ngbPopover]="popoverContent" 
        popoverTitle="Game Details" triggers="manual" #p="ngbPopover" 
@@ -27,7 +31,7 @@
 
 <!-- Componente de paginação -->
 
-<ngb-pagination   [collectionSize]="totalGames" 
+<ngb-pagination *ngIf="!isSearching"  [collectionSize]="totalGames" 
 [(page)]="currentPage" 
 (pageChange)="loadGames($event)" 
 [pageSize]="20" class="pages">
