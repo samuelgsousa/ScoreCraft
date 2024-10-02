@@ -6,47 +6,55 @@ import { CommonModule } from '@angular/common';
 import { Games } from '../interfaces/games';
 import { Profile } from '../interfaces/profile';
 import { ProfileService } from '../interfaces/profile.service';
-import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-allreviews',
   standalone: true,
-  imports: [CommonModule, NgbRatingModule, RouterLink],
+  imports: [CommonModule, NgbRatingModule, RouterLink, NgbModule],
   templateUrl: './allreviews.component.html',
   styleUrl: './allreviews.component.css'
 })
 export class AllreviewsComponent {
 
+
   reviewList: Reviews[] = [];
   gameDetails: { [key: number]: Games } = {}; 
   profileData: { [key: number]: Profile } = {}; 
+  currentPage = 1; // Página atual
+  totalGames = 500;  // Total de jogos
 
   constructor(private reviewsService: ReviewsService, private gamesService: GamesService, private profileService: ProfileService) {
     
   }
 
 ngOnInit(): void {
-    this.reviewsService.asyncgetAllReviews().subscribe(
-        (reviews: Reviews[]) => {
-            this.reviewList = reviews;
-            this.loadGameDetails()
-        },
-        (error) => {
-            console.error('Erro ao carregar reviews:', error);
-        }
-    );
-
-
+  this.loadReviews(1)
+  this.loadGameDetails()
 }
 
-loadGameDetails(): void {
-  this.reviewList.forEach(review => {
-    if (!this.gameDetails[review.game_id]) {
-      this.getGameDetails(review.game_id); // Função que busca detalhes do jogo
-      this.getUserData(review.user_id)
+loadReviews(page: number) {
+  
+  this.reviewsService.asyncgetAllReviews(page).subscribe(
+    (reviews: Reviews[]) => {
+        this.reviewList = reviews;
+        this.loadGameDetails()
+    },
+    (error) => {
+        console.error('Erro ao carregar reviews:', error);
     }
-  });
+);
+  
+  }
+
+loadGameDetails(): void {
+   this.reviewList.forEach(review => {
+     if (!this.gameDetails[review.game_id]) {
+       this.getGameDetails(review.game_id); // Função que busca detalhes do jogo
+       this.getUserData(review.user_id)
+     }
+   });
 }
 
 async getGameDetails(id: number): Promise<void> {

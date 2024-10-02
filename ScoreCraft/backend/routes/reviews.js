@@ -5,13 +5,23 @@ const Review = require('../models/Reviews');
 
 // Rota para obter todas as avaliações
 router.get('/', async (req, res) => {
+  const page = parseInt(req.query.page); // Pega a página da query string
+  const limit = 5; // Define quantas reviews retornar
+  const skip = page * limit; // Calcula quantas reviews pular
+
   try {
-    const reviews = await Review.find().populate('user_id').populate('game_id');
-    res.json(reviews);
+      const reviews = await Review.find()
+          .populate('user_id')
+          .populate('game_id')
+          .skip(skip) // Pula as avaliações conforme a página
+          .limit(limit); // Limita a quantidade de resultados
+
+      res.json(reviews);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
   }
 });
+ 
 
 
 // Rota para criar uma nova avaliação
@@ -37,6 +47,10 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+
+
+
 
 // Rota para atualizar uma avaliação
 router.patch('/:id', async (req, res) => {

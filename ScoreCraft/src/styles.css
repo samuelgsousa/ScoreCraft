@@ -91,4 +91,31 @@
   font-size: 1.8rem;
 }
 
+.pages{
   
+}
+
+.pages ul{
+  justify-content: center;
+  flex-wrap: wrap; 
+}
+
+.pages a{
+  background-color: var(--MainBackground);
+}
+
+.active > .page-link, .page-link.active {
+  z-index: 3;
+  background-color: var(--SecondaryColor);
+  border-color: var(--SecondaryColor);
+
+}
+
+.page-link.active, .page-link{
+  background-color: var(--MainBackground);
+}
+
+.page-link:hover{
+  background-color: var(--SecondaryColor);
+  color: white;
+}
