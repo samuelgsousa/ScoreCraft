@@ -8,6 +8,7 @@ h1{
 .searchDiv{
     margin-top: 35px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     height: 5vh;
     gap: 15px;
@@ -97,3 +98,4 @@ h1{
     height: 42px;
     cursor: pointer;
 }
+

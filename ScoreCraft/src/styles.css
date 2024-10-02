@@ -99,6 +99,7 @@ div.popover-arrow::after{
   --bs-popover-bg: var(--MainBackground);
 }
 
+
 .pages ul{
   justify-content: center;
   flex-wrap: wrap; 
