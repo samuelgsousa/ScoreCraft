@@ -23,5 +23,8 @@ export class AppComponent {
     if (isPlatformBrowser(this.platformId)) {
       // Código que acessa o document ou window
     }
+    if (typeof document !== 'undefined') {
+      // Acessar o document somente no lado do cliente
+    }
 }
 }
