@@ -10,7 +10,7 @@
   <div *ngFor="let game of gameList" class="game" [ngbPopover]="popoverContent" 
        popoverTitle="Game Details" triggers="manual" #p="ngbPopover" 
        (clickOutside)="p.close()" [popoverClass]="'popoverGameDetails'">
-    <img [src]="[game?.cover_url]" alt="" class="img-game" (click)="openPopoverOrPopup(p, game)">
+    <img [src]="[game?.cover_url]" alt="" class="img-game" (click)="openPopoverOrPopup(p, game, content)">
 
     <ng-template #popoverContent>
       <div class="game-data">
@@ -28,6 +28,20 @@
     </ng-template>
   </div>
 </div>
+
+<ng-template #content let-modal class="gamesModal">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ selectedGame?.name }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <!-- <p>Data de lançamento: {{ selectedGame?.release_dates | date:'dd MMM yyyy' }}</p> -->
+    <p>Summary: {{ selectedGame?.summary }}</p>
+  </div>
+  <div class="modal-footer">
+    <button id="avaliar" class="btn btn-primary" [routerLink]="['../newreview/' + selectedGame?.id]" (click)="modal.dismiss('Cross click')">Avaliar</button>
+  </div>
+</ng-template>
 
 <!-- Componente de paginação -->
 

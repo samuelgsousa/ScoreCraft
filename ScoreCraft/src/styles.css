@@ -124,3 +124,13 @@ div.popover-arrow::after{
   background-color: var(--SecondaryColor);
   color: white;
 }
+
+.games-modal .modal-content {
+  background-color: var(--MainBackground);
+  color: white;
+}
+
+.games-modal .btn-close{
+  --bs-btn-close-bg: url('/icons/w-close-btn.svg');
+  --bs-btn-close-opacity: none;
+}

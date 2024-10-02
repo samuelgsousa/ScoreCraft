@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Games } from '../interfaces/games';
 import { HttpClient} from '@angular/common/http';
 import { RouterLink } from '@angular/router';
-import { NgbModule, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModule, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { Directive, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
 import { ClickOutsideDirective } from './click-outside.directive'; 
@@ -29,7 +29,7 @@ export class JogosComponent {
 
   gameList: Games[] = [];
   
-  constructor(private gamesService: GamesService) {}
+  constructor(private gamesService: GamesService, private modalService: NgbModal) {}
   
   isSmallScreen: boolean = false;
   currentPage = 1; // Página atual
@@ -38,6 +38,7 @@ export class JogosComponent {
   isSearching!: boolean | false;
   searchTerm: string = '';
 
+  selectedGame: any;
 
   ngOnInit(): void {
     this.loadGames(0)
@@ -89,18 +90,19 @@ export class JogosComponent {
     this.isSearching = false;
 }
 
-openPopoverOrPopup(p: any, game: any): void {
+openPopoverOrPopup(p: any, game: any, content: any): void {
   if (this.isSmallScreen) {
-    this.openPopup(game); // Abre um popup
+    this.openPopup(content, game); // Abre o popup/modal
   } else {
     p.open(); // Abre o popover
   }
 }
 
-openPopup(game: any): void {
-  // Lógica para abrir o popup centralizado
-  alert(`Popup para o jogo: ${game.name}`); // Substitua por seu modal/popup
+openPopup(content: any, game: any): void {
+  this.selectedGame = game; // Armazena o jogo atual para exibir os detalhes no modal
+  this.modalService.open(content, { centered: true, windowClass: 'games-modal' }); // Abre o modal centralizado
 }
+
 
 
 }
