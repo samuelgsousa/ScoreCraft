@@ -10,7 +10,7 @@
   <div *ngFor="let game of gameList" class="game" [ngbPopover]="popoverContent" 
        popoverTitle="Game Details" triggers="manual" #p="ngbPopover" 
        (clickOutside)="p.close()" [popoverClass]="'popoverGameDetails'">
-    <img [src]="[game?.cover_url]" alt="" class="img-game" (click)="p.open()">
+    <img [src]="[game?.cover_url]" alt="" class="img-game" (click)="openPopoverOrPopup(p, game)">
 
     <ng-template #popoverContent>
       <div class="game-data">
