@@ -2,7 +2,7 @@
   <img [src]="gameDetails?.cover_url" alt="" class="img-game-review">
 <div class="composing">
   
-    <h1 class="text-light">{{gameDetails?.name}}</h1>
+    <h1 class="text-light">{{gameDetails?.name}}  <div class="spinner-border" role="status" *ngIf="isLoading"></div> </h1>
   
     <span class="text-success rating">
       <ngb-rating [(rate)]="rating" [max]="5" [readonly]="false"></ngb-rating> <!-- Vincule a variável de rating -->
@@ -11,7 +11,9 @@
     <textarea [(ngModel)]="reviewText" class="form-control" placeholder='Review' (input)="autoResize($event)"></textarea> <!-- Vincule a variável de texto da review -->
   
     <div>
-      <button (click)="createReview()" class="crud-button save-button">Salvar</button>
+     
+      <button (click)="createReview()" class="crud-button save-button">Salvar
+      </button>
       <button (click)="cancelCreation()" class="crud-button cancel-button">Cancelar</button>
     </div>
 </div>

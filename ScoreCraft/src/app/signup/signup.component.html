@@ -54,6 +54,8 @@
     </div>
    
     <br>
-    <button type="submit" [disabled]="accountForm.invalid || isLoading">Criar Conta</button>
+    <button type="submit" [disabled]="accountForm.invalid || isLoading"> Criar Conta 
+      <div class="spinner-border" role="status" *ngIf="isLoading"></div></button>
+    
   </form>
 </main>

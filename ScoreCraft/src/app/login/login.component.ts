@@ -26,7 +26,11 @@ export class LoginComponent {
     })
   }
 
+  isLoading: boolean = false;
+
   async onSubmit(): Promise<void> {
+    this.isLoading = true
+
     if (this.loginForm.valid) {
       const { email, senha } = this.loginForm.value;
       const isAuthenticated = await this.authService.login(email, senha); // Use "await" para aguardar a Promise
@@ -36,9 +40,11 @@ export class LoginComponent {
       } else {
         console.error('Credenciais inválidas');
         window.alert('Email e/ou Senha incorretos')
+        this.isLoading = false
       }
     } else {
       console.error('Formulário inválido');
+      this.isLoading = false
     }
   }
   

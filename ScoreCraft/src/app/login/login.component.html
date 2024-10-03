@@ -14,7 +14,9 @@
         <small *ngIf="loginForm.controls.senha.errors?.required">Senha é obrigatória</small>
       </div>
     </div>
-    <button type="submit">Entrar</button>
+    <button type="submit">Entrar
+      <div class="spinner-border" role="status" *ngIf="isLoading"></div>
+    </button>
 
     <h1 class="accreate">Não possui uma conta? <a [routerLink]="['../signup']" class="linkcreate">Crie aqui</a></h1>
   </form>

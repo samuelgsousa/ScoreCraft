@@ -25,6 +25,7 @@ export class ComposereviewComponent {
   userId: number | null | undefined;
   AllReviews: Reviews[] | undefined;
   newId: number | undefined;
+  isLoading: boolean = false;
   
   constructor(
     private gamesService: GamesService, 
@@ -66,6 +67,8 @@ export class ComposereviewComponent {
   }
 
   createReview() {
+    this.isLoading = true;
+
     if (this.gameDetails && this.userId !== undefined) {
       this.reviewsService.getLastReviewId().subscribe(
         review => {
@@ -85,11 +88,13 @@ export class ComposereviewComponent {
             this.reviewsService.createReview(newReview).subscribe(
               response => {
                 console.log('Review criada com sucesso:', response);
+                this.isLoading = false;
                 window.alert('Review criada com sucesso! Você será redirecionado');
                 this.router.navigate(['/dashboard']);
               },
               error => {
                 console.error('Erro ao criar review:', error);
+                this.isLoading = false;
               }
             );
           } else {

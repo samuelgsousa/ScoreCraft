@@ -6,6 +6,13 @@
   <button (click)="clearSearch()" class="searchBtn clean">Limpar</button>
 </div>
 
+<div *ngIf="isLoading">
+  <h1>Carregando
+    <div class="spinner-border" role="status">
+    </div>
+  </h1>
+</div>
+
 <div id="AllGamesList">
   <div *ngFor="let game of gameList" class="game" [ngbPopover]="popoverContent" 
        popoverTitle="Game Details" triggers="manual" #p="ngbPopover" 

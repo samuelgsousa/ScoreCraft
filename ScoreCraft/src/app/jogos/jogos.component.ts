@@ -40,6 +40,8 @@ export class JogosComponent {
 
   selectedGame: any;
 
+  isLoading: boolean = true;
+
   ngOnInit(): void {
     this.loadGames(0)
     this.checkScreenSize();
@@ -52,33 +54,43 @@ export class JogosComponent {
 
 
   loadGames(page: number){
-    
+
+    this.isLoading = true
+
     const range = (page - 1) * 20
 
     this.gamesService.getRangeGames(range).subscribe(
       (data: Games[]) => {
         this.gameList = data;
+        this.isLoading = false
         // this.totalGames = data.length;
       },
       (error) => {
         console.error('Erro ao buscar jogos', error);
+        this.isLoading = false
       }
     );
+
   }
 
   searchGames() {
 
+    this.isLoading = true
+
     if(this.searchTerm == ""){
       this.loadGames(0)
       this.isSearching = false
+      this.isLoading = false
     } else{
       this.isSearching = true;
       this.gamesService.searchGame(this.searchTerm).subscribe(
         (data: Games[]) => {
           this.gameList = data;
+          this.isLoading = false
         },
         (error) => {
           console.error('Erro ao buscar jogos', error);
+          this.isLoading = false
         }
       );
     }

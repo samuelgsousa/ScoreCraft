@@ -133,8 +133,7 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
         //Busca as capas 
 
         const coverIds = gamesResponse.data.map(game => game.cover).filter(Boolean);
-        const missingCovers = [];
-        
+
         if (coverIds.length > 0) {
             const coverResponse = await axios.post('https://api.igdb.com/v4/covers', 
                 `fields url; where id = (${coverIds.join(',')}); limit ${Qlimit};`, 
@@ -155,10 +154,6 @@ router.post('/popularidade', igdbAuth, async (req, res) => {
                 if (cover) {
                     game.cover_url = cover.url.replace('t_thumb', 't_cover_big'); // Modifica a URL
                 } 
-                else {
-                    // Adiciona o jogo ao array de jogos sem capa
-                    missingCovers.push({ id: game.id, coverId: game.cover });
-                }
             });
 
         }
@@ -225,7 +220,6 @@ router.post('/:id', igdbAuth, async (req, res) => {
         res.status(500).send({ message: 'Server error', error: error.message });
     }
 });
-
 
 
 
